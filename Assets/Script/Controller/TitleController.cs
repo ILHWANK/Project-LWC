@@ -39,6 +39,9 @@ namespace WHDle.Controller {
             }
         }
 
+        [SerializeField]
+        private TitleDlg title;
+
         private Coroutine loadGagueUpdateCoroutine;
 
         public void SetLoadStateGagueAfterLogin(IntroPhase phase)
@@ -61,7 +64,7 @@ namespace WHDle.Controller {
             if (phase > IntroPhase.Login)
                 SetLoadStateGagueAfterLogin(phase);
 
-            Debug.Log($"Phase = {phase}");
+
 
             switch (phase)
             {
@@ -79,6 +82,7 @@ namespace WHDle.Controller {
                     ServerManager.Instance.CheckAppVersion();
                     break;
                 case IntroPhase.Login:
+                    title.EnableGoogleLoginButton();
                     break;
                 case IntroPhase.StaticData:
                     break;

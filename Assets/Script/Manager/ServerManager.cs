@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BackEnd;
+using GooglePlayGames.BasicApi;
+using GooglePlayGames;
 
 namespace WHDle.Server
 {
@@ -77,6 +79,7 @@ namespace WHDle.Server
             GameManager.Instance.TitleController.LoadComplete = true;
 #else
             // 추후 버전 관리가 들어갈 때 제작하겠습니다.
+            GameManager.Instance.TitleController.LoadComplete = true;
 #endif
         }
     }
