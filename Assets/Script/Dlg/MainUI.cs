@@ -1,0 +1,158 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+public class MainUI : MonoBehaviour
+{
+    public static MainUI Instance;
+
+    [SerializeField] StoryEvent storyEvent;
+
+    // BottomUI
+    GameObject bottomObject;
+
+    Button backButton;
+
+    // StoryUI
+    GameObject nextObject, contextObject, selectListOneObject, selectListTwoObject, selectListThreeObject, selectListFourObject;
+
+    Button nextButtonBackGround, selectListOneButton, selectListTwoButton, selectListThreeButton, selectListFourButton;
+
+    Text backgroundText, nameText;
+
+    //
+    Story[] storys;
+    bool isStoryPlay = false;
+    bool isNext = false;
+    bool isNextStory = false;
+
+    int lineInext = 0;
+    int contextIndex = 0;
+    float textDelay = 0.05f;
+
+    IEnumerator storyCoroutine = null;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // Object
+        bottomObject  = GameObject.Find("BottomUI_Object");
+        nextObject    = GameObject.Find("Next_Object");
+        contextObject = GameObject.Find("Context_Object");
+
+        // Button
+        backButton           = GameObject.Find("BottomUI_Button_Back").GetComponent<Button>();
+        nextButtonBackGround = GameObject.Find("Next_Button_BackGround").GetComponent<Button>();
+
+        // Text
+        backgroundText = GameObject.Find("BackGround_Text").GetComponent<Text>();
+        nameText       = GameObject.Find("Name_Text").GetComponent<Text>();
+
+        // Add Event
+        backButton.onClick.AddListener(OnClick_BottomUI_Button_Back);
+        nextButtonBackGround.onClick.AddListener(OnClick_Next_Button_BackGround);
+
+        // temp Story
+        isNext = true;
+        isStoryPlay = true;
+        ShowStory(GetStory());
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (isStoryPlay){
+            if (isNext && isNextStory){
+                isNext = false;
+                isNextStory = false;
+
+                backgroundText.text = "";
+                nameText.text = "";
+
+                storyCoroutine = StoryPlayCoroutine();
+
+                if (++contextIndex < storys[lineInext].contexts.Length){
+                    StartCoroutine(storyCoroutine);
+                }
+                else {
+                    contextIndex = 0;
+                    if (++lineInext < storys.Length){
+                        StartCoroutine(storyCoroutine);
+                    }
+                    else {
+                        EndStory();
+                    }
+                }
+            }
+        }
+    }
+
+    public Story[] GetStory(){
+        int endIndex = CSVDataManager.Instance.GetEndIndex();
+
+        storyEvent.storys = CSVDataManager.Instance.GetStory(1, endIndex);
+
+        return storyEvent.storys;
+    }
+
+    void SetShowStory(bool pIsStoryShow){
+        bottomObject.SetActive(!pIsStoryShow);
+        nextObject.SetActive(pIsStoryShow);
+        contextObject.SetActive(pIsStoryShow);
+    }
+
+    void EndStory(){
+        isStoryPlay = false;
+        contextIndex = 0;
+        lineInext = 0;
+        storys = null;
+        isNext = false;
+
+        SetShowStory(false);
+    }
+
+    void ShowStory(Story[] pStorys){
+        SetShowStory(true);
+
+        backgroundText.text = "";
+        nameText.text = "";
+
+        storys = pStorys;
+
+        if (storyCoroutine != null){
+            storyCoroutine = null;            
+        }
+
+        storyCoroutine = StoryPlayCoroutine();
+        StartCoroutine(storyCoroutine);
+    }
+
+    IEnumerator StoryPlayCoroutine(){
+        string context = storys[lineInext].contexts[contextIndex];
+        
+        //context = backgroundText.Replace("", "");
+
+        nameText.text = storys[lineInext].characterName;
+
+        for (int i = 0 ; i < context.Length ; ++i){
+            backgroundText.text += context[i];   
+
+            yield return new WaitForSeconds(textDelay);
+            //backgroundText.text = context;
+        }
+
+        isNext = true;
+    }
+
+    void OnClick_BottomUI_Button_Back()
+    {
+        SceneManager.LoadScene("Title");
+    }
+
+    void OnClick_Next_Button_BackGround()
+    {
+        isNextStory = true;
+    }
+}
