@@ -20,9 +20,9 @@ public class AdMobBanner : MonoBehaviour
 #if UNITY_ANDROID
         adUnitId = "ca-app-pub-3940256099942544/6300978111";
 #elif UNITY_IOS
-adUnitId = "ca-app-pub-3940256099942544/2934735716";
+    adUnitId = "ca-app-pub-3940256099942544/2934735716";
 #else
-adUnitId = "unexpected_platform;
+    adUnitId = "unexpected_platform";
 #endif
 
         LoadAd();
