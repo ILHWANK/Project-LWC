@@ -57,14 +57,11 @@ namespace WHDle.Controller {
         // 초기화
         public void Initialize() => onPhase(introPhase);
 
-
         // introPhase변수에 맞는 초기화 로딩
         private void onPhase(IntroPhase phase)
         {
-            if (phase > IntroPhase.Login)
+            if (phase > IntroPhase.AfterLogin)
                 SetLoadStateGagueAfterLogin(phase);
-
-
 
             switch (phase)
             {
@@ -81,10 +78,20 @@ namespace WHDle.Controller {
                 case IntroPhase.VersionCheck:
                     ServerManager.Instance.CheckAppVersion();
                     break;
-                case IntroPhase.Login:
-                    title.EnableGoogleLoginButton();
+                case IntroPhase.BeforeLogin:
+                    title.BeforeLogin();
+                    break;
+                case IntroPhase.Register:
+                    title.EnableRegisterPanel();
+                    break;
+                case IntroPhase.AfterLogin:
+                    title.AfterLogin();
+                    break;
+                case IntroPhase.Save_Load:
+                    title.SaveLoadPanelEnable();
                     break;
                 case IntroPhase.StaticData:
+
                     break;
                 case IntroPhase.UserData:
                     break;
@@ -111,5 +118,8 @@ namespace WHDle.Controller {
                 onPhase(++introPhase);
             }
         }
+
+        public void SkipRegister()
+            => introPhase = IntroPhase.Register;
     }
 }

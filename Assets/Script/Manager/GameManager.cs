@@ -4,12 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WHDle.Controller;
+using WHDle.Util.Define;
 
 namespace WHDle.Util
 {
     public class GameManager : Singleton<GameManager>
     {
         public TitleController TitleController;
+
+        public LoginType loginType = LoginType.Null;
 
         protected override void Awake()
         {
@@ -25,11 +28,6 @@ namespace WHDle.Util
         public void Start()
         {
             TitleController?.Initialize();
-        }
-
-        public void Update()
-        {
-            
         }
 
         public void OnAplicationSetting()

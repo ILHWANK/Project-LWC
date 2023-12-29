@@ -11,12 +11,22 @@ namespace WHDle.Util.Define
         ApplicationSetting,
         ServerInit,
         VersionCheck,
-        Login,
+        BeforeLogin,
+        Register,
+        AfterLogin,
+        Save_Load,
         StaticData,
         UserData,
         Resource,
         UI,
         Complete
+    }
+
+    public enum LoginType
+    {
+        Null,
+        Google,
+        Guest
     }
 
     public class Define : MonoBehaviour

@@ -6,9 +6,16 @@ using UnityEngine.SceneManagement;
 using BackEnd;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+using WHDle.Util;
+using TMPro;
+using WHDle.Util.Define;
+using WHDle.Server;
 
 public class TitleDlg : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject saveLoadPanel;
+
     [SerializeField]
     Button newGameButton, loadGameButton, devCloseButton;
 
@@ -18,10 +25,17 @@ public class TitleDlg : MonoBehaviour
     [SerializeField]
     GameObject panelAnnouncement;
 
-    //TEST
     [SerializeField]
-    private Text text;
+    private GameObject registerPanel;
 
+    [SerializeField]
+    private GameObject errorPanel;
+
+    [SerializeField]
+    private Button googleRegisterButton, guestRegisterButton;
+
+    [SerializeField]
+    private TMP_Text errorText;
 
     // Start is called before the first frame update
     void Start()
@@ -32,11 +46,6 @@ public class TitleDlg : MonoBehaviour
         devCloseButton.onClick.AddListener(OnClick_Announcement_Button_Close);
 
         EnablePanelAnnouncement(false);
-
-        newGameButton.interactable = true;
-        loadGameButton.interactable = true;
-        devCloseButton.interactable = true;
-        googleLoginButton.interactable = false;
 
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration
         .Builder()
@@ -50,13 +59,6 @@ public class TitleDlg : MonoBehaviour
 
         PlayGamesPlatform.Activate();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void EnablePanelAnnouncement(bool pBool)
     {
         panelAnnouncement.SetActive(pBool);
@@ -77,47 +79,162 @@ public class TitleDlg : MonoBehaviour
         EnablePanelAnnouncement(false);
     }
 
-    public void EnableGoogleLoginButton() => googleLoginButton.interactable = true;
 
-    public void GoogleLogin()
+    #region Before Login
+
+    public void BeforeLogin()
     {
-        Social.localUser.Authenticate((bool success) =>
+        if (PlayGamesPlatform.Instance.localUser.authenticated)
         {
-            Debug.Log($"success = {success}");
+            GameManager.Instance.loginType = LoginType.Google;
+            SkipRegister();
 
-            if (!success)
-            {
-                Debug.LogError("Failure reason: ");
-            }
-        });
+            return;
+        }
 
-        Backend.BMember.AuthorizeFederation(getToken(true), FederationType.Google, callback =>
+        var guestId = Backend.BMember.GetGuestID();
+
+        if (guestId != null && guestId != string.Empty)
         {
-            if (callback.IsSuccess())
+            GameManager.Instance.loginType = LoginType.Guest;
+            SkipRegister();
+
+            return;
+        }
+
+        GameManager.Instance.TitleController.LoadComplete = true;
+    }
+
+    private void SkipRegister()
+    {
+        GameManager.Instance.TitleController.SkipRegister();
+        GameManager.Instance.TitleController.LoadComplete = true;
+
+        ServerManager.Instance.isFirstLogin = false;
+    }
+
+    #endregion
+
+    #region Register
+
+    public void EnableRegisterPanel()
+    {
+        registerPanel.gameObject.SetActive(true);
+
+#if UNITY_EDITOR
+        googleRegisterButton.interactable = false;
+#endif
+    }
+
+    #endregion
+
+    #region Button Function
+    public void RegisterGoogle()
+    {
+        Social.localUser.Authenticate((bool success) => 
+        {
+            if (success)
             {
-                text.text = "LOGIN SUCCESS";
+                GameManager.Instance.TitleController.LoadComplete = true;
+                GameManager.Instance.loginType = LoginType.Google;
             }
             else
             {
-                text.text = $"localUser = {PlayGamesPlatform.Instance.localUser}\n" 
-                                + $"authenticated = {PlayGamesPlatform.Instance.localUser.authenticated}\n"
-                                + $"token = {PlayGamesPlatform.Instance.GetIdToken()}"; 
+                errorText.text = "구글 회원가입 실패";
+
+                enableErrorPanel();
             }
         });
     }
 
-    private string getToken(bool isFirst)
+    public void RegisterGuest()
+    {
+        GameManager.Instance.TitleController.LoadComplete = true;
+        GameManager.Instance.loginType = LoginType.Guest;
+    }
+
+    #endregion
+
+    #region AfterLogin
+
+    public void AfterLogin()
+    {
+        registerPanel.gameObject.SetActive(false);
+
+        switch (GameManager.Instance.loginType)
+        {
+            case LoginType.Google:
+                googleLogin();
+                break;
+            case LoginType.Guest:
+                guestLogin();
+                break;
+        }
+    }
+
+    private void googleLogin()
+    {
+        Backend.BMember.AuthorizeFederation(getToken(), FederationType.Google, callback =>
+        {
+            if (callback.IsSuccess())
+            {
+                GameManager.Instance.TitleController.LoadComplete = true;
+            }
+            else
+            {
+                errorText.text = "구글 로그인 에러!";
+                enableErrorPanel();
+            }
+        });
+    }
+
+    private void guestLogin()
+    {
+        Backend.BMember.GuestLogin("GuestLogin", callback =>
+        {
+            if (callback.IsSuccess())
+            {
+                GameManager.Instance.TitleController.LoadComplete = true;
+            }
+            else
+            {
+                errorText.text = "게스트 로그인 에러!";
+                enableErrorPanel();
+            }
+        });
+    }
+
+    #endregion
+
+    #region Save_Load
+
+    public void SaveLoadPanelEnable()
+    {
+        saveLoadPanel.gameObject.SetActive(true);
+    }
+
+    #endregion
+
+    #region Error
+    private void enableErrorPanel()
+    {
+        errorPanel.SetActive(true);
+    }
+
+    #endregion
+
+    private string getToken()
     {
         if (PlayGamesPlatform.Instance.localUser.authenticated)
         {
             string _IDtoken = PlayGamesPlatform.Instance.GetIdToken();
 
+            if (ServerManager.Instance.isFirstLogin && _IDtoken.Length <= 0)
+                _IDtoken = PlayGamesPlatform.Instance.GetIdToken();
+
             return _IDtoken;
         }
-        else
-        {
-            var token = isFirst ? getToken(false) : null;
-            return token;
-        }
+
+        return string.Empty;
     }
 }
