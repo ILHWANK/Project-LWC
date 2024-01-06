@@ -10,16 +10,24 @@ public class MainUI : MonoBehaviour
 
     [SerializeField] StoryEvent storyEvent;
 
+    [SerializeField]
     // BottomUI
     GameObject bottomObject;
 
+    [SerializeField] 
     Button backButton;
 
+    [SerializeField]
+    GameObject interactionObject;
+
     // StoryUI
+    [SerializeField]
     GameObject nextObject, contextObject, selectListOneObject, selectListTwoObject, selectListThreeObject, selectListFourObject;
 
+    [SerializeField] 
     Button nextButtonBackGround, selectListOneButton, selectListTwoButton, selectListThreeButton, selectListFourButton;
 
+    [SerializeField] 
     Text backgroundText, nameText;
 
     //
@@ -38,21 +46,24 @@ public class MainUI : MonoBehaviour
     void Start()
     {
         // Object
-        bottomObject  = GameObject.Find("BottomUI_Object");
-        nextObject    = GameObject.Find("Next_Object");
-        contextObject = GameObject.Find("Context_Object");
+        //bottomObject  = GameObject.Find("BottomUI_Object");
+        //nextObject    = GameObject.Find("Next_Object");
+        //contextObject = GameObject.Find("Context_Object");
 
         // Button
-        backButton           = GameObject.Find("BottomUI_Button_Back").GetComponent<Button>();
-        nextButtonBackGround = GameObject.Find("Next_Button_BackGround").GetComponent<Button>();
+        //backButton           = GameObject.Find("BottomUI_Button_Back").GetComponent<Button>();
+        //nextButtonBackGround = GameObject.Find("Next_Button_BackGround").GetComponent<Button>();
 
         // Text
-        backgroundText = GameObject.Find("BackGround_Text").GetComponent<Text>();
-        nameText       = GameObject.Find("Name_Text").GetComponent<Text>();
+        //backgroundText = contextObject.Find("BackGround_Text").GetComponent<Text>();
+        //nameText       = contextObject.Find("Name_Text").GetComponent<Text>();
 
         // Add Event
         backButton.onClick.AddListener(OnClick_BottomUI_Button_Back);
         nextButtonBackGround.onClick.AddListener(OnClick_Next_Button_BackGround);
+
+        // Set
+        SetShowStory(false);
 
         // temp Story
         isNext = true;
