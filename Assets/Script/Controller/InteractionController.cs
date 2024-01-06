@@ -11,35 +11,70 @@ public class InteractionController : MonoBehaviour
     [SerializeField] 
     Button interactionButton;
 
-    RaycastHit hitInfo;
-
+    bool isTrigger = false;
     bool isCollide = false;
+    bool isInteraction = false;
 
-    // Update is called once per frame
-    void Update()
+    // Joystick
+    public FixedJoystick joy;
+    public float speed;
+    
+    Rigidbody2D rb;
+    Vector2 moveVec;
+
+    void Awake()
     {
-        CheckCollide();
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    void CheckCollide(){
-        Vector3 touchPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+    void Start(){
+        interactionButton.interactable = false;
+    }
 
-        if (Physics.Raycast(mainCamera.ScreenPointToRay(touchPosition), out hitInfo, 100)){
-            Collide();
-            Debug.Log("Ture : " + touchPosition);
+    void FixedUpdate()
+    {
+        float x = joy.Horizontal;
+        float y = joy.Vertical;
+
+        // Move Position 
+        moveVec = new Vector2(x, y) * speed * Time.fixedDeltaTime;              
+        rb.MovePosition(rb.position + moveVec);
+                
+        if (moveVec.sqrMagnitude == 0)
+            return; 
+    }
+
+    void Update()
+    {
+        if(isCollide && Input.GetKeyDown(KeyCode.F)){
+            Debug.Log("확인용");
+        }
+    }
+
+    void LateUpdate()
+    {
+        //
+    }
+
+    private void OnTriggerEnter2D(Collider2D other){
+        if (other != null){
+            Collide(other);
         }
         else{
             NotCollide();
-            Debug.Log("False : " +touchPosition);
-        }
+        } 
     }
 
-    void Collide(){
-        if(hitInfo.transform.CompareTag("Interaction")){
+    private void OnTriggerExit2D(Collider2D other){
+        NotCollide();
+    }
+
+    void Collide(Collider2D pCollider2D){
+        if (pCollider2D.gameObject.tag == "Interaction"){
             if(!isCollide){
                 isCollide = true;
-                interactionButton.interactable = true;
                 interactionButton.interactable = false;
+                interactionButton.interactable = true;
             }
         }
         else{
@@ -50,8 +85,8 @@ public class InteractionController : MonoBehaviour
     void NotCollide(){
         if(isCollide){
             isCollide = false;
-            interactionButton.interactable = false;
             interactionButton.interactable = true;
+            interactionButton.interactable = false;
         }
     }
 }

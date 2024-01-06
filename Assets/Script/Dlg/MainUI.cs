@@ -15,7 +15,7 @@ public class MainUI : MonoBehaviour
     GameObject bottomObject;
 
     [SerializeField] 
-    Button backButton;
+    Button interactionButton, backButton;
 
     [SerializeField]
     GameObject interactionObject;
@@ -45,30 +45,13 @@ public class MainUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Object
-        //bottomObject  = GameObject.Find("BottomUI_Object");
-        //nextObject    = GameObject.Find("Next_Object");
-        //contextObject = GameObject.Find("Context_Object");
-
-        // Button
-        //backButton           = GameObject.Find("BottomUI_Button_Back").GetComponent<Button>();
-        //nextButtonBackGround = GameObject.Find("Next_Button_BackGround").GetComponent<Button>();
-
-        // Text
-        //backgroundText = contextObject.Find("BackGround_Text").GetComponent<Text>();
-        //nameText       = contextObject.Find("Name_Text").GetComponent<Text>();
-
         // Add Event
+        interactionButton.onClick.AddListener(OnClick_ButtonUI_Button_Interaction);
         backButton.onClick.AddListener(OnClick_BottomUI_Button_Back);
         nextButtonBackGround.onClick.AddListener(OnClick_Next_Button_BackGround);
 
         // Set
         SetShowStory(false);
-
-        // temp Story
-        isNext = true;
-        isStoryPlay = true;
-        ShowStory(GetStory());
     }
 
     // Update is called once per frame
@@ -155,6 +138,14 @@ public class MainUI : MonoBehaviour
         }
 
         isNext = true;
+    }
+
+    void OnClick_ButtonUI_Button_Interaction()
+    {
+        // temp Story
+        isNext = true;
+        isStoryPlay = true;
+        ShowStory(GetStory());
     }
 
     void OnClick_BottomUI_Button_Back()
