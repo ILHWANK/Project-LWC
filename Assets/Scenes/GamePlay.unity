@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 30512943}
   - component: {fileID: 30512942}
   m_Layer: 0
-  m_Name: ButtonUI_Text_Interaction
+  m_Name: BottonUI_Text_Interaction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -416,6 +416,7 @@ GameObject:
   m_Component:
   - component: {fileID: 235201597}
   - component: {fileID: 235201596}
+  - component: {fileID: 235201602}
   - component: {fileID: 235201599}
   - component: {fileID: 235201601}
   - component: {fileID: 235201600}
@@ -507,8 +508,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 274301226}
   interactionButton: {fileID: 1115445568}
-  joy: {fileID: 374546563}
-  speed: 2
 --- !u!50 &235201600
 Rigidbody2D:
   serializedVersion: 4
@@ -556,6 +555,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.4, y: 2.4}
   m_EdgeRadius: 0
+--- !u!114 &235201602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235201595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b249398025c074beb802b6367b7da608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joy: {fileID: 374546563}
+  speed: 2
 --- !u!1 &274301224
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,6 +937,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1681279881}
     m_Modifications:
+    - target: {fileID: 2929252283123773937, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 48c0d4d6bebaa934384b07aa1e2f8184, type: 3}
     - target: {fileID: 2929252283123773938, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1026,8 +1043,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2929252283123773939, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_Name
-      value: Fixed Joystick
+      value: BottomUI_Joystick_Fixed
       objectReference: {fileID: 0}
+    - target: {fileID: 2929252285020697097, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
+      propertyPath: m_Name
+      value: BottomUI_Joystick_Handle
+      objectReference: {fileID: 0}
+    - target: {fileID: 2929252285020698103, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3a74f678ee8f3bd49aacf3de1ae4bcaa, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
 --- !u!224 &374546562 stripped
@@ -1934,7 +1959,7 @@ GameObject:
   m_Component:
   - component: {fileID: 996736817}
   m_Layer: 0
-  m_Name: ButtomUI_Object_Interaction
+  m_Name: BottomUI_Object_Interaction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2239,7 +2264,7 @@ GameObject:
   - component: {fileID: 1115445569}
   - component: {fileID: 1115445568}
   m_Layer: 0
-  m_Name: ButtonUI_Button_Interaction
+  m_Name: BottonUI_Button_Interaction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3316,6 +3341,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1463860092}
   - component: {fileID: 1463860091}
+  - component: {fileID: 1463860093}
   m_Layer: 0
   m_Name: MainUI
   m_TagString: Untagged
@@ -3335,14 +3361,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a34e9eded6b64778a87b8a2c0ff0055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storyEvent:
-    characterName: 
-    line: {x: 0, y: 0}
-    storys: []
+  storyManager: {fileID: 0}
   bottomObject: {fileID: 1681279880}
+  interactionObject: {fileID: 996736816}
   interactionButton: {fileID: 1115445568}
   backButton: {fileID: 1387216772}
-  interactionObject: {fileID: 996736816}
   nextObject: {fileID: 1596433652}
   contextObject: {fileID: 1317053143}
   selectListOneObject: {fileID: 2091527304}
@@ -3350,12 +3373,6 @@ MonoBehaviour:
   selectListThreeObject: {fileID: 1356626106}
   selectListFourObject: {fileID: 284963308}
   nextButtonBackGround: {fileID: 730344829}
-  selectListOneButton: {fileID: 0}
-  selectListTwoButton: {fileID: 0}
-  selectListThreeButton: {fileID: 0}
-  selectListFourButton: {fileID: 0}
-  backgroundText: {fileID: 286760926}
-  nameText: {fileID: 1354820002}
 --- !u!4 &1463860092
 Transform:
   m_ObjectHideFlags: 0
@@ -3373,6 +3390,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1463860093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463860090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e180474c4d0de450dab9bc2f75b4f06a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottomObject: {fileID: 1681279880}
+  nextObject: {fileID: 1596433652}
+  characterObject: {fileID: 1375023990}
+  contextObject: {fileID: 1317053143}
+  selectListOneObject: {fileID: 2091527304}
+  selectListTwoObject: {fileID: 1175383290}
+  selectListThreeObject: {fileID: 1356626106}
+  selectListFourObject: {fileID: 284963308}
+  nextButtonBackGround: {fileID: 730344829}
+  selectListOneButton: {fileID: 0}
+  selectListTwoButton: {fileID: 0}
+  selectListThreeButton: {fileID: 0}
+  selectListFourButton: {fileID: 0}
+  backgroundText: {fileID: 286760926}
+  nameText: {fileID: 1354820002}
+  storyEvent:
+    characterName: 
+    line: {x: 0, y: 0}
+    storys: []
 --- !u!1 &1513929302
 GameObject:
   m_ObjectHideFlags: 0

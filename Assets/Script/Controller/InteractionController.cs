@@ -15,45 +15,18 @@ public class InteractionController : MonoBehaviour
     bool isCollide = false;
     bool isInteraction = false;
 
-    // Joystick
-    public FixedJoystick joy;
-    public float speed;
-    
-    Rigidbody2D rb;
-    Vector2 moveVec;
-
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
+    StoryManager storyManager;
 
     void Start(){
+        storyManager = FindObjectOfType<StoryManager>();
         interactionButton.interactable = false;
-    }
-
-    void FixedUpdate()
-    {
-        float x = joy.Horizontal;
-        float y = joy.Vertical;
-
-        // Move Position 
-        moveVec = new Vector2(x, y) * speed * Time.fixedDeltaTime;              
-        rb.MovePosition(rb.position + moveVec);
-                
-        if (moveVec.sqrMagnitude == 0)
-            return; 
     }
 
     void Update()
     {
         if(isCollide && Input.GetKeyDown(KeyCode.F)){
-            Debug.Log("확인용");
+            storyManager.TempPlayStory();
         }
-    }
-
-    void LateUpdate()
-    {
-        //
     }
 
     private void OnTriggerEnter2D(Collider2D other){
