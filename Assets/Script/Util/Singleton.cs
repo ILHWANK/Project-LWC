@@ -39,7 +39,7 @@ namespace WHDle.Util
                 if (instance == null)
                     instance = this as T;
                 else
-                    Destroy(Instance);
+                    Destroy(gameObject);
             }
         }
 

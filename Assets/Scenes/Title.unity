@@ -249,6 +249,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &456841152
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 456841153}
+  m_Layer: 0
+  m_Name: StaticDataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &456841153
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456841152}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 567829363}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &537938493
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,6 +367,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2088548435}
+  - {fileID: 456841153}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -353,6 +385,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleController: {fileID: 221193221}
   loginType: 0
+  boUser:
+    boAccount:
+      UId: 
+      Nickname: 
+      Gold: 0
+      Day: 0
+  sd:
+    sdItems: []
+    sdItemNames: []
+    sdItemMaxAmounts: []
 --- !u!1 &617715237
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,7 +718,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 832810063}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 537938495}
+        m_TargetAssemblyTypeName: TitleDlg, Assembly-CSharp
+        m_MethodName: LoadNewGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &832810063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1517,7 +1571,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1420018568}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 537938495}
+        m_TargetAssemblyTypeName: TitleDlg, Assembly-CSharp
+        m_MethodName: LoadGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1420018568
 MonoBehaviour:
   m_ObjectHideFlags: 0

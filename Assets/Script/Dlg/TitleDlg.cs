@@ -40,9 +40,7 @@ public class TitleDlg : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Add Event
-        newGameButton.onClick.AddListener(OnClick_TitleDlg_Button_NewGame);
-        loadGameButton.onClick.AddListener(OnClick_TitleDlg_Button_LoadGame);
+
         devCloseButton.onClick.AddListener(OnClick_Announcement_Button_Close);
 
         EnablePanelAnnouncement(false);
@@ -59,14 +57,10 @@ public class TitleDlg : MonoBehaviour
 
         PlayGamesPlatform.Activate();
     }
+
     public void EnablePanelAnnouncement(bool pBool)
     {
         panelAnnouncement.SetActive(pBool);
-    }
-
-    public void OnClick_TitleDlg_Button_NewGame()
-    {
-        SceneManager.LoadScene("Loading");     
     }
 
     public void OnClick_TitleDlg_Button_LoadGame()
@@ -210,7 +204,22 @@ public class TitleDlg : MonoBehaviour
 
     public void SaveLoadPanelEnable()
     {
-        saveLoadPanel.gameObject.SetActive(true);
+        saveLoadPanel.SetActive(true);
+
+        loadGameButton.interactable = !ServerManager.Instance.isFirstLogin;
+    }
+
+    public void LoadNewGame()
+    {
+        ServerManager.Instance.isFirstLogin = true;
+        LoadGame();
+    }
+
+    public void LoadGame()
+    {
+        saveLoadPanel.SetActive(false);
+
+        GameManager.Instance.TitleController.LoadComplete = true;
     }
 
     #endregion

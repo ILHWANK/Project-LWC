@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
+using WHDle.Database;
 using WHDle.Server;
+using WHDle.Stage;
 using WHDle.Util;
 using WHDle.Util.Define;
 
@@ -88,18 +90,21 @@ namespace WHDle.Controller {
                     title.AfterLogin();
                     break;
                 case IntroPhase.Save_Load:
+                    ServerManager.Instance.CheckIsFirstLogin();
+
                     title.SaveLoadPanelEnable();
                     break;
                 case IntroPhase.StaticData:
-
+                    GameManager.SD.Initialize();
                     break;
                 case IntroPhase.UserData:
-                    break;
-                case IntroPhase.Resource:
-                    break;
-                case IntroPhase.UI:
+                    DatabaseManager.Instance.LoaduserData(() => LoadComplete = true);
                     break;
                 case IntroPhase.Complete:
+                    var stageManager = StageManager.Instance;
+                    GameManager.Instance.LoadScene(SceneType.GamePlay, stageManager.ChangeStage(), stageManager.OnChangeStageComplete);
+                    allLoaded = true;
+                    LoadComplete = true;
                     break;
                 default:
                     break;

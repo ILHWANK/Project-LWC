@@ -17,8 +17,6 @@ namespace WHDle.Util.Define
         Save_Load,
         StaticData,
         UserData,
-        Resource,
-        UI,
         Complete
     }
 
@@ -28,6 +26,41 @@ namespace WHDle.Util.Define
         Google,
         Guest
     }
+
+    public enum SDType
+    {
+        Item,
+        ItemMaxAmount,
+        ItemName,
+        End
+    }
+
+    public enum Language
+    {
+        English,
+        Korean
+    }
+
+    public enum ItemType
+    {
+        Expendables,
+        Crops
+    }
+
+    public enum SubType
+    {
+        NULL,
+        Seed
+    }
+
+    public enum SceneType
+    {
+        Title,
+        Loading,
+        GamePlay
+    }
+
+    public enum DeserializeType { SD, DTO, DefineDtoByBackend }
 
     public class Define : MonoBehaviour
     {
