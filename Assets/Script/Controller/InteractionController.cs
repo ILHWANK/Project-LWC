@@ -46,7 +46,6 @@ public class InteractionController : MonoBehaviour
         if (pCollider2D.gameObject.tag == "Interaction"){
             if(!isCollide){
                 isCollide = true;
-                interactionButton.interactable = false;
                 interactionButton.interactable = true;
             }
         }
@@ -58,7 +57,6 @@ public class InteractionController : MonoBehaviour
     void NotCollide(){
         if(isCollide){
             isCollide = false;
-            interactionButton.interactable = true;
             interactionButton.interactable = false;
         }
     }
