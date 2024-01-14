@@ -123,16 +123,16 @@ public class StoryManager : MonoBehaviour
     {
         string context = storys[lineInext].contexts[contextIndex];
 
-        //context = backgroundText.Replace("", "");
+        context = context.Replace("\\", ",");
 
         nameText.text = storys[lineInext].characterName;
 
         for (int i = 0; i < context.Length; ++i)
         {
             backgroundText.text += context[i];
+            //backgroundText.text = context;
 
             yield return new WaitForSeconds(textDelay);
-            //backgroundText.text = context;
         }
 
         isNext = true;
@@ -158,6 +158,5 @@ public class StoryManager : MonoBehaviour
     void OnClick_Next_Button_BackGround()
     {
         SetIsNextStory();
-        //isNextStory = true;
     }
 }

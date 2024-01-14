@@ -420,6 +420,7 @@ GameObject:
   - component: {fileID: 235201599}
   - component: {fileID: 235201601}
   - component: {fileID: 235201600}
+  - component: {fileID: 235201603}
   m_Layer: 0
   m_Name: TempPlayer
   m_TagString: Untagged
@@ -468,7 +469,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 30ce75897951e1e4ca275eae3eb949bc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 30c3166c7a9a54a25a6cdfe9d3c77c17, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -488,7 +489,7 @@ Transform:
   m_GameObject: {fileID: 235201595}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1.75, y: 1.75, z: 1.75}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -546,14 +547,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.4, y: 2.4}
+    oldSize: {x: 0.48, y: 0.48}
     newSize: {x: 2.4, y: 2.4}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.4, y: 2.4}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
 --- !u!114 &235201602
 MonoBehaviour:
@@ -567,8 +568,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b249398025c074beb802b6367b7da608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joy: {fileID: 374546563}
-  speed: 2
+  joyStick: {fileID: 374546563}
+  speed: 1
+--- !u!95 &235201603
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235201595}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 89f11a6805eed4f4b8677cc11386331b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &274301224
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,6 +601,7 @@ GameObject:
   - component: {fileID: 274301227}
   - component: {fileID: 274301226}
   - component: {fileID: 274301225}
+  - component: {fileID: 274301228}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -653,6 +675,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &274301228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274301224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66526508b41ac44ee8ba8f2e0685750c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 235201595}
+  center: {x: 0, y: 0}
+  size: {x: 12, y: 12}
+  moveSpeed: 1
 --- !u!1 &284963308
 GameObject:
   m_ObjectHideFlags: 0
