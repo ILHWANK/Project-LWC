@@ -10,5 +10,6 @@ namespace WHDle.Database.BO
     public class BoUser : BoBase
     {
         public BoAccount boAccount;
+        public BoInventory boInventory;
     }
 }
