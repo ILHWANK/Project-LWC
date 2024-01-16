@@ -11,13 +11,56 @@ namespace WHDle.Util.Define
         ApplicationSetting,
         ServerInit,
         VersionCheck,
-        Login,
+        BeforeLogin,
+        Register,
+        AfterLogin,
+        Save_Load,
         StaticData,
         UserData,
-        Resource,
-        UI,
         Complete
     }
+
+    public enum LoginType
+    {
+        Null,
+        Google,
+        Guest
+    }
+
+    public enum SDType
+    {
+        Item,
+        ItemMaxAmount,
+        ItemName,
+        End
+    }
+
+    public enum Language
+    {
+        English,
+        Korean
+    }
+
+    public enum ItemType
+    {
+        Expendables,
+        Crops
+    }
+
+    public enum SubType
+    {
+        NULL,
+        Seed
+    }
+
+    public enum SceneType
+    {
+        Title,
+        Loading,
+        GamePlay
+    }
+
+    public enum DeserializeType { SD, DTO, DefineDtoByBackend }
 
     public class Define : MonoBehaviour
     {
