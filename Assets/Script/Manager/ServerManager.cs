@@ -1,12 +1,13 @@
 using WHDle.Util;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using BackEnd;
+using GooglePlayGames.BasicApi;
+using GooglePlayGames;
 
 namespace WHDle.Server
 {
-    using Database;
-    using WHDle.Database.Dto;
-
     public class ServerManager : Singleton<ServerManager>
     {
         // 처음 로그인 하는지 확인하는 변수
@@ -35,6 +36,7 @@ namespace WHDle.Server
             {
                 // 비동기 호출을 사용하기 위해 AysncPoll를 호출합니다.
                 Backend.AsyncPoll();
+
 
                 // SendQueue의 초기화가 완료되었는지 확인합니다.
                 if (SendQueue.IsInitialize)
@@ -79,15 +81,6 @@ namespace WHDle.Server
             // 추후 버전 관리가 들어갈 때 제작하겠습니다.
             GameManager.Instance.TitleController.LoadComplete = true;
 #endif
-        }
-
-        public void CheckIsFirstLogin()
-        {
-            var chart =  Backend.GameData.GetMyData("Account", new Where(), 10);
-
-            var jsonData = chart.GetReturnValuetoJSON();
-
-            isFirstLogin = (jsonData["rows"].Count == 0) ? true : false;
         }
     }
 }

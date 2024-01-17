@@ -6,16 +6,9 @@ using UnityEngine.SceneManagement;
 using BackEnd;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
-using WHDle.Util;
-using TMPro;
-using WHDle.Util.Define;
-using WHDle.Server;
 
 public class TitleDlg : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject saveLoadPanel;
-
     [SerializeField]
     Button newGameButton, loadGameButton, devCloseButton;
 
@@ -25,25 +18,25 @@ public class TitleDlg : MonoBehaviour
     [SerializeField]
     GameObject panelAnnouncement;
 
+    //TEST
     [SerializeField]
-    private GameObject registerPanel;
+    private Text text;
 
-    [SerializeField]
-    private GameObject errorPanel;
-
-    [SerializeField]
-    private Button googleRegisterButton, guestRegisterButton;
-
-    [SerializeField]
-    private TMP_Text errorText;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        //Add Event
+        newGameButton.onClick.AddListener(OnClick_TitleDlg_Button_NewGame);
+        loadGameButton.onClick.AddListener(OnClick_TitleDlg_Button_LoadGame);
         devCloseButton.onClick.AddListener(OnClick_Announcement_Button_Close);
 
         EnablePanelAnnouncement(false);
+
+        newGameButton.interactable = true;
+        loadGameButton.interactable = true;
+        devCloseButton.interactable = true;
+        googleLoginButton.interactable = false;
 
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration
         .Builder()
@@ -58,9 +51,20 @@ public class TitleDlg : MonoBehaviour
         PlayGamesPlatform.Activate();
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
     public void EnablePanelAnnouncement(bool pBool)
     {
         panelAnnouncement.SetActive(pBool);
+    }
+
+    public void OnClick_TitleDlg_Button_NewGame()
+    {
+        SceneManager.LoadScene("Loading");     
     }
 
     public void OnClick_TitleDlg_Button_LoadGame()
@@ -73,177 +77,47 @@ public class TitleDlg : MonoBehaviour
         EnablePanelAnnouncement(false);
     }
 
+    public void EnableGoogleLoginButton() => googleLoginButton.interactable = true;
 
-    #region Before Login
-
-    public void BeforeLogin()
+    public void GoogleLogin()
     {
-        if (PlayGamesPlatform.Instance.localUser.authenticated)
+        Social.localUser.Authenticate((bool success) =>
         {
-            GameManager.Instance.loginType = LoginType.Google;
-            SkipRegister();
+            Debug.Log($"success = {success}");
 
-            return;
-        }
-
-        var guestId = Backend.BMember.GetGuestID();
-
-        if (guestId != null && guestId != string.Empty)
-        {
-            GameManager.Instance.loginType = LoginType.Guest;
-            SkipRegister();
-
-            return;
-        }
-
-        GameManager.Instance.TitleController.LoadComplete = true;
-    }
-
-    private void SkipRegister()
-    {
-        GameManager.Instance.TitleController.SkipRegister();
-        GameManager.Instance.TitleController.LoadComplete = true;
-
-        ServerManager.Instance.isFirstLogin = false;
-    }
-
-    #endregion
-
-    #region Register
-
-    public void EnableRegisterPanel()
-    {
-        registerPanel.gameObject.SetActive(true);
-
-#if UNITY_EDITOR
-        googleRegisterButton.interactable = false;
-#endif
-    }
-
-    #endregion
-
-    #region Button Function
-    public void RegisterGoogle()
-    {
-        Social.localUser.Authenticate((bool success) => 
-        {
-            if (success)
+            if (!success)
             {
-                GameManager.Instance.TitleController.LoadComplete = true;
-                GameManager.Instance.loginType = LoginType.Google;
-            }
-            else
-            {
-                errorText.text = "구글 회원가입 실패";
-
-                enableErrorPanel();
+                Debug.LogError("Failure reason: ");
             }
         });
-    }
 
-    public void RegisterGuest()
-    {
-        GameManager.Instance.TitleController.LoadComplete = true;
-        GameManager.Instance.loginType = LoginType.Guest;
-    }
-
-    #endregion
-
-    #region AfterLogin
-
-    public void AfterLogin()
-    {
-        registerPanel.gameObject.SetActive(false);
-
-        switch (GameManager.Instance.loginType)
-        {
-            case LoginType.Google:
-                googleLogin();
-                break;
-            case LoginType.Guest:
-                guestLogin();
-                break;
-        }
-    }
-
-    private void googleLogin()
-    {
-        Backend.BMember.AuthorizeFederation(getToken(), FederationType.Google, callback =>
+        Backend.BMember.AuthorizeFederation(getToken(true), FederationType.Google, callback =>
         {
             if (callback.IsSuccess())
             {
-                GameManager.Instance.TitleController.LoadComplete = true;
+                text.text = "LOGIN SUCCESS";
             }
             else
             {
-                errorText.text = "구글 로그인 에러!";
-                enableErrorPanel();
+                text.text = $"localUser = {PlayGamesPlatform.Instance.localUser}\n" 
+                                + $"authenticated = {PlayGamesPlatform.Instance.localUser.authenticated}\n"
+                                + $"token = {PlayGamesPlatform.Instance.GetIdToken()}"; 
             }
         });
     }
 
-    private void guestLogin()
-    {
-        Backend.BMember.GuestLogin("GuestLogin", callback =>
-        {
-            if (callback.IsSuccess())
-            {
-                GameManager.Instance.TitleController.LoadComplete = true;
-            }
-            else
-            {
-                errorText.text = "게스트 로그인 에러!";
-                enableErrorPanel();
-            }
-        });
-    }
-
-    #endregion
-
-    #region Save_Load
-
-    public void SaveLoadPanelEnable()
-    {
-        saveLoadPanel.SetActive(true);
-
-        loadGameButton.interactable = !ServerManager.Instance.isFirstLogin;
-    }
-
-    public void LoadNewGame()
-    {
-        ServerManager.Instance.isFirstLogin = true;
-        LoadGame();
-    }
-
-    public void LoadGame()
-    {
-        saveLoadPanel.SetActive(false);
-
-        GameManager.Instance.TitleController.LoadComplete = true;
-    }
-
-    #endregion
-
-    #region Error
-    private void enableErrorPanel()
-    {
-        errorPanel.SetActive(true);
-    }
-
-    #endregion
-
-    private string getToken()
+    private string getToken(bool isFirst)
     {
         if (PlayGamesPlatform.Instance.localUser.authenticated)
         {
             string _IDtoken = PlayGamesPlatform.Instance.GetIdToken();
 
-            if (ServerManager.Instance.isFirstLogin && _IDtoken.Length <= 0)
-                _IDtoken = PlayGamesPlatform.Instance.GetIdToken();
-
             return _IDtoken;
         }
-
-        return string.Empty;
+        else
+        {
+            var token = isFirst ? getToken(false) : null;
+            return token;
+        }
     }
 }
