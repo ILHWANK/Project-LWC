@@ -1,18 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoItem : MonoBehaviour
+namespace WHDle.Database.BO
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    using SD;
 
-    // Update is called once per frame
-    void Update()
+    [Serializable]
+    public class BoItem : BoBase
     {
-        
+        public SDItem SDItem;
+        public int Amount;
     }
 }
