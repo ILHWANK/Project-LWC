@@ -27,17 +27,11 @@ namespace WHDle.Database {
             }
 
             var user = GameManager.User;
-            InitCompleteCount(2);
+            InitCompleteCount(1);
 
             ReadMyData<DtoAccount>(dtoAccount =>
             {
                 user.boAccount = new BoAccount(dtoAccount);
-                CheckCompleteCount(complete);
-            });
-
-            ReadMyData<DtoInventory>(dtoInventory =>
-            {
-                user.boInventory = new BoInventory(dtoInventory);
                 CheckCompleteCount(complete);
             });
         }
@@ -46,7 +40,7 @@ namespace WHDle.Database {
         {
             var user = GameManager.User;
 
-            InitCompleteCount(2);
+            InitCompleteCount(1);
 
             InitUserAccount();
 
@@ -59,14 +53,6 @@ namespace WHDle.Database {
                 WriteMyData(dtoAccount, new Where(), () =>
                 {
                     user.boAccount = new BoAccount(dtoAccount);
-                    CheckCompleteCount(complete);
-                });
-
-                var dtoInventory = new DtoInventory { ItemAmounts = string.Empty, ItemIndexes = string.Empty };
-
-                WriteMyData(dtoInventory, new Where(), () =>
-                {
-                    user.boInventory = new BoInventory(dtoInventory);
                     CheckCompleteCount(complete);
                 });
             }
