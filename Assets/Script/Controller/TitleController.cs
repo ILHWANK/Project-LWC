@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Resources;
 using Unity.Collections;
 using UnityEngine;
 using WHDle.Database;
@@ -99,6 +100,9 @@ namespace WHDle.Controller {
                     break;
                 case IntroPhase.UserData:
                     DatabaseManager.Instance.LoaduserData(() => LoadComplete = true);
+                    break;
+                case IntroPhase.PoolableObject:
+                    ResourcesManager.Instance.RegistAllPoolableObject();
                     break;
                 case IntroPhase.Complete:
                     var stageManager = StageManager.Instance;

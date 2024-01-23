@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WHDle.Database.BO
+namespace WHDle.Database.Vo
 {
     [Serializable]
-    public class BoUser : BoBase
+    public class VOUser : VOBase
     {
-        public BoAccount boAccount;
-        public BoInventory boInventory;
+        public VOAccount VoAccount;
+        public VOInventory VoInventory;
     }
 }

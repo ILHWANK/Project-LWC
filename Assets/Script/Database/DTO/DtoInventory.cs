@@ -11,24 +11,38 @@ namespace WHDle.Database.Dto
     [SerializeField]
     public class DtoInventory : DtoBase
     {
-        public string ItemIndexes;
-        public string ItemAmounts;
+        public string MakeItemIndexes;
+        public string MakeItemAmounts;
+
+        public string PlaceItemIndexes;
+        public string PlaceItemAmounts;
 
         public DtoInventory()
         {
-            var boInventory = GameManager.User.boInventory;
+            var voInventory = GameManager.User.VoInventory;
 
-            if (boInventory == null)
+            if (voInventory == null)
             {
-                this.ItemIndexes = string.Empty;
-                this.ItemAmounts = string.Empty;
+                this.MakeItemIndexes = string.Empty;
+                this.MakeItemAmounts = string.Empty;
+
+                this.PlaceItemIndexes = string.Empty;
+                this.PlaceItemAmounts = string.Empty;
+
+                return;
             }
 
-            int[] ItemIndexes = boInventory.Items.Select(item => item.SDItem.ItemIndex).ToArray();
-            int[] ItemAmounts = boInventory.Items.Select(item => item.Amount).ToArray();
+            var MakeItemIndexes = voInventory.voMake.Select(vm => vm.sdMake.MakeItemNumber).ToList();
+            var MakeItemAmounts = voInventory.voMake.Select(vm => vm.ItemAmount).ToList();
 
-            this.ItemIndexes = JsonMapper.ToJson(ItemIndexes);
-            this.ItemAmounts = JsonMapper.ToJson(ItemAmounts);
+            var PlaceItemIndexes = voInventory.voPlaceItem.Select(vpi => vpi.sdPlaceItem.PlaceItemNumber).ToList();
+            var PlaceItemAmounts = voInventory.voPlaceItem.Select(vpi => vpi.ItemAmount).ToList();
+
+            this.MakeItemIndexes = JsonMapper.ToJson(MakeItemIndexes);
+            this.MakeItemAmounts = JsonMapper.ToJson(MakeItemAmounts);
+
+            this.PlaceItemIndexes = JsonMapper.ToJson(PlaceItemIndexes);
+            this.PlaceItemAmounts = JsonMapper.ToJson(PlaceItemAmounts);
         }
     }
 }

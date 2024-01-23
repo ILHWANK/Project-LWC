@@ -26,7 +26,7 @@ namespace WHDle.Util
 
                 if(!isExists)
                 {
-                    GameManager.Log($"### {identifier} Field of {typeof(T).Name} is Not Exist ###");
+                    GameManager.ErrorLog($"### {identifier} Field of {typeof(T).Name} is Not Exist ###");
                     continue;
                 }
 
@@ -41,7 +41,7 @@ namespace WHDle.Util
                 }
                 catch(Exception ex)
                 {
-                    GameManager.Log($"### Access a Key in {field.Name} Field in {typeof(T).Name} Failed ###\n {ex}");
+                    GameManager.ErrorLog($"### Access a Key in {field.Name} Field in {typeof(T).Name} Failed ###\n {ex}");
                 }
             }
 
@@ -105,7 +105,7 @@ namespace WHDle.Util
             }
             catch (Exception ex)
             {
-                Debug.Log($"{ex}");
+                Debug.LogError($"Field Set Faild = {type.Name}");
             }
         }
 
