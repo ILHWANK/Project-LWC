@@ -7,6 +7,10 @@ using WHDle.Util;
 namespace WHDle.UI.Inventory
 {
     using Util.Define;
+    using WHDle.Database.Dto;
+    using WHDle.Database.Vo;
+    using WHDle.Database;
+
     public class Inventory : MonoBehaviour
     {
         [SerializeField]
@@ -36,7 +40,7 @@ namespace WHDle.UI.Inventory
         {
             inventoryObject.SetActive(false);
 
-            GameManager.User.VoInventory.TempAdd();
+            TempAdd();
             isUpdate = true;
         }
 
@@ -55,7 +59,7 @@ namespace WHDle.UI.Inventory
 
             currentSlotCount = slotCount;
 
-            SetItems();
+            /*SetItems();*/
         }
 
         private void AddSlot(int slotCount)
@@ -85,7 +89,7 @@ namespace WHDle.UI.Inventory
             foreach(var s in slot)
             {
                 s.gameObject.SetActive(false);
-                s.transform.parent = pools.holder;
+                s.transform.SetParent(pools.holder);
                 slots.Remove(s);
             }
                 
@@ -110,12 +114,30 @@ namespace WHDle.UI.Inventory
 
             for(int i = vmCount; i < vmCount + voPlaceItems.Count; i++)
             {
-                var vp = voPlaceItems[i - vmCount];
+                var index = i - vmCount;
 
-                slots[i].SetSprite(vp);
-                slots[i].SetAmount(vp.ItemAmount);
+                var vp = voPlaceItems[i];
+
+                slots[index].SetSprite(vp);
+                slots[index].SetAmount(vp.ItemAmount);
             }
+        }
 
+        public void TempAdd()
+        {
+            var voInventory = GameManager.User.VoInventory;
+
+            voInventory.voPlaceItem.Add(new(GameManager.SD.sdPlaceItems[0].PlaceItemNumber, 10));
+            voInventory.voPlaceItem.Add(new(GameManager.SD.sdPlaceItems[1].PlaceItemNumber, 20));
+            voInventory.voPlaceItem.Add(new(GameManager.SD.sdPlaceItems[2].PlaceItemNumber, 30));
+
+            voInventory.voMake.Add(new(GameManager.SD.sdMakes[0].MakeItemNumber, 10));
+            voInventory.voMake.Add(new(GameManager.SD.sdMakes[1].MakeItemNumber, 20));
+            voInventory.voMake.Add(new(GameManager.SD.sdMakes[2].MakeItemNumber, 30));
+
+            voInventory.ItemSlotCount += 6;
+
+            DatabaseManager.Instance.UpdateMyData<DtoInventory>(SerializationUtil.DtoToParam(new DtoInventory()));
         }
     }
 }

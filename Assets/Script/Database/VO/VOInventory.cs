@@ -46,20 +46,5 @@ namespace WHDle.Database.Vo
                 voMake.Add(vm);
             }
         }
-
-        public void TempAdd()
-        {
-            voPlaceItem.Add(new(GameManager.SD.sdPlaceItems[0].PlaceItemNumber, 10));
-            voPlaceItem.Add(new(GameManager.SD.sdPlaceItems[1].PlaceItemNumber, 20));
-            voPlaceItem.Add(new(GameManager.SD.sdPlaceItems[2].PlaceItemNumber, 30));
-
-            voMake.Add(new(GameManager.SD.sdMakes[0].MakeItemNumber, 10));
-            voMake.Add(new(GameManager.SD.sdMakes[1].MakeItemNumber, 20));
-            voMake.Add(new(GameManager.SD.sdMakes[2].MakeItemNumber, 30));
-
-            ItemSlotCount = 6;
-
-            DatabaseManager.Instance.UpdateMyData<DtoInventory>(SerializationUtil.DtoToParam(new DtoInventory()));
-        }
     }
 }
