@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using WHDle.Controller;
-using WHDle.Database.BO;
 using WHDle.Database.SD;
+using WHDle.Database.Vo;
 using WHDle.Util.Define;
 
 namespace WHDle.Util
@@ -21,8 +21,8 @@ namespace WHDle.Util
         public LoginType loginType = LoginType.Null;
 
         [SerializeField]
-        private BoUser boUser;
-        public static BoUser User => Instance?.boUser;
+        private VOUser boUser;
+        public static VOUser User => Instance?.boUser;
 
         [SerializeField]
         private StaticDataModule sd = new();
@@ -91,5 +91,8 @@ namespace WHDle.Util
 
         public static void Log(string str)
             => Debug.Log($"{str}");
+
+        public static void ErrorLog(string str)
+            => Debug.LogError($"{str}");
     }
 }

@@ -10,7 +10,6 @@ namespace WHDle.Database.Dto
     public class DtoAccount : DtoBase
     {
         public string UId;
-        public string Nickname;
         public int Gold;
         public int Day;
     }

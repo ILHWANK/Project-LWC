@@ -7,6 +7,6 @@ namespace WHDle.Database.SD
     [Serializable]
     public class StaticBase
     {
-        /*public int id;*/
+        public int Index;
     }
 }

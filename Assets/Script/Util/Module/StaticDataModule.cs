@@ -12,9 +12,9 @@ namespace WHDle.Database.SD
     [Serializable]
     public class StaticDataModule
     {
-        public List<SDItem> sdItems = new();
-        public List<SDItemName> sdItemNames = new();
-        public List<SDItemMaxAmount> sdItemMaxAmounts = new();
+        public List<SDMake> sdMakes = new();
+        public List<SDPlace> sdPlaces = new();
+        public List<SDPlaceItem> sdPlaceItems = new();
 
         public void Initialize()
         {
@@ -79,14 +79,14 @@ namespace WHDle.Database.SD
 
                 switch (type)
                 {
-                    case SDType.Item:
-                        LoadData(dataId, module.sdItems);
+                    case SDType.Make:
+                        LoadData(dataId, module.sdMakes);
                         break;
-                    case SDType.ItemMaxAmount:
-                        LoadData(dataId, module.sdItemMaxAmounts);
+                    case SDType.Place:
+                        LoadData(dataId, module.sdPlaces);
                         break;
-                    case SDType.ItemName:
-                        LoadData(dataId, module.sdItemNames);
+                    case SDType.PlaceItem:
+                        LoadData(dataId, module.sdPlaceItems);
                         break;
                     case SDType.End:
                         break;

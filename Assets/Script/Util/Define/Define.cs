@@ -17,6 +17,7 @@ namespace WHDle.Util.Define
         Save_Load,
         StaticData,
         UserData,
+        PoolableObject,
         Complete
     }
 
@@ -29,9 +30,9 @@ namespace WHDle.Util.Define
 
     public enum SDType
     {
-        Item,
-        ItemMaxAmount,
-        ItemName,
+        Make,
+        Place,
+        PlaceItem,
         End
     }
 
@@ -43,14 +44,28 @@ namespace WHDle.Util.Define
 
     public enum ItemType
     {
-        Expendables,
-        Crops
+        P,
+        PI,
+        M
     }
 
-    public enum SubType
+    public enum PlaceLocation
     {
-        NULL,
-        Seed
+        In,
+        Out
+    }
+
+    public enum MakeItemMixDivision
+    {
+        and,
+        or
+    }
+
+    public enum MakeItemLocation
+    {
+        C,
+        A,
+        P
     }
 
     public enum SceneType
@@ -58,6 +73,12 @@ namespace WHDle.Util.Define
         Title,
         Loading,
         GamePlay
+    }
+
+    public enum PoolType
+    {
+        Slot,
+        End
     }
 
     public enum DeserializeType { SD, DTO, DefineDtoByBackend }

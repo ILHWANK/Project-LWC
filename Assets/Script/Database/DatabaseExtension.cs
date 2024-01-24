@@ -8,7 +8,7 @@ using WHDle.Util;
 
 namespace WHDle.Database {
     using BackEnd;
-    using BO;
+    using WHDle.Database.Vo;
 
     public partial class DatabaseManager
     {
@@ -31,13 +31,13 @@ namespace WHDle.Database {
 
             ReadMyData<DtoAccount>(dtoAccount =>
             {
-                user.boAccount = new BoAccount(dtoAccount);
+                user.VoAccount = new VOAccount(dtoAccount);
                 CheckCompleteCount(complete);
             });
 
             ReadMyData<DtoInventory>(dtoInventory =>
             {
-                user.boInventory = new BoInventory(dtoInventory);
+                user.VoInventory = new VOInventory(dtoInventory);
                 CheckCompleteCount(complete);
             });
         }
@@ -54,19 +54,19 @@ namespace WHDle.Database {
             {
                 var bro = Backend.BMember.GetUserInfo().GetReturnValuetoJSON()["row"];
 
-                var dtoAccount = new DtoAccount { UId = bro["gamerId"].ToString(), Nickname = string.Empty, Gold = 10000, Day = 0 };
+                var dtoAccount = new DtoAccount { UId = bro["gamerId"].ToString(), Gold = 10000, Day = 0 };
 
                 WriteMyData(dtoAccount, new Where(), () =>
                 {
-                    user.boAccount = new BoAccount(dtoAccount);
+                    user.VoAccount = new VOAccount(dtoAccount);
                     CheckCompleteCount(complete);
                 });
 
-                var dtoInventory = new DtoInventory { ItemAmounts = string.Empty, ItemIndexes = string.Empty };
+                var dtoInventory = new DtoInventory();
 
                 WriteMyData(dtoInventory, new Where(), () =>
                 {
-                    user.boInventory = new BoInventory(dtoInventory);
+                    user.VoInventory = new VOInventory(dtoInventory);
                     CheckCompleteCount(complete);
                 });
             }
