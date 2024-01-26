@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using WHDle.Database.Dto;
 using WHDle.Util;
-using static UnityEditor.Progress;
 
 namespace WHDle.Database.Vo
 {
