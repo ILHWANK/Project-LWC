@@ -5,9 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class Story
 {
+    [HideInInspector]
     public string characterName;
 
-    public string[] contexts;
+    [HideInInspector]
+    public string[] contexts, spriteName;
 }
 
 [System.Serializable]

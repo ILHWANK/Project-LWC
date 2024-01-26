@@ -19,6 +19,9 @@ public class StoryManager : MonoBehaviour
     [SerializeField]
     Text backgroundText, nameText;
 
+    [SerializeField]
+    Transform tempTaregt;
+
     //
     [SerializeField] StoryEvent storyEvent;
 
@@ -27,16 +30,20 @@ public class StoryManager : MonoBehaviour
     bool isNext = false;
     bool isNextStory = false;
 
-    int lineInext = 0;
+    int lineIndex = 0;
     int contextIndex = 0;
     float textDelay = 0.05f;
 
     IEnumerator storyCoroutine = null;
 
+    SpriteManager spriteManager;
+
     void Start()
     {
         // Set
         SetShowStory(false);
+
+        spriteManager = FindObjectOfType<SpriteManager>();
     }
 
     void Update()
@@ -53,14 +60,14 @@ public class StoryManager : MonoBehaviour
 
                 storyCoroutine = StoryPlayCoroutine();
 
-                if (++contextIndex < storys[lineInext].contexts.Length)
+                if (++contextIndex < storys[lineIndex].contexts.Length)
                 {
                     StartCoroutine(storyCoroutine);
                 }
                 else
                 {
                     contextIndex = 0;
-                    if (++lineInext < storys.Length)
+                    if (++lineIndex < storys.Length)
                     {
                         StartCoroutine(storyCoroutine);
                     }
@@ -94,7 +101,7 @@ public class StoryManager : MonoBehaviour
     {
         isStoryPlay = false;
         contextIndex = 0;
-        lineInext = 0;
+        lineIndex = 0;
         storys = null;
         isNext = false;
 
@@ -119,13 +126,23 @@ public class StoryManager : MonoBehaviour
         StartCoroutine(storyCoroutine);
     }
 
+    void ChangeSprite()
+    {
+        if(storys[lineIndex].spriteName[contextIndex] != "")
+        {
+            StartCoroutine(spriteManager.SpriteChangeCoroutine(tempTaregt, storys[lineIndex].spriteName[contextIndex]));
+        }
+    }
+
     IEnumerator StoryPlayCoroutine()
     {
-        string context = storys[lineInext].contexts[contextIndex];
+        ChangeSprite();
+
+        string context = storys[lineIndex].contexts[contextIndex];
 
         context = context.Replace("\\", ",");
 
-        nameText.text = storys[lineInext].characterName;
+        nameText.text = storys[lineIndex].characterName;
 
         for (int i = 0; i < context.Length; ++i)
         {

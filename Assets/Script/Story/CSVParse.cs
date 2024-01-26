@@ -18,10 +18,13 @@ public class CSVParse : MonoBehaviour
                 story.characterName = row[1];
                 
                 List<string> contextList = new List<string>();
-                do{
-                    contextList.Add(row[2]);
+                List<string> spriteList  = new List<string>();
 
-                    if(++i < storyData.Length){
+                do{
+                    contextList.Add(row[2]); // row ดย column
+                    spriteList.Add(row[3]);
+
+                    if (++i < storyData.Length){
                         row = storyData[i].Split(new char[]{','});
                     }
                     else {
@@ -31,6 +34,7 @@ public class CSVParse : MonoBehaviour
                 while(row[0].ToString() == "");
 
                 story.contexts = contextList.ToArray();
+                story.spriteName = spriteList.ToArray();
 
                 storyList.Add(story);
             }
