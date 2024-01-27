@@ -22,6 +22,9 @@ public class StoryManager : MonoBehaviour
     [SerializeField]
     Transform tempTaregt;
 
+    [SerializeField]
+    Camera tempCamera;
+
     //
     [SerializeField] StoryEvent storyEvent;
 
@@ -77,6 +80,10 @@ public class StoryManager : MonoBehaviour
                     }
                 }
             }
+
+            Vector3 characterPosition = new Vector3(tempCamera.transform.position.x, tempCamera.transform.position.y -1.5f, 0);
+
+            characterObject.transform.position = characterPosition;
         }
     }
 
