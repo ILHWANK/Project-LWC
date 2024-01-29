@@ -50,11 +50,13 @@ public class CSVParse : MonoBehaviour
     {
         CameraType cameraType;
 
-        switch (pCameraType)
+        switch (pCameraType.ToString())
         {
             case "FadeIn":
                 {
                     cameraType = CameraType.FadeIn;
+
+                    Debug.Log("1");
 
                     break;
                 }
@@ -62,24 +64,28 @@ public class CSVParse : MonoBehaviour
                 {
                     cameraType = CameraType.FadeOut;
 
+                    Debug.Log("2");
                     break;
                 }
             case "FlashIn":
                 {
                     cameraType = CameraType.FlashIn;
 
+                    Debug.Log("3");
                     break;
                 }
             case "FlashOut":
                 {
                     cameraType = CameraType.FlashOut;
 
+                    Debug.Log("4");
                     break;
                 }
             default:
                 {
                     cameraType = CameraType.None;
 
+                    Debug.Log("5");
                     break;
                 }
         }

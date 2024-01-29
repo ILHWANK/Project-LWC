@@ -111,44 +111,51 @@ public class StoryManager : MonoBehaviour
 
     IEnumerator CameraAction()
     {
-        switch (storys[lineIndex].cameraType)
+        storys = GetStory();
+
+        if (storys != null)
         {
-            case CameraType.FadeOut:
-                {
-                    SplashManager.isFinish = false;
-                    StartCoroutine(splashManager.FadeOut(false, false));
+            switch (storys[lineIndex].cameraActions[contextIndex])
+            {
+                case CameraType.FadeOut:
+                    {
+                        SplashManager.isFinish = false;
+                        StartCoroutine(splashManager.FadeOut(false, false));
 
-                    yield return new WaitUntil(() => SplashManager.isFinish);
-                    break;
-                }
-            case CameraType.FadeIn:
-                {
-                    SplashManager.isFinish = false;
-                    StartCoroutine(splashManager.FadeIn(false, false));
+                        yield return new WaitUntil(() => SplashManager.isFinish);
+                        break;
+                    }
+                case CameraType.FadeIn:
+                    {
+                        SplashManager.isFinish = false;
+                        StartCoroutine(splashManager.FadeIn(false, false));
 
-                    yield return new WaitUntil(() => SplashManager.isFinish);
-                    break;
-                }
-            case CameraType.FlashOut:
-                {
-                    SplashManager.isFinish = false;
-                    StartCoroutine(splashManager.FadeOut(true, false));
+                        yield return new WaitUntil(() => SplashManager.isFinish);
+                        break;
+                    }
+                case CameraType.FlashOut:
+                    {
+                        SplashManager.isFinish = false;
+                        StartCoroutine(splashManager.FadeOut(true, false));
 
-                    yield return new WaitUntil(() => SplashManager.isFinish);
-                    break;
-                }
-            case CameraType.FlashIn:
-                {
-                    SplashManager.isFinish = false;
-                    StartCoroutine(splashManager.FadeIn(true, false));
+                        yield return new WaitUntil(() => SplashManager.isFinish);
+                        break;
+                    }
+                case CameraType.FlashIn:
+                    {
+                        SplashManager.isFinish = false;
+                        StartCoroutine(splashManager.FadeIn(true, false));
 
-                    yield return new WaitUntil(() => SplashManager.isFinish);
-                    break;
-                }
-            default:
-                {
-                    break;
-                }
+                        yield return new WaitUntil(() => SplashManager.isFinish);
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+
+            SplashManager.isFinish = true;
         }
     }
 
