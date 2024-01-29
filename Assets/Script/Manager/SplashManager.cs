@@ -46,4 +46,13 @@ public class SplashManager : MonoBehaviour
 
         isFinish = true;
     }
+
+    public void Reset()
+    {
+        Color color = new Color();
+
+        color.a = 0;
+
+        image.color = color;
+    }
 }

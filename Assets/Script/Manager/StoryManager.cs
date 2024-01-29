@@ -113,14 +113,14 @@ public class StoryManager : MonoBehaviour
     {
         storys = GetStory();
 
-        if (storys != null)
+        if (storys != null && splashManager != null)
         {
             switch (storys[lineIndex].cameraActions[contextIndex])
             {
                 case CameraType.FadeOut:
                     {
                         SplashManager.isFinish = false;
-                        StartCoroutine(splashManager.FadeOut(false, false));
+                        StartCoroutine(splashManager.FadeOut(false, true));
 
                         yield return new WaitUntil(() => SplashManager.isFinish);
                         break;
@@ -128,7 +128,7 @@ public class StoryManager : MonoBehaviour
                 case CameraType.FadeIn:
                     {
                         SplashManager.isFinish = false;
-                        StartCoroutine(splashManager.FadeIn(false, false));
+                        StartCoroutine(splashManager.FadeIn(false, true));
 
                         yield return new WaitUntil(() => SplashManager.isFinish);
                         break;
@@ -136,7 +136,7 @@ public class StoryManager : MonoBehaviour
                 case CameraType.FlashOut:
                     {
                         SplashManager.isFinish = false;
-                        StartCoroutine(splashManager.FadeOut(true, false));
+                        StartCoroutine(splashManager.FadeOut(true, true));
 
                         yield return new WaitUntil(() => SplashManager.isFinish);
                         break;
@@ -144,13 +144,15 @@ public class StoryManager : MonoBehaviour
                 case CameraType.FlashIn:
                     {
                         SplashManager.isFinish = false;
-                        StartCoroutine(splashManager.FadeIn(true, false));
+                        StartCoroutine(splashManager.FadeIn(true, true));
 
                         yield return new WaitUntil(() => SplashManager.isFinish);
                         break;
                     }
                 default:
                     {
+                        splashManager.Reset();
+
                         break;
                     }
             }
