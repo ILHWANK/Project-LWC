@@ -40,6 +40,7 @@ public class StoryManager : MonoBehaviour
     IEnumerator storyCoroutine = null;
 
     SpriteManager spriteManager;
+    SplashManager splashManager;
 
     void Start()
     {
@@ -47,6 +48,7 @@ public class StoryManager : MonoBehaviour
         SetShowStory(false);
 
         spriteManager = FindObjectOfType<SpriteManager>();
+        splashManager = FindObjectOfType<SplashManager>();
     }
 
     void Update()
@@ -73,6 +75,7 @@ public class StoryManager : MonoBehaviour
                     if (++lineIndex < storys.Length)
                     {
                         StartCoroutine(storyCoroutine);
+                        StartCoroutine(CameraAction());
                     }
                     else
                     {
@@ -102,6 +105,51 @@ public class StoryManager : MonoBehaviour
         nextObject.SetActive(pIsStoryShow);
         characterObject.SetActive(pIsStoryShow);
         contextObject.SetActive(pIsStoryShow);
+
+        StartCoroutine(CameraAction());
+    }
+
+    IEnumerator CameraAction()
+    {
+        switch (storys[lineIndex].cameraType)
+        {
+            case CameraType.FadeOut:
+                {
+                    SplashManager.isFinish = false;
+                    StartCoroutine(splashManager.FadeOut(false, false));
+
+                    yield return new WaitUntil(() => SplashManager.isFinish);
+                    break;
+                }
+            case CameraType.FadeIn:
+                {
+                    SplashManager.isFinish = false;
+                    StartCoroutine(splashManager.FadeIn(false, false));
+
+                    yield return new WaitUntil(() => SplashManager.isFinish);
+                    break;
+                }
+            case CameraType.FlashOut:
+                {
+                    SplashManager.isFinish = false;
+                    StartCoroutine(splashManager.FadeOut(true, false));
+
+                    yield return new WaitUntil(() => SplashManager.isFinish);
+                    break;
+                }
+            case CameraType.FlashIn:
+                {
+                    SplashManager.isFinish = false;
+                    StartCoroutine(splashManager.FadeIn(true, false));
+
+                    yield return new WaitUntil(() => SplashManager.isFinish);
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
     }
 
     void EndStory()
@@ -135,9 +183,9 @@ public class StoryManager : MonoBehaviour
 
     void ChangeSprite()
     {
-        if(storys[lineIndex].spriteName[contextIndex] != "")
+        if(storys[lineIndex].spriteNames[contextIndex] != "")
         {
-            StartCoroutine(spriteManager.SpriteChangeCoroutine(tempTaregt, storys[lineIndex].spriteName[contextIndex]));
+            StartCoroutine(spriteManager.SpriteChangeCoroutine(tempTaregt, storys[lineIndex].spriteNames[contextIndex]));
         }
     }
 

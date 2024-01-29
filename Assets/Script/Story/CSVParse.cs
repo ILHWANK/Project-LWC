@@ -19,10 +19,12 @@ public class CSVParse : MonoBehaviour
                 
                 List<string> contextList = new List<string>();
                 List<string> spriteList  = new List<string>();
+                List<CameraType> cameraActionList = new List<CameraType>();
 
                 do{
-                    contextList.Add(row[2]); // row ดย column
+                    contextList.Add(row[2]); // column
                     spriteList.Add(row[3]);
+                    cameraActionList.Add(GetCameraType(row[4]));
 
                     if (++i < storyData.Length){
                         row = storyData[i].Split(new char[]{','});
@@ -34,12 +36,54 @@ public class CSVParse : MonoBehaviour
                 while(row[0].ToString() == "");
 
                 story.contexts = contextList.ToArray();
-                story.spriteName = spriteList.ToArray();
+                story.spriteNames = spriteList.ToArray();
+                story.cameraActions = cameraActionList.ToArray();
 
                 storyList.Add(story);
             }
         }
 
         return storyList.ToArray();
+    }
+
+    CameraType GetCameraType(string pCameraType)
+    {
+        CameraType cameraType;
+
+        switch (pCameraType)
+        {
+            case "FadeIn":
+                {
+                    cameraType = CameraType.FadeIn;
+
+                    break;
+                }
+            case "FadeOut":
+                {
+                    cameraType = CameraType.FadeOut;
+
+                    break;
+                }
+            case "FlashIn":
+                {
+                    cameraType = CameraType.FlashIn;
+
+                    break;
+                }
+            case "FlashOut":
+                {
+                    cameraType = CameraType.FlashOut;
+
+                    break;
+                }
+            default:
+                {
+                    cameraType = CameraType.None;
+
+                    break;
+                }
+        }
+
+        return cameraType;
     }
 }
