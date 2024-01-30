@@ -59,7 +59,7 @@ namespace WHDle.UI.Inventory
 
             currentSlotCount = slotCount;
 
-            /*SetItems();*/
+            SetItems();
         }
 
         private void AddSlot(int slotCount)
@@ -116,13 +116,12 @@ namespace WHDle.UI.Inventory
             {
                 var index = i - vmCount;
 
-                var vp = voPlaceItems[i];
+                var vp = voPlaceItems[index];
 
-                slots[index].SetSprite(vp);
-                slots[index].SetAmount(vp.ItemAmount);
+                slots[i].SetSprite(vp);
+                slots[i].SetAmount(vp.ItemAmount);
             }
         }
-
         public void TempAdd()
         {
             var voInventory = GameManager.User.VoInventory;
