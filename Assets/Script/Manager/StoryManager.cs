@@ -68,6 +68,7 @@ public class StoryManager : MonoBehaviour
                 if (++contextIndex < storys[lineIndex].contexts.Length)
                 {
                     StartCoroutine(storyCoroutine);
+                    StartCoroutine(CameraAction());
                 }
                 else
                 {
@@ -151,8 +152,6 @@ public class StoryManager : MonoBehaviour
                     }
                 default:
                     {
-                        splashManager.Reset();
-
                         break;
                     }
             }
@@ -233,7 +232,8 @@ public class StoryManager : MonoBehaviour
 
     void OnClick_ButtonUI_Button_Interaction()
     {
-        TempPlayStory();
+        if (isNext)
+            TempPlayStory();
     }
 
     void OnClick_Next_Button_BackGround()
