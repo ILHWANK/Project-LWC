@@ -32,6 +32,7 @@ public class StoryManager : MonoBehaviour
     bool isStoryPlay = false;
     bool isNext = false;
     bool isNextStory = false;
+    bool isStoryContextEnd = false;
 
     int lineIndex = 0;
     int contextIndex = 0;
@@ -41,6 +42,27 @@ public class StoryManager : MonoBehaviour
 
     SpriteManager spriteManager;
     SplashManager splashManager;
+
+    public enum FontStyle
+    {
+        None,
+        Bold,
+        Italic,
+        BoldAndItalic
+    }
+
+    public enum FontColor
+    {
+        None,
+        White,
+        Black
+    }
+
+    public struct FontConfiguration
+    {
+        public FontStyle fontStyle;
+        public FontColor fontColor;
+    }
 
     void Start()
     {
@@ -114,7 +136,7 @@ public class StoryManager : MonoBehaviour
     {
         storys = GetStory();
 
-        if (storys != null && splashManager != null)
+        if (isStoryPlay && storys != null && splashManager != null)
         {
             switch (storys[lineIndex].cameraActions[contextIndex])
             {
@@ -205,17 +227,82 @@ public class StoryManager : MonoBehaviour
 
         context = context.Replace("\\", ",");
 
+        FontConfiguration fontConfiguration = new FontConfiguration();
+
+        fontConfiguration.fontColor = FontColor.Black;
+
         nameText.text = storys[lineIndex].characterName;
 
         for (int i = 0; i < context.Length; ++i)
         {
-            backgroundText.text += context[i];
-            //backgroundText.text = context;
+            bool isWrite = false;
 
-            yield return new WaitForSeconds(textDelay);
+            string letter = context[i].ToString();
+
+            switch (letter)
+            {
+                case "ⓑ":
+                    {
+                        fontConfiguration.fontColor = FontColor.Black;
+
+                        break;
+                    }
+                case "ⓦ":
+                    {
+                        fontConfiguration.fontColor = FontColor.White;
+
+                        break;
+                    }
+                default:
+                    {
+                        isWrite = true;
+
+                        break;
+                    }
+            }
+
+            if (isWrite)
+            {
+                letter = letterFont(letter, fontConfiguration);
+
+                backgroundText.text += letter;
+
+                yield return new WaitForSeconds(textDelay);
+            }
+            else
+            {
+                continue;
+            }
         }
 
         isNext = true;
+    }
+
+    string letterFont(string pLetter, FontConfiguration pFontConfiguration)
+    {
+        switch (pFontConfiguration.fontColor)
+        {
+            case FontColor.Black:
+                {
+                    pLetter = "<color=#000000>" + pLetter + "</color>";
+
+                    break;
+                }
+            case FontColor.White:
+                {
+                    pLetter = "<color=#ffffff>" + pLetter + "</color>";
+                    //pLetter = "<i>" + pLetter + "</i>";
+                    //pLetter = "<b>" + pLetter + "</b>";
+
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
+
+        return pLetter;
     }
 
     public void SetIsNextStory()
