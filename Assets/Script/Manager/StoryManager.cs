@@ -7,7 +7,7 @@ public class StoryManager : MonoBehaviour
 {
     // BottomUI
     [SerializeField]
-    GameObject bottomObject;
+    GameObject topObject, bottomObject;
 
     // StoryUI
     [SerializeField]
@@ -124,6 +124,7 @@ public class StoryManager : MonoBehaviour
 
     void SetShowStory(bool pIsStoryShow)
     {
+        topObject.SetActive(!pIsStoryShow);
         bottomObject.SetActive(!pIsStoryShow);
         nextObject.SetActive(pIsStoryShow);
         characterObject.SetActive(pIsStoryShow);

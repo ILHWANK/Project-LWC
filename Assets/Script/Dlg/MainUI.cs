@@ -12,7 +12,7 @@ public class MainUI : MonoBehaviour
 
     // BottomUI
     [SerializeField]
-    GameObject bottomObject, interactionObject;
+    GameObject topObject, bottomObject, interactionObject;
 
     [SerializeField] 
     Button interactionButton, backButton;
@@ -45,6 +45,7 @@ public class MainUI : MonoBehaviour
     }
 
     void SetShowStory(bool pIsStoryShow){
+        topObject.SetActive(!pIsStoryShow);
         bottomObject.SetActive(!pIsStoryShow);
         nextObject.SetActive(pIsStoryShow);
         contextObject.SetActive(pIsStoryShow);
