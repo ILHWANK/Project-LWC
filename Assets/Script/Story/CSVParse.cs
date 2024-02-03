@@ -50,7 +50,9 @@ public class CSVParse : MonoBehaviour
     {
         CameraType cameraType;
 
-        switch (pCameraType.ToString())
+        string cameraTypeString = pCameraType.ToString();
+
+        switch (cameraTypeString)
         {
             case "FadeIn":
                 {
