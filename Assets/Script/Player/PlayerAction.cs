@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAction : MonoBehaviour
 {
     // Joystick
-    public FixedJoystick joyStick;
+    public DynamicJoystick joyStick;
     public float speed;
 
     Rigidbody2D rb;
