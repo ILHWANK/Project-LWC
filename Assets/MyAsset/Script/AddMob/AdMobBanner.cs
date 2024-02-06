@@ -25,7 +25,8 @@ adUnitId = "ca-app-pub-3940256099942544/2934735716";
 adUnitId = "unexpected_platform;
 #endif
 
-        LoadAd();
+        //Banner 임시 처리
+        //LoadAd();
 
     }
 

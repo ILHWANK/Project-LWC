@@ -1,4 +1,4 @@
-Index,CharacterName,Context(대사),Sprite Name,CameraActionType
+﻿Index,CharacterName,Context(대사),Sprite Name,CameraActionType
 1,나레이터,오래전\ 어느 한적한 마을에서 아이가 태어났어요.,,FadeOut
 ,,아이의 부모는 아이를 사랑했지만\ 아이와 함께 살 수 없었어요.,,
 ,,그들은 아이의 더 나은 미래를 위해 마녀를 찾았죠.,,
@@ -154,4 +154,4 @@ Index,CharacterName,Context(대사),Sprite Name,CameraActionType
 ,,…,,
 ,,그리고 그날 저녁\ (마스코트 이름)이 움직이기 시작했어요.,,
 ,,아이는 (마스코트 이름)을 꼬옥 껴안고는\,,
-,,무척 기쁜 마음으로 잠들었답니다.,,
+,,무척 기쁜 마음으로 잠들었답니다.,,FadeIn
