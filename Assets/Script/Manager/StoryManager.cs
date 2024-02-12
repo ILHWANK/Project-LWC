@@ -254,6 +254,24 @@ public class StoryManager : MonoBehaviour
 
                         break;
                     }
+                case "ⓝ":
+                    {
+                        fontConfiguration.fontStyle = FontStyle.None;
+
+                        break;
+                    }
+                case "ⓜ":
+                    {
+                        fontConfiguration.fontStyle = FontStyle.Bold;
+
+                        break;
+                    }
+                case "ⓘ":
+                    {
+                        fontConfiguration.fontStyle = FontStyle.Italic;
+
+                        break;
+                    }
                 default:
                     {
                         isWrite = true;
@@ -294,6 +312,30 @@ public class StoryManager : MonoBehaviour
                     pLetter = "<color=#ffffff>" + pLetter + "</color>";
                     //pLetter = "<i>" + pLetter + "</i>";
                     //pLetter = "<b>" + pLetter + "</b>";
+
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
+
+        switch (pFontConfiguration.fontStyle)
+        {
+            case FontStyle.None:
+                {
+                    break;
+                }
+            case FontStyle.Bold:
+                {
+                    pLetter = "<b>" + pLetter + "</b>";
+
+                    break;
+                }
+            case FontStyle.Italic:
+                {
+                    pLetter = "<i>" + pLetter + "</i>";
 
                     break;
                 }
