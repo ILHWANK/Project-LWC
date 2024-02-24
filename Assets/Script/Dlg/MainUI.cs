@@ -19,7 +19,7 @@ public class MainUI : MonoBehaviour
 
     // StoryUI
     [SerializeField]
-    GameObject nextObject, contextObject, selectListOneObject, selectListTwoObject, selectListThreeObject, selectListFourObject;
+    GameObject nextObject, skipObject, contextObject, selectListOneObject, selectListTwoObject, selectListThreeObject, selectListFourObject;
 
     [SerializeField]
     Button nextButtonBackGround;
@@ -48,6 +48,7 @@ public class MainUI : MonoBehaviour
         topObject.SetActive(!pIsStoryShow);
         bottomObject.SetActive(!pIsStoryShow);
         nextObject.SetActive(pIsStoryShow);
+        skipObject.SetActive(pIsStoryShow);
         contextObject.SetActive(pIsStoryShow);
     }
 
