@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using WHDle.Util;
+using WHDle.Util.Define;
+using WHDle.Stage;
+using BackEnd;
 
 public class MainUI : MonoBehaviour
 {
+    
+
     public static MainUI Instance;
 
     [SerializeField] StoryManager storyManager;
@@ -63,6 +69,9 @@ public class MainUI : MonoBehaviour
 
     void OnClick_BottomUI_Button_Back()
     {
-        SceneManager.LoadScene("Title");
+        Backend.BMember.Logout();
+
+        GameManager.Instance.LoadScene(SceneType.Title, StageManager.Instance.ChangeStage(), StageManager.Instance.OnChangeTitleScene);
     }
+
 }
