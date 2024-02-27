@@ -27,7 +27,8 @@ namespace WHDle.Database {
             }
 
             var user = GameManager.User;
-            InitCompleteCount(2);
+
+            InitCompleteCount(3);
 
             ReadMyData<DtoAccount>(dtoAccount =>
             {
@@ -38,6 +39,12 @@ namespace WHDle.Database {
             ReadMyData<DtoInventory>(dtoInventory =>
             {
                 user.VoInventory = new VOInventory(dtoInventory);
+                CheckCompleteCount(complete);
+            });
+
+            ReadMyData<DtoFavorability>(dtoFavorability =>
+            {
+                user.VoFavorability = new VOFavorability(dtoFavorability);
                 CheckCompleteCount(complete);
             });
         }

@@ -86,6 +86,8 @@ public class TitleDlg : MonoBehaviour
             return;
         }
 
+        /*Backend.BMember.DeleteGuestInfo();*/
+
         var guestId = Backend.BMember.GetGuestID();
 
         if (guestId != null && guestId != string.Empty)
@@ -193,7 +195,11 @@ public class TitleDlg : MonoBehaviour
             else
             {
                 errorText.text = "게스트 로그인 에러!";
-                enableErrorPanel();
+
+                Backend.BMember.DeleteGuestInfo();
+
+                guestLogin();
+                /*enableErrorPanel();*/
             }
         });
     }
