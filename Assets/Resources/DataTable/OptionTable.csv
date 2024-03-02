@@ -1,0 +1,6 @@
+﻿Index,Option_Group,Option_Index,Option_Context,Option_Item,Dialogue_Group,Likeability_World,Likeability_Value
+1,Day1_Oriental_Option,1,초콜릿을 만들어 주자!,Chocolate,Day1_Oriental_Option,Oriental,10
+2,Day1_Oriental_Option,2,양갱을 만들어 주자! ,RedBean,Day1_Oriental_Option,Oriental,30
+3,Day1_Oriental_Option,3,케이크는 어때?,Cake,Day1_Oriental_Option,Oriental,20
+4,Day1_Western_Option,1,선물을 주라고 하셨을꺼 같습니다!,None,Day1_Western_Option1,Western,10
+5,Day1_Western_Option,2,밝게 인사부터 하라고 하셨을꺼 같습니다.,None,Day1_Western_Option2,Western,30
