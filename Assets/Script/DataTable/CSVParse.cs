@@ -79,6 +79,16 @@ public class CSVParse : MonoBehaviour
         return dialogueList.ToArray();
     }
 
+    public void LetterParse(string letter_File)
+    {
+
+    }
+
+    public void ChoiceParse(string choice_File)
+    {
+
+    }
+
     CameraType GetCameraType(string pCameraType)
     {
         CameraType cameraType;

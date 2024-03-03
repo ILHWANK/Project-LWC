@@ -5624,10 +5624,7 @@ MonoBehaviour:
   characterObject: {fileID: 624023524}
   skipObject: {fileID: 1769679917}
   contextObject: {fileID: 1317053143}
-  selectListOneObject: {fileID: 0}
-  selectListTwoObject: {fileID: 0}
-  selectListThreeObject: {fileID: 0}
-  selectListFourObject: {fileID: 284963308}
+  choicetListObject: {fileID: 0}
   nextButtonBackGround: {fileID: 730344829}
   selectListOneButton: {fileID: 0}
   selectListTwoButton: {fileID: 0}
@@ -5639,6 +5636,7 @@ MonoBehaviour:
   tempCamera: {fileID: 274301226}
   dialogueEvent:
     characterName: 
+    choiceGroup: 
     line: {x: 0, y: 0}
     dialogues: []
 --- !u!1 &1517977034
@@ -9524,7 +9522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f86f7b3fea599449dbe71a22c7b2d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tempDialogueGroup: Day1_Western
+  tempDialogueGroup: Prologue_Intro
 --- !u!4 &1713883213
 Transform:
   m_ObjectHideFlags: 0
@@ -9552,7 +9550,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c25b3d2596bc9045b200c88ee16c618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filePath: DataTable/DialogueTable
+  dialoguefilePath: DataTable/DialogueTable
+  letterfilePath: DataTable/LetterTable
+  choicefilePath: DataTable/ChoiceTable
 --- !u!114 &1713883215
 MonoBehaviour:
   m_ObjectHideFlags: 0

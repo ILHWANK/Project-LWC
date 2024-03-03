@@ -6,7 +6,8 @@ public class CSVDataManager : MonoBehaviour
 {
     public static CSVDataManager Instance;
 
-    [SerializeField] string filePath;
+    [SerializeField]
+    string dialoguefilePath, letterfilePath, choicefilePath;
 
     Dictionary<int, Dialogue> dialogueDictionary = new Dictionary<int, Dialogue>();
 
@@ -16,7 +17,7 @@ public class CSVDataManager : MonoBehaviour
         if(Instance == null){
             Instance = this;
             CSVParse csvParse = GetComponent<CSVParse>();
-            Dialogue[] dialogues = csvParse.DialogueParse(filePath);
+            Dialogue[] dialogues = csvParse.DialogueParse(dialoguefilePath);
 
             for (int i = 0 ; i < dialogues.Length ; ++i){
                 dialogueDictionary.Add(i + 1, dialogues[i]);
