@@ -20,10 +20,10 @@ public class Dialogue
     public CameraType cameraType;
 
     [HideInInspector]
-    public string characterName;
+    public string characterName, choiceGroup, skipContext;
 
     [HideInInspector]
-    public string[] contexts, spriteNames, choiceGroups;
+    public string[] contexts, spriteNames;
 
     [HideInInspector]
     public CameraType[] cameraActions;
@@ -32,7 +32,7 @@ public class Dialogue
 [System.Serializable]
 public class DialogueEvent
 {
-    public string characterName;
+    public string characterName, choiceGroup;
 
     public Vector2 line;
     public Dialogue[] dialogues;

@@ -11,7 +11,7 @@ public class DialogueManager : MonoBehaviour
 
     // StoryUI
     [SerializeField]
-    GameObject nextObject, characterObject, skipObject, contextObject, selectListOneObject, selectListTwoObject, selectListThreeObject, selectListFourObject;
+    GameObject nextObject, characterObject, skipObject, contextObject, choicetListObject;
 
     [SerializeField]
     Button nextButtonBackGround, selectListOneButton, selectListTwoButton, selectListThreeButton, selectListFourButton;
