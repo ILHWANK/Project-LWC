@@ -8,7 +8,7 @@ public class CSVDataManager : MonoBehaviour
 
     [SerializeField] string filePath;
 
-    Dictionary<int, Story> storyDictionary = new Dictionary<int, Story>();
+    Dictionary<int, Dialogue> dialogueDictionary = new Dictionary<int, Dialogue>();
 
     public static bool isEnd = false;
 
@@ -16,27 +16,32 @@ public class CSVDataManager : MonoBehaviour
         if(Instance == null){
             Instance = this;
             CSVParse csvParse = GetComponent<CSVParse>();
-            Story[] storys = csvParse.Parse(filePath);
+            Dialogue[] dialogues = csvParse.DialogueParse(filePath);
 
-            for (int i = 0 ; i < storys.Length ; ++i){
-                storyDictionary.Add(i + 1, storys[i]);
+            for (int i = 0 ; i < dialogues.Length ; ++i){
+                dialogueDictionary.Add(i + 1, dialogues[i]);
             }
 
             isEnd = true;
         }
     }
 
-    public int GetEndIndex(){
-        return storyDictionary.Count;
+    public int GetStartIndex()
+    {
+        return 0;
     }
 
-    public Story[] GetStory(int pStartIndex, int pEndIndex){
-        List<Story> storyList = new List<Story>();
+    public int GetEndIndex(){
+        return dialogueDictionary.Count;
+    }
+
+    public Dialogue[] GetDialogue(int pStartIndex, int pEndIndex){
+        List<Dialogue> dialogueList = new List<Dialogue>();
 
         for (int i = 0 ; i <= pEndIndex - pStartIndex ; ++i){
-            storyList.Add(storyDictionary[pStartIndex + i]);
+            dialogueList.Add(dialogueDictionary[pStartIndex + i]);
         }
 
-        return storyList.ToArray();
+        return dialogueList.ToArray();
     }
 }

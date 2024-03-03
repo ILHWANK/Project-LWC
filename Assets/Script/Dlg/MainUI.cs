@@ -8,7 +8,7 @@ public class MainUI : MonoBehaviour
 {
     public static MainUI Instance;
 
-    [SerializeField] StoryManager storyManager;
+    [SerializeField] DialogueManager dialogueManager;
 
     // BottomUI
     [SerializeField]
@@ -24,11 +24,9 @@ public class MainUI : MonoBehaviour
     [SerializeField]
     Button nextButtonBackGround;
 
-    IEnumerator storyCoroutine = null;
-
     void Start()
     {
-        storyManager = FindObjectOfType<StoryManager>();
+        dialogueManager = FindObjectOfType<DialogueManager>();
 
         // Add Event
         interactionButton.onClick.AddListener(OnClick_ButtonUI_Button_Interaction);
@@ -54,12 +52,12 @@ public class MainUI : MonoBehaviour
 
     void OnClick_ButtonUI_Button_Interaction()
     {
-        storyManager.TempPlayStory();
+        dialogueManager.TempPlayStory();
     }
 
     void OnClick_Next_Button_BackGround()
     {
-        storyManager.SetIsNextStory();
+        dialogueManager.SetIsNextStory();
     }
 
     void OnClick_BottomUI_Button_Back()

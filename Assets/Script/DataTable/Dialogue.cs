@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum CameraType
@@ -11,8 +9,13 @@ public enum CameraType
     FlashIn
 }
 
+public enum DialogueType
+{
+    None,
+}
+
 [System.Serializable]
-public class Story
+public class Dialogue
 {
     public CameraType cameraType;
 
@@ -20,17 +23,17 @@ public class Story
     public string characterName;
 
     [HideInInspector]
-    public string[] contexts, spriteNames;
+    public string[] contexts, spriteNames, choiceGroups;
 
     [HideInInspector]
     public CameraType[] cameraActions;
 }
 
 [System.Serializable]
-public class StoryEvent
+public class DialogueEvent
 {
     public string characterName;
 
     public Vector2 line;
-    public Story[] storys;
+    public Dialogue[] dialogues;
 }

@@ -17,7 +17,6 @@ public class SpriteManager : MonoBehaviour
     public IEnumerator SpriteChangeCoroutine(Transform pTarget, string pSpriteName)
     {
         SpriteRenderer targetSpriteRenderer = pTarget.GetComponent<SpriteRenderer>();
-        //Sprite targetSprite = Resources.Load("Characters/" + pSpriteName, typeof(Sprite)) as Sprite;
 
         string resourceName = "Characters/Sprites/" + pSpriteName.ToString();
 

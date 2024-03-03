@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StoryManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour
 {
     // BottomUI
     [SerializeField]
@@ -26,9 +26,9 @@ public class StoryManager : MonoBehaviour
     Camera tempCamera;
 
     //
-    [SerializeField] StoryEvent storyEvent;
+    [SerializeField] DialogueEvent dialogueEvent;
 
-    Story[] storys;
+    Dialogue[] dialogues;
     bool isStoryPlay = false;
     bool isNext = false;
     bool isNextStory = false;
@@ -38,7 +38,7 @@ public class StoryManager : MonoBehaviour
     int contextIndex = 0;
     float textDelay = 0.05f;
 
-    IEnumerator storyCoroutine = null;
+    IEnumerator dialogueCoroutine = null;
 
     SpriteManager spriteManager;
     SplashManager splashManager;
@@ -85,19 +85,19 @@ public class StoryManager : MonoBehaviour
                 backgroundText.text = "";
                 nameText.text = "";
 
-                storyCoroutine = StoryPlayCoroutine();
+                dialogueCoroutine = DialoguePlayCoroutine();
 
-                if (++contextIndex < storys[lineIndex].contexts.Length)
+                if (++contextIndex < dialogues[lineIndex].contexts.Length)
                 {
-                    StartCoroutine(storyCoroutine);
+                    StartCoroutine(dialogueCoroutine);
                     StartCoroutine(CameraAction());
                 }
                 else
                 {
                     contextIndex = 0;
-                    if (++lineIndex < storys.Length)
+                    if (++lineIndex < dialogues.Length)
                     {
-                        StartCoroutine(storyCoroutine);
+                        StartCoroutine(dialogueCoroutine);
                         StartCoroutine(CameraAction());
                     }
                     else
@@ -113,13 +113,13 @@ public class StoryManager : MonoBehaviour
         }
     }
 
-    public Story[] GetStory()
+    public Dialogue[] GetStory()
     {
         int endIndex = CSVDataManager.Instance.GetEndIndex();
 
-        storyEvent.storys = CSVDataManager.Instance.GetStory(1, endIndex);
+        dialogueEvent.dialogues = CSVDataManager.Instance.GetDialogue(1, endIndex);
 
-        return storyEvent.storys;
+        return dialogueEvent.dialogues;
     }
 
     void SetShowStory(bool pIsStoryShow)
@@ -136,11 +136,11 @@ public class StoryManager : MonoBehaviour
 
     IEnumerator CameraAction()
     {
-        storys = GetStory();
+        dialogues = GetStory();
 
-        if (isStoryPlay && storys != null && splashManager != null)
+        if (isStoryPlay && dialogues != null && splashManager != null)
         {
-            switch (storys[lineIndex].cameraActions[contextIndex])
+            switch (dialogues[lineIndex].cameraActions[contextIndex])
             {
                 case CameraType.FadeOut:
                     {
@@ -189,43 +189,43 @@ public class StoryManager : MonoBehaviour
         isStoryPlay = false;
         contextIndex = 0;
         lineIndex = 0;
-        storys = null;
+        dialogues = null;
         isNext = false;
 
         SetShowStory(false);
     }
 
-    void ShowStory(Story[] pStorys)
+    void ShowStory(Dialogue[] pStorys)
     {
         SetShowStory(true);
 
         backgroundText.text = "";
         nameText.text = "";
 
-        storys = pStorys;
+        dialogues = pStorys;
 
-        if (storyCoroutine != null)
+        if (dialogueCoroutine != null)
         {
-            storyCoroutine = null;
+            dialogueCoroutine = null;
         }
 
-        storyCoroutine = StoryPlayCoroutine();
-        StartCoroutine(storyCoroutine);
+        dialogueCoroutine = DialoguePlayCoroutine();
+        StartCoroutine(dialogueCoroutine);
     }
 
     void ChangeSprite()
     {
-        if(storys[lineIndex].spriteNames[contextIndex] != "")
+        if(dialogues[lineIndex].spriteNames[contextIndex] != "")
         {
-            StartCoroutine(spriteManager.SpriteChangeCoroutine(tempTaregt, storys[lineIndex].spriteNames[contextIndex]));
+            StartCoroutine(spriteManager.SpriteChangeCoroutine(tempTaregt, dialogues[lineIndex].spriteNames[contextIndex]));
         }
     }
 
-    IEnumerator StoryPlayCoroutine()
+    IEnumerator DialoguePlayCoroutine()
     {
         ChangeSprite();
 
-        string context = storys[lineIndex].contexts[contextIndex];
+        string context = dialogues[lineIndex].contexts[contextIndex];
 
         context = context.Replace("\\", ",");
 
@@ -233,7 +233,7 @@ public class StoryManager : MonoBehaviour
 
         fontConfiguration.fontColor = FontColor.Black;
 
-        nameText.text = storys[lineIndex].characterName;
+        nameText.text = dialogues[lineIndex].characterName;
 
         for (int i = 0; i < context.Length; ++i)
         {
@@ -311,8 +311,6 @@ public class StoryManager : MonoBehaviour
             case FontColor.White:
                 {
                     pLetter = "<color=#ffffff>" + pLetter + "</color>";
-                    //pLetter = "<i>" + pLetter + "</i>";
-                    //pLetter = "<b>" + pLetter + "</b>";
 
                     break;
                 }

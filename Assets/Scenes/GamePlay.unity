@@ -6312,7 +6312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a34e9eded6b64778a87b8a2c0ff0055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storyManager: {fileID: 0}
+  dialogueManager: {fileID: 0}
   topObject: {fileID: 1517977034}
   bottomObject: {fileID: 1681279880}
   interactionObject: {fileID: 996736816}
@@ -6376,10 +6376,10 @@ MonoBehaviour:
   nameText: {fileID: 1354820002}
   tempTaregt: {fileID: 4842669}
   tempCamera: {fileID: 274301226}
-  storyEvent:
+  dialogueEvent:
     characterName: 
     line: {x: 0, y: 0}
-    storys: []
+    dialogues: []
 --- !u!1 &1513929302
 GameObject:
   m_ObjectHideFlags: 0
@@ -10492,7 +10492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c25b3d2596bc9045b200c88ee16c618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filePath: Storys/StoryGroup1
+  filePath: DataTable/DialogueTable
 --- !u!114 &1713883215
 MonoBehaviour:
   m_ObjectHideFlags: 0

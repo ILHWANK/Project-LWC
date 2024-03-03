@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class InteractionEvent : MonoBehaviour
 {
-    [SerializeField] StoryEvent storyEvent;
+    [SerializeField] DialogueEvent dialogueEvent;
 
-    public Story[] GetStory()
+    public Dialogue[] GetStory()
     {
         int endIndex = CSVDataManager.Instance.GetEndIndex();
 
-        storyEvent.storys = CSVDataManager.Instance.GetStory(1, endIndex);
+        dialogueEvent.dialogues = CSVDataManager.Instance.GetDialogue(1, endIndex);
 
-        return storyEvent.storys;
+        return dialogueEvent.dialogues;
     }
 }

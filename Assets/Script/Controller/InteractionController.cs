@@ -15,17 +15,17 @@ public class InteractionController : MonoBehaviour
     bool isCollide = false;
     bool isInteraction = false;
 
-    StoryManager storyManager;
+    DialogueManager dialogueManager;
 
     void Start(){
-        storyManager = FindObjectOfType<StoryManager>();
+        dialogueManager = FindObjectOfType<DialogueManager>();
         interactionButton.interactable = false;
     }
 
     void Update()
     {
         if(isCollide && Input.GetKeyDown(KeyCode.F)){
-            storyManager.TempPlayStory();
+            dialogueManager.TempPlayStory();
         }
     }
 
