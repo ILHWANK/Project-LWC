@@ -45,12 +45,6 @@ namespace WHDle.Controller {
         [SerializeField]
         private TitleDlg title;
 
-        private Coroutine loadGagueUpdateCoroutine;
-
-        public void SetLoadStateGagueAfterLogin(IntroPhase phase)
-        {
-
-        }
 
         // 현재 로딩하고 있는 페이지를 알려주는 변수
         // IntroPhase => Define.cs
@@ -60,12 +54,19 @@ namespace WHDle.Controller {
         // 초기화
         public void Initialize() => onPhase(introPhase);
 
+        public void RestartLogin()
+        {
+            introPhase = IntroPhase.BeforeLogin;
+
+            GameManager.Instance.TitleController = this;
+            title = FindObjectOfType<TitleDlg>();
+
+            onPhase(introPhase);
+        }
+
         // introPhase변수에 맞는 초기화 로딩
         private void onPhase(IntroPhase phase)
         {
-            if (phase > IntroPhase.AfterLogin)
-                SetLoadStateGagueAfterLogin(phase);
-
             switch (phase)
             {
                 case IntroPhase.Start:
@@ -106,7 +107,7 @@ namespace WHDle.Controller {
                     break;
                 case IntroPhase.Complete:
                     var stageManager = StageManager.Instance;
-                    GameManager.Instance.LoadScene(SceneType.GamePlay, stageManager.ChangeStage(), stageManager.OnChangeStageComplete);
+                    GameManager.Instance.LoadScene(SceneType.GamePlay, stageManager.ChangeStage());
                     allLoaded = true;
                     LoadComplete = true;
                     break;
@@ -121,7 +122,7 @@ namespace WHDle.Controller {
 
             IEnumerator WaitForSeconds()
             {
-                yield return new WaitForSeconds(.5f);
+                yield return new WaitForSeconds(.25f);
 
                 loadComplete = true;
                 onPhase(++introPhase);

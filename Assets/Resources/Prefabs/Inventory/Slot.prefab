@@ -244,10 +244,10 @@ RectTransform:
   m_Father: {fileID: 4017616023391836522}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: -25, y: -25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4017616023373170897
 GameObject:
@@ -376,6 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 193b47706bc6e3e4da8130d65f212afc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SlotInner: {fileID: 4017616022845982357}
   ItemImage: {fileID: 4017616023373170895}
   AmountText: {fileID: 810473281740258796}
 --- !u!1 &4017616023745104680

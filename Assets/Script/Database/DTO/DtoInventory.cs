@@ -17,6 +17,8 @@ namespace WHDle.Database.Dto
         public string PlaceItemIndexes;
         public string PlaceItemAmounts;
 
+        public int SlotCounter;
+
         public DtoInventory()
         {
             var voInventory = GameManager.User.VoInventory;
@@ -28,6 +30,8 @@ namespace WHDle.Database.Dto
 
                 this.PlaceItemIndexes = string.Empty;
                 this.PlaceItemAmounts = string.Empty;
+
+                SlotCounter = 0;
 
                 return;
             }
@@ -43,6 +47,8 @@ namespace WHDle.Database.Dto
 
             this.PlaceItemIndexes = JsonMapper.ToJson(PlaceItemIndexes);
             this.PlaceItemAmounts = JsonMapper.ToJson(PlaceItemAmounts);
+
+            this.SlotCounter = voInventory.SlotCounter;
         }
     }
 }

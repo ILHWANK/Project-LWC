@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WHDle.Database.Vo
 {
@@ -11,5 +7,6 @@ namespace WHDle.Database.Vo
     {
         public VOAccount VoAccount;
         public VOInventory VoInventory;
+        public VOFavorability VoFavorability;
     }
 }

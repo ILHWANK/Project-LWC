@@ -12,17 +12,34 @@ namespace WHDle.UI.Inventory
         public bool CanRecyle { get; set; } = true;
         public Action OnRecyleStart { get; set; }
 
+        private VOItemBase voItemBase;
+        public VOItemBase VoItemBase { get { return voItemBase; } }
+
+        public GameObject SlotInner;
         public Image ItemImage;
         public TMP_Text AmountText;
 
-        public void SetSprite(VOItemBase voItemBase)
+        public void DeleteItem()
         {
-            /*ItemImage.sprite = Resources.Load<Sprite>(voItemBase.EnglishName);*/
+            ItemImage.sprite = null;
+            AmountText.text = string.Empty;
+
+            SlotInner.SetActive(false);
         }
 
-        public void SetAmount(int amount)
+        public void SetItem(VOItemBase voItemBase)
         {
-            AmountText.text = amount.ToString();
+            this.voItemBase = voItemBase;
+
+
+            //ItemImage.sprite = Resources.Load<Sprite>(voItemBase.EnglishName);
+
+        }
+
+        public void SlotClear()
+        {
+            ItemImage.sprite = null;
+            AmountText.text = string.Empty;
         }
     }
 }
