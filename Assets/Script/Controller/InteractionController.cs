@@ -17,6 +17,9 @@ public class InteractionController : MonoBehaviour
 
     DialogueManager dialogueManager;
 
+    [SerializeField]
+    string tempdialogueGroup;
+
     void Start(){
         dialogueManager = FindObjectOfType<DialogueManager>();
         interactionButton.interactable = false;
@@ -24,7 +27,7 @@ public class InteractionController : MonoBehaviour
 
     void Update()
     {
-        if(isCollide && Input.GetKeyDown(KeyCode.F)){
+        if (isCollide && Input.GetKeyDown(KeyCode.F)){
             dialogueManager.TempPlayStory();
         }
     }

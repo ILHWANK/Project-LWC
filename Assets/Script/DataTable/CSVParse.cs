@@ -7,7 +7,7 @@ public class CSVParse : MonoBehaviour
     [SerializeField]
     string tempDialogueGroup;
     
-    public Dialogue[] DialogueParse(string dialouge_File)
+    public Dialogue[] DialogueParse(string dialouge_File, string pDialogueGorup)
     {
         List<Dialogue> dialogueList = new List<Dialogue>();
         TextAsset dialogueCsvData = Resources.Load<TextAsset>(dialouge_File);
@@ -20,7 +20,7 @@ public class CSVParse : MonoBehaviour
             {
                 string[] row = dialogueData[i].Split(new char[] { ',' });
 
-                if (row[1].ToString() == tempDialogueGroup)
+                if (row[1].ToString() == pDialogueGorup)
                 {
                     Dialogue dialogue = new Dialogue();
                     dialogue.characterName = row[3];
@@ -79,14 +79,73 @@ public class CSVParse : MonoBehaviour
         return dialogueList.ToArray();
     }
 
-    public void LetterParse(string letter_File)
+    public Letter[] LetterParse(string letter_File, string pLetterGroup)
     {
+        List<Letter> letterList = new List<Letter>();
+        TextAsset letterData = Resources.Load<TextAsset>(letter_File);
 
+        if (letterData != null)
+        {
+            string[] dialogueData = letterData.text.Remove(letterData.text.Length - 1, 1).Split(new char[] { '\n' });
+
+            for (int i = 1; i < dialogueData.Length;)
+            {
+                string[] row = dialogueData[i].Split(new char[] { ',' });
+
+                if (row[1].ToString() == tempDialogueGroup)
+                {
+
+                }
+                else
+                {
+                    do
+                    {
+                        if (++i < dialogueData.Length)
+                        {
+                            row = dialogueData[i].Split(new char[] { ',' });
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    while (row[2] == "");
+                }
+            }
+        }
+
+        return letterList.ToArray();
     }
 
-    public void ChoiceParse(string choice_File)
+    public Choice[] ChoiceParse(string choice_File, string pChoiceGroup)
     {
+        List<Choice> choiceList = new List<Choice>();
+        TextAsset choiceData = Resources.Load<TextAsset>(choice_File);
 
+        if (choiceData != null)
+        {
+            string[] dialogueData = choiceData.text.Remove(choiceData.text.Length - 1, 1).Split(new char[] { '\n' });
+
+            for (int i = 1; i < dialogueData.Length; ++i)
+            {
+                string[] row = dialogueData[i].Split(new char[] { ',' });
+
+                if (row[1].ToString() == pChoiceGroup)
+                {
+                    Choice choice = new Choice();
+
+                    choice.context = row[3];
+                    choice.item = row[4];
+                    choice.dialogueGroup = row[5];
+                    choice.likeabilityWorld = row[6];
+                    choice.likeabilityValue = row[7];
+
+                    choiceList.Add(choice);
+                }
+            }
+        }
+
+        return choiceList.ToArray();
     }
 
     CameraType GetCameraType(string pCameraType)

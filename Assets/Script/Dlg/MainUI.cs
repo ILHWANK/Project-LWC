@@ -51,7 +51,7 @@ public class MainUI : MonoBehaviour
     }
 
     void OnClick_ButtonUI_Button_Interaction()
-    {
+    { 
         dialogueManager.TempPlayStory();
     }
 

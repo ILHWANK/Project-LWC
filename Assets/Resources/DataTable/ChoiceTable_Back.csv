@@ -1,0 +1,25 @@
+﻿Index,Choice_Group,Choice_Index,Choice_Context,Choice_Item,Dialogue_Group,Likeability_World,Likeability_Value
+1,Day1_Oriental_Choice,1,초콜릿 쿠키,,Day1_Oriental_Choice1,Oriental,10
+2,Day1_Oriental_Choice,2,사과 파이,,Day1_Oriental_Choice2,Oriental,30
+3,Day1_Oriental_Choice,3,딸기 케이크,,Day1_Oriental_Choice3,Oriental,20
+4,Day1_Western_Choice,1,고향에 대해 묻는 건 어떨까요?,None,Day1_Western_Choice1,Western,20
+5,Day1_Western_Choice,2,취미에 대해 묻는 건 어떨까요?,None,Day1_Western_Choice2,Western,10
+6,Day1_Western_Choice,3,좋아하는 음식에 대해 묻는 건 어떨까요?,None,Day1_Western_Choice3,Western,30
+7,Day1_Animal_Choice,1,피로를 회복시키는 물약,,Day1_Animal_Choice1,Animal,30
+8,Day1_Animal_Choice,2,잠이 오게 하는 물약,,Day1_Animal_Choice2,Animal,20
+9,Day1_Animal_Choice,3,잠이 안 오게 하는 물약,,Day1_Animal_Choice3,Animal,10
+10,Day1_Future_Choice,1,사람들에게 기부하는 건 어떨까요?,None,Day1_Future_Choice1,Future,10
+11,Day1_Future_Choice,2,집을 예쁘게 꾸미는 건 어떨까요?,None,Day1_Future_Choice2,Future,20
+12,Day1_Future_Choice,3,새로운 발명품을 만드는 건 어떨까요?,None,Day1_Future_Choice3,Future,30
+13,Day2_Oriental_Choice,1,이번에는 합격할 것이라고 응원하는 건 어떨까요?,None,Day2_Oriental_Choice,Oriental,20
+14,Day2_Oriental_Choice,2,어머니를 생각하며 공부하라고 하는 건 어떨까요?,None,Day2_Oriental_Choice,Oriental,30
+15,Day2_Oriental_Choice,3,가문은 몰락하지 않을 거라고 위로하는 건 어떨까요?,None,Day2_Oriental_Choice,Oriental,10
+16,Day2_Western_Choice,1,잠이 오게 하는 물약,,Day2_Western_Choice,Western,20
+17,Day2_Western_Choice,2,주변을 깨끗하게 만드는 물약,,Day2_Western_Choice,Western,30
+18,Day2_Western_Choice,3,소리가 나지 않게 만드는 물약,,Day2_Western_Choice,Western,10
+19,Day2_Animal_Choice,1,맛집에 함께 가자고 하는 건 어떨까요?,None,Day2_Animal_Choice,Animal,30
+20,Day2_Animal_Choice,2,장미꽃을 선물하며 놀러가자고 하는 건 어떨까요?,None,Day2_Animal_Choice,Animal,10
+21,Day2_Animal_Choice,3,가볍게 농담하며 놀러가자고 하는 건 어떨까요?,None,Day2_Animal_Choice,Animal,20
+22,Day2_Future_Choice,1,주변을 깨끗하게 만드는 물약,,Day2_Future_Choice,Future,30
+23,Day2_Future_Choice,2,피로를 회복시키는 물약,,Day2_Future_Choice,Future,10
+24,Day2_Future_Choice,3,몸을 강화시키는 물약,,Day2_Future_Choice,Future,20

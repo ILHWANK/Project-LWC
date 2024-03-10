@@ -28,6 +28,9 @@ public class DialogueManager : MonoBehaviour
     //
     [SerializeField] DialogueEvent dialogueEvent;
 
+    //
+    PlayerAction playerAction;
+
     Dialogue[] dialogues;
     bool isStoryPlay = false;
     bool isNext = false;
@@ -39,6 +42,8 @@ public class DialogueManager : MonoBehaviour
     float textDelay = 0.05f;
 
     IEnumerator dialogueCoroutine = null;
+
+    ChoiceManager choiceManager;
 
     SpriteManager spriteManager;
     SplashManager splashManager;
@@ -66,8 +71,13 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
+        //
+        playerAction = FindObjectOfType<PlayerAction>();
+
         // Set
         SetShowStory(false);
+
+        choiceManager = FindObjectOfType<ChoiceManager>();
 
         spriteManager = FindObjectOfType<SpriteManager>();
         splashManager = FindObjectOfType<SplashManager>();
@@ -115,7 +125,9 @@ public class DialogueManager : MonoBehaviour
 
     public Dialogue[] GetStory()
     {
-        int endIndex = CSVDataManager.Instance.GetEndIndex();
+        CSVDataManager.Instance.SetDialogueData(playerAction.currentDialogueGroup);
+
+        int endIndex = CSVDataManager.Instance.GetEndIndex(CSVDataManager.DataType.Dialogue);
 
         dialogueEvent.dialogues = CSVDataManager.Instance.GetDialogue(1, endIndex);
 
@@ -184,7 +196,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    void EndStory()
+    public void EndStory()
     {
         isStoryPlay = false;
         contextIndex = 0;
@@ -218,6 +230,14 @@ public class DialogueManager : MonoBehaviour
         if(dialogues[lineIndex].spriteNames[contextIndex] != "")
         {
             StartCoroutine(spriteManager.SpriteChangeCoroutine(tempTaregt, dialogues[lineIndex].spriteNames[contextIndex]));
+        }
+    }
+
+    void ShowChoice(string _choiceGroup)
+    {
+        if (_choiceGroup != null && _choiceGroup != "")
+        {
+            choiceManager.SetChoiceData(_choiceGroup);
         }
     }
 
@@ -294,6 +314,8 @@ public class DialogueManager : MonoBehaviour
                 continue;
             }
         }
+
+        ShowChoice(dialogues[lineIndex].choiceGroup);
 
         isNext = true;
     }

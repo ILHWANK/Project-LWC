@@ -14,6 +14,9 @@ public class PlayerAction : MonoBehaviour
     // MoveAnimation
     Animator animator;
 
+    [SerializeField]
+    public string currentDialogueGroup;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
