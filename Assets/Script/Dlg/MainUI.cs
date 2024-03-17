@@ -10,7 +10,12 @@ using BackEnd;
 
 public class MainUI : MonoBehaviour
 {
-    
+    public enum DialogurType
+    {
+        Context,
+        Letter,
+        Narration
+    }
 
     public static MainUI Instance;
 
@@ -25,7 +30,7 @@ public class MainUI : MonoBehaviour
 
     // StoryUI
     [SerializeField]
-    GameObject nextObject, skipObject, contextObject, selectListOneObject, selectListTwoObject, selectListThreeObject, selectListFourObject;
+    GameObject nextObject, skipObject, contextObject, selectListOneObject, selectListTwoObject, selectListThreeObject;
 
     [SerializeField]
     Button nextButtonBackGround;

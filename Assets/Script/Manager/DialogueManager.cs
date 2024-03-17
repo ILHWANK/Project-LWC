@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
     GameObject nextObject, characterObject, skipObject, contextObject, choicetListObject;
 
     [SerializeField]
-    Button nextButtonBackGround, selectListOneButton, selectListTwoButton, selectListThreeButton, selectListFourButton;
+    Button nextButtonBackGround, selectListOneButton, selectListTwoButton, selectListThreeButton;
 
     [SerializeField]
     Text backgroundText, nameText;

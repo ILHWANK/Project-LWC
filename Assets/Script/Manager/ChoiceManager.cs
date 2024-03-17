@@ -10,13 +10,13 @@ public class ChoiceManager : MonoBehaviour
 
     // Temp ObjectPool 적용 예정
     [SerializeField]
-    GameObject choiceObject, choiceObjectOne, choiceObjectTwo, choiceObjectThree, choiceObjectFour;
+    GameObject choiceObject, choiceObjectOne, choiceObjectTwo, choiceObjectThree;
 
     [SerializeField]
-    Button choiceButtonOne, choiceButtonTwo, choiceButtonThree, choiceButtonFour;
+    Button choiceButtonOne, choiceButtonTwo, choiceButtonThree;
 
     [SerializeField]
-    Text choiceTextOne, choiceTextTwo, choiceTextThree, choiceTextFour;
+    Text choiceTextOne, choiceTextTwo, choiceTextThree;
 
     PlayerAction playerAction;
 
