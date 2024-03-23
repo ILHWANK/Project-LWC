@@ -8,18 +8,9 @@ using WHDle.Util.Define;
 using WHDle.Stage;
 using BackEnd;
 
-public class MainUI : MonoBehaviour
+public class MainUIManager : MonoBehaviour
 {
-    public enum DialogurType
-    {
-        Context,
-        Letter,
-        Narration
-    }
-
-    public static MainUI Instance;
-
-    [SerializeField] DialogueManager dialogueManager;
+    public static MainUIManager Instance;
 
     // BottomUI
     [SerializeField]
@@ -29,11 +20,13 @@ public class MainUI : MonoBehaviour
     Button interactionButton, backButton;
 
     // StoryUI
-    [SerializeField]
-    GameObject nextObject, skipObject, contextObject, selectListOneObject, selectListTwoObject, selectListThreeObject;
+    //[SerializeField]
+    //GameObject nextObject, skipObject, contextObject, selectListOneObject, selectListTwoObject, selectListThreeObject;
 
     [SerializeField]
     Button nextButtonBackGround;
+
+    DialogueManager dialogueManager;
 
     void Start()
     {
@@ -45,7 +38,7 @@ public class MainUI : MonoBehaviour
         backButton.onClick.AddListener(OnClick_BottomUI_Button_Back);
 
         // Set
-		SetShowStory(false);
+        dialogueManager.SetShowStory(false);
     }
 
     void Update()
@@ -53,6 +46,7 @@ public class MainUI : MonoBehaviour
         
     }
 
+    /*
     void SetShowStory(bool pIsStoryShow){
         topObject.SetActive(!pIsStoryShow);
         bottomObject.SetActive(!pIsStoryShow);
@@ -60,6 +54,7 @@ public class MainUI : MonoBehaviour
         skipObject.SetActive(pIsStoryShow);
         contextObject.SetActive(pIsStoryShow);
     }
+    */
 
     void OnClick_ButtonUI_Button_Interaction()
     { 

@@ -4,20 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
-{
+{ 
     // BottomUI
     [SerializeField]
     GameObject topObject, bottomObject;
 
     // StoryUI
     [SerializeField]
-    GameObject nextObject, characterObject, skipObject, contextObject, choicetListObject;
+    GameObject nextObject, characterObject, skipObject, contextUpObject, contextDownObject, letterObject, narrationObject, choicetListObject;
 
     [SerializeField]
     Button nextButtonBackGround, selectListOneButton, selectListTwoButton, selectListThreeButton;
 
     [SerializeField]
-    Text backgroundText, nameText;
+    Text nameUpText, contextUpText, nameDownText, contextDownText, letterText, narrationText;
 
     [SerializeField]
     Transform tempTaregt;
@@ -30,6 +30,9 @@ public class DialogueManager : MonoBehaviour
 
     //
     PlayerAction playerAction;
+
+    //
+    DialogueType currentDialogueType;
 
     Dialogue[] dialogues;
     bool isStoryPlay = false;
@@ -92,8 +95,7 @@ public class DialogueManager : MonoBehaviour
                 isNext = false;
                 isNextStory = false;
 
-                backgroundText.text = "";
-                nameText.text = "";
+                ResetText();
 
                 dialogueCoroutine = DialoguePlayCoroutine();
 
@@ -134,14 +136,60 @@ public class DialogueManager : MonoBehaviour
         return dialogueEvent.dialogues;
     }
 
-    void SetShowStory(bool pIsStoryShow)
+    public void SetShowStory(bool pIsStoryShow)
     {
         topObject.SetActive(!pIsStoryShow);
         bottomObject.SetActive(!pIsStoryShow);
         nextObject.SetActive(pIsStoryShow);
         skipObject.SetActive(pIsStoryShow);
         characterObject.SetActive(pIsStoryShow);
-        contextObject.SetActive(pIsStoryShow);
+
+        if (pIsStoryShow)
+        {
+            contextUpObject.SetActive(false);
+            contextDownObject.SetActive(false);
+            letterObject.SetActive(false);
+            narrationObject.SetActive(false);
+
+            switch (currentDialogueType)
+            {
+                case DialogueType.ContextUp:
+                    {
+                        contextUpObject.SetActive(true);
+                        break;
+                    }
+                case DialogueType.ContextDown:
+                    {
+                        contextDownObject.SetActive(true);
+                        break;
+                    }
+                case DialogueType.Letter:
+                    {
+                        letterObject.SetActive(true);
+                        break;
+                    }
+                case DialogueType.Narration:
+                    {
+                        narrationObject.SetActive(true);
+                        break;
+                    }
+                default:
+                    {
+                        contextUpObject.SetActive(false);
+                        contextDownObject.SetActive(false);
+                        letterObject.SetActive(false);
+                        narrationObject.SetActive(false);
+                        break;
+                    }
+            }
+        }
+        else
+        {
+            contextUpObject.SetActive(false);
+            contextDownObject.SetActive(false);
+            letterObject.SetActive(false);
+            narrationObject.SetActive(false);
+        }
 
         StartCoroutine(CameraAction());
     }
@@ -209,10 +257,12 @@ public class DialogueManager : MonoBehaviour
 
     void ShowStory(Dialogue[] pStorys)
     {
+        if (dialogues[lineIndex].dialogueType != DialogueType.None)
+            currentDialogueType = dialogues[lineIndex].dialogueType;
+
         SetShowStory(true);
 
-        backgroundText.text = "";
-        nameText.text = "";
+        ResetText();
 
         dialogues = pStorys;
 
@@ -253,7 +303,32 @@ public class DialogueManager : MonoBehaviour
 
         fontConfiguration.fontColor = FontColor.Black;
 
-        nameText.text = dialogues[lineIndex].characterName;
+        string nameText = dialogues[lineIndex].characterName;
+
+        DialogueType dialogueType = dialogues[lineIndex].dialogueType;
+
+        switch (dialogueType)
+        {
+            case DialogueType.ContextUp:
+                {
+                    nameUpText.text = nameText;
+
+                    break;
+                }
+            case DialogueType.ContextDown:
+                {
+                    nameDownText.text = nameText;
+
+                    break;
+                }
+            default:
+                {
+                    nameUpText.text = "";
+                    nameDownText.text = "";
+
+                    break;
+                }
+        }
 
         for (int i = 0; i < context.Length; ++i)
         {
@@ -305,7 +380,33 @@ public class DialogueManager : MonoBehaviour
             {
                 letter = letterFont(letter, fontConfiguration);
 
-                backgroundText.text += letter;
+                switch (dialogueType)
+                {
+                    case DialogueType.ContextUp:
+                        {
+                            contextUpText.text += letter;
+                            break;
+                        }
+                    case DialogueType.ContextDown:
+                        {
+                            contextDownText.text += letter;
+                            break;
+                        }
+                    case DialogueType.Narration:
+                        {
+                            narrationText.text += letter;
+                            break;
+                        }
+                    case DialogueType.Letter:
+                        {
+                            letterText.text += letter;
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
 
                 yield return new WaitForSeconds(textDelay);
             }
@@ -367,6 +468,16 @@ public class DialogueManager : MonoBehaviour
         }
 
         return pLetter;
+    }
+
+    void ResetText()
+    {
+        nameUpText.text = "";
+        contextUpText.text = "";
+        nameDownText.text = "";
+        contextDownText.text = "";
+        letterText.text = "";
+        narrationText.text = "";
     }
 
     public void SetIsNextStory()

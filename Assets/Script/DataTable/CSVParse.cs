@@ -28,7 +28,7 @@ public class CSVParse : MonoBehaviour
                     List<string> contextList = new List<string>();
                     List<CameraType> cameraActionList = new List<CameraType>();
                     List<string> spriteList = new List<string>();
-                    List<DialogueType> dialogueTypeList = new List<DialogueType>();
+                    //List<DialogueType> dialogueTypeList = new List<DialogueType>();
 
                     do
                     {
@@ -39,7 +39,7 @@ public class CSVParse : MonoBehaviour
                         if (row[7] != "")
                             dialogue.choiceGroup = row[7].ToString();
 
-                        dialogueTypeList.Add(GetDialogueType(row[8]));
+                        //dialogueTypeList.Add(GetDialogueType(row[8]));
 
                         if (++i < dialogueData.Length)
                         {
@@ -55,6 +55,7 @@ public class CSVParse : MonoBehaviour
                     dialogue.contexts = contextList.ToArray();
                     dialogue.spriteNames = spriteList.ToArray();
                     dialogue.cameraActions = cameraActionList.ToArray();
+                    dialogue.dialogueType = GetDialogueType(row[8]);
 
                     dialogueList.Add(dialogue);
                 }
@@ -195,19 +196,41 @@ public class CSVParse : MonoBehaviour
     {
         DialogueType dialogueType;
 
-        string cameraTypeString = pDialogueType.ToString();
+        string dialogueTypeString = pDialogueType.ToString();
 
-        switch (cameraTypeString)
+        switch (dialogueTypeString)
         {
-            case "None":
+            case "ContextUp":
                 {
-                    dialogueType = DialogueType.None;
+                    dialogueType = DialogueType.ContextUp;
 
                     break;
                 }
+            case "ContextDown":
+                {
+                    dialogueType = DialogueType.ContextDown;
+
+                    break;
+                }
+            case "Narration":
+                {
+                    dialogueType = DialogueType.Narration;
+
+                    break;
+                }
+
+            case "Letter" :
+                {
+                    dialogueType = DialogueType.Letter;
+
+                    break;
+                }
+
             default:
                 {
-                    dialogueType = DialogueType.None;
+                    //dialogueType = DialogueType.None;
+
+                    dialogueType = DialogueType.Narration;
 
                     break;
                 }

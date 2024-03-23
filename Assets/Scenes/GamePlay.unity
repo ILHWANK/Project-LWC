@@ -2021,7 +2021,7 @@ GameObject:
   - component: {fileID: 286760927}
   - component: {fileID: 286760926}
   m_Layer: 5
-  m_Name: BackGround_Text
+  m_Name: ConextUp_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2586,7 +2586,7 @@ GameObject:
   - component: {fileID: 547342522}
   - component: {fileID: 547342521}
   m_Layer: 5
-  m_Name: BackGround_Text
+  m_Name: ContextDown_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6750,14 +6750,21 @@ MonoBehaviour:
   nextObject: {fileID: 1596433652}
   characterObject: {fileID: 624023524}
   skipObject: {fileID: 1769679917}
-  contextObject: {fileID: 1317053143}
-  choicetListObject: {fileID: 0}
+  contextUpObject: {fileID: 1317053143}
+  contextDownObject: {fileID: 1535440609}
+  letterObject: {fileID: 1626498808}
+  narrationObject: {fileID: 1314363523}
+  choicetListObject: {fileID: 284963308}
   nextButtonBackGround: {fileID: 730344829}
   selectListOneButton: {fileID: 950869624}
   selectListTwoButton: {fileID: 1930900392}
   selectListThreeButton: {fileID: 406595281}
-  backgroundText: {fileID: 286760926}
-  nameText: {fileID: 1354820002}
+  nameUpText: {fileID: 1354820002}
+  contextUpText: {fileID: 286760926}
+  nameDownText: {fileID: 478700651}
+  contextDownText: {fileID: 547342521}
+  letterText: {fileID: 1902276652}
+  narrationText: {fileID: 187415732}
   tempTaregt: {fileID: 4842669}
   tempCamera: {fileID: 274301226}
   dialogueEvent:
