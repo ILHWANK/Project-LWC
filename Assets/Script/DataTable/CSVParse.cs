@@ -24,11 +24,11 @@ public class CSVParse : MonoBehaviour
                 {
                     Dialogue dialogue = new Dialogue();
                     dialogue.characterName = row[3];
+                    dialogue.dialogueType = GetDialogueType(row[8]);
 
                     List<string> contextList = new List<string>();
                     List<CameraType> cameraActionList = new List<CameraType>();
                     List<string> spriteList = new List<string>();
-                    //List<DialogueType> dialogueTypeList = new List<DialogueType>();
 
                     do
                     {
@@ -55,7 +55,6 @@ public class CSVParse : MonoBehaviour
                     dialogue.contexts = contextList.ToArray();
                     dialogue.spriteNames = spriteList.ToArray();
                     dialogue.cameraActions = cameraActionList.ToArray();
-                    dialogue.dialogueType = GetDialogueType(row[8]);
 
                     dialogueList.Add(dialogue);
                 }
@@ -198,6 +197,8 @@ public class CSVParse : MonoBehaviour
 
         string dialogueTypeString = pDialogueType.ToString();
 
+        Debug.Log("확인용 : " + dialogueTypeString);
+
         switch (dialogueTypeString)
         {
             case "ContextUp":
@@ -228,9 +229,7 @@ public class CSVParse : MonoBehaviour
 
             default:
                 {
-                    //dialogueType = DialogueType.None;
-
-                    dialogueType = DialogueType.Narration;
+                    dialogueType = DialogueType.None;
 
                     break;
                 }

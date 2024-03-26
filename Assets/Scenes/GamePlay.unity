@@ -1759,7 +1759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 274301226}
   interactionButton: {fileID: 1115445568}
-  tempdialogueGroup: Day2_Animal
+  tempdialogueGroup: Prologue_Intro
 --- !u!50 &235201600
 Rigidbody2D:
   serializedVersion: 4
@@ -1821,7 +1821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joyStick: {fileID: 1740064797}
   speed: 1
-  currentDialogueGroup: Day6_Future
+  currentDialogueGroup: Prologue_Intro
 --- !u!95 &235201603
 Animator:
   serializedVersion: 4
@@ -6701,18 +6701,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a34e9eded6b64778a87b8a2c0ff0055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 0}
   topObject: {fileID: 1517977034}
   bottomObject: {fileID: 1681279880}
   interactionObject: {fileID: 996736816}
   interactionButton: {fileID: 1115445568}
   backButton: {fileID: 157707582}
-  nextObject: {fileID: 1596433652}
-  skipObject: {fileID: 1769679917}
-  contextObject: {fileID: 1317053143}
-  selectListOneObject: {fileID: 950869622}
-  selectListTwoObject: {fileID: 1930900390}
-  selectListThreeObject: {fileID: 406595279}
   nextButtonBackGround: {fileID: 730344829}
 --- !u!4 &1463860092
 Transform:
@@ -13977,7 +13970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

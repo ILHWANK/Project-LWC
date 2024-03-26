@@ -175,7 +175,7 @@ public class DialogueManager : MonoBehaviour
                     }
                 default:
                     {
-                        contextUpObject.SetActive(false);
+                        contextUpObject.SetActive(true);
                         contextDownObject.SetActive(false);
                         letterObject.SetActive(false);
                         narrationObject.SetActive(false);
@@ -404,6 +404,7 @@ public class DialogueManager : MonoBehaviour
                         }
                     default:
                         {
+                            contextUpText.text += letter;
                             break;
                         }
                 }
