@@ -17,7 +17,7 @@ public class MainUIManager : MonoBehaviour
     GameObject topObject, bottomObject, interactionObject;
 
     [SerializeField] 
-    Button interactionButton, backButton;
+    Button interactionButton, backButton, skipButton;
 
     // StoryUI
     //[SerializeField]
@@ -27,34 +27,27 @@ public class MainUIManager : MonoBehaviour
     Button nextButtonBackGround;
 
     DialogueManager dialogueManager;
+    SplashManager splashManager;
 
     void Start()
     {
         dialogueManager = FindObjectOfType<DialogueManager>();
+        splashManager = FindObjectOfType<SplashManager>();
 
         // Add Event
         interactionButton.onClick.AddListener(OnClick_ButtonUI_Button_Interaction);
         nextButtonBackGround.onClick.AddListener(OnClick_Next_Button_BackGround);
         backButton.onClick.AddListener(OnClick_BottomUI_Button_Back);
+        skipButton.onClick.AddListener(OnClick_BottomUI_Button_Skip);
 
         // Set
-        dialogueManager.SetShowStory(false);
+        dialogueManager.SetDialogue(false);
     }
 
     void Update()
     {
         
     }
-
-    /*
-    void SetShowStory(bool pIsStoryShow){
-        topObject.SetActive(!pIsStoryShow);
-        bottomObject.SetActive(!pIsStoryShow);
-        nextObject.SetActive(pIsStoryShow);
-        skipObject.SetActive(pIsStoryShow);
-        contextObject.SetActive(pIsStoryShow);
-    }
-    */
 
     void OnClick_ButtonUI_Button_Interaction()
     { 
@@ -73,4 +66,9 @@ public class MainUIManager : MonoBehaviour
         GameManager.Instance.LoadScene(SceneType.Title, StageManager.Instance.ChangeStage(), StageManager.Instance.OnChangeTitleScene);
     }
 
+    void OnClick_BottomUI_Button_Skip()
+    {
+        dialogueManager.SetDialogue(false);
+        splashManager.Reset();
+    }
 }

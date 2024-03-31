@@ -1759,7 +1759,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 274301226}
   interactionButton: {fileID: 1115445568}
-  tempdialogueGroup: Prologue_Intro
 --- !u!50 &235201600
 Rigidbody2D:
   serializedVersion: 4
@@ -1820,7 +1819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joyStick: {fileID: 1740064797}
-  speed: 1
+  speed: 3
   currentDialogueGroup: Prologue_Intro
 --- !u!95 &235201603
 Animator:
@@ -6706,6 +6705,7 @@ MonoBehaviour:
   interactionObject: {fileID: 996736816}
   interactionButton: {fileID: 1115445568}
   backButton: {fileID: 157707582}
+  skipButton: {fileID: 807491537}
   nextButtonBackGround: {fileID: 730344829}
 --- !u!4 &1463860092
 Transform:
@@ -11021,7 +11021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1769679918
 RectTransform:
   m_ObjectHideFlags: 0

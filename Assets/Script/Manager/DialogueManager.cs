@@ -32,7 +32,7 @@ public class DialogueManager : MonoBehaviour
     PlayerAction playerAction;
 
     //
-    DialogueType currentDialogueType;
+    DialogueType currentDialogueType = DialogueType.ContextUp;
 
     Dialogue[] dialogues;
     bool isStoryPlay = false;
@@ -78,7 +78,7 @@ public class DialogueManager : MonoBehaviour
         playerAction = FindObjectOfType<PlayerAction>();
 
         // Set
-        SetShowStory(false);
+        SetDialogue(false);
 
         choiceManager = FindObjectOfType<ChoiceManager>();
 
@@ -136,10 +136,13 @@ public class DialogueManager : MonoBehaviour
         return dialogueEvent.dialogues;
     }
 
-    public void SetShowStory(bool pIsStoryShow)
+    public void SetDialogue(bool pIsStoryShow)
     {
+        // false
         topObject.SetActive(!pIsStoryShow);
         bottomObject.SetActive(!pIsStoryShow);
+
+        // true
         nextObject.SetActive(pIsStoryShow);
         skipObject.SetActive(pIsStoryShow);
         characterObject.SetActive(pIsStoryShow);
@@ -252,7 +255,7 @@ public class DialogueManager : MonoBehaviour
         dialogues = null;
         isNext = false;
 
-        SetShowStory(false);
+        SetDialogue(false);
     }
 
     void ShowStory(Dialogue[] pStorys)
@@ -260,7 +263,7 @@ public class DialogueManager : MonoBehaviour
         if (dialogues[lineIndex].dialogueType != DialogueType.None)
             currentDialogueType = dialogues[lineIndex].dialogueType;
 
-        SetShowStory(true);
+        SetDialogue(true);
 
         ResetText();
 
@@ -305,9 +308,12 @@ public class DialogueManager : MonoBehaviour
 
         string nameText = dialogues[lineIndex].characterName;
 
-        DialogueType dialogueType = dialogues[lineIndex].dialogueType;
+        currentDialogueType
+            = dialogues[lineIndex].dialogueType != DialogueType.None ? dialogues[lineIndex].dialogueType : currentDialogueType;
 
-        switch (dialogueType)
+        SetDialogue(true);
+
+        switch (currentDialogueType)
         {
             case DialogueType.ContextUp:
                 {
@@ -329,6 +335,8 @@ public class DialogueManager : MonoBehaviour
                     break;
                 }
         }
+
+        SetDialogue(true);
 
         for (int i = 0; i < context.Length; ++i)
         {
@@ -380,7 +388,7 @@ public class DialogueManager : MonoBehaviour
             {
                 letter = letterFont(letter, fontConfiguration);
 
-                switch (dialogueType)
+                switch (currentDialogueType)
                 {
                     case DialogueType.ContextUp:
                         {
