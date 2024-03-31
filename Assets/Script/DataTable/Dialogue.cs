@@ -12,6 +12,10 @@ public enum CameraType
 public enum DialogueType
 {
     None,
+    ContextUp,
+    ContextDown,
+    Narration,
+    Letter,
 }
 
 [System.Serializable]
@@ -27,6 +31,9 @@ public class Dialogue
 
     [HideInInspector]
     public CameraType[] cameraActions;
+
+    [HideInInspector]
+    public DialogueType dialogueType;
 }
 
 [System.Serializable]

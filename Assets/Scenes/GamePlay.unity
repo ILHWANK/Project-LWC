@@ -1759,7 +1759,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 274301226}
   interactionButton: {fileID: 1115445568}
-  tempdialogueGroup: Day2_Animal
 --- !u!50 &235201600
 Rigidbody2D:
   serializedVersion: 4
@@ -1820,8 +1819,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joyStick: {fileID: 1740064797}
-  speed: 1
-  currentDialogueGroup: Day6_Future
+  speed: 3
+  currentDialogueGroup: Prologue_Intro
 --- !u!95 &235201603
 Animator:
   serializedVersion: 4
@@ -2021,7 +2020,7 @@ GameObject:
   - component: {fileID: 286760927}
   - component: {fileID: 286760926}
   m_Layer: 5
-  m_Name: BackGround_Text
+  m_Name: ConextUp_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2586,7 +2585,7 @@ GameObject:
   - component: {fileID: 547342522}
   - component: {fileID: 547342521}
   m_Layer: 5
-  m_Name: BackGround_Text
+  m_Name: ContextDown_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6701,18 +6700,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a34e9eded6b64778a87b8a2c0ff0055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 0}
   topObject: {fileID: 1517977034}
   bottomObject: {fileID: 1681279880}
   interactionObject: {fileID: 996736816}
   interactionButton: {fileID: 1115445568}
   backButton: {fileID: 157707582}
-  nextObject: {fileID: 1596433652}
-  skipObject: {fileID: 1769679917}
-  contextObject: {fileID: 1317053143}
-  selectListOneObject: {fileID: 950869622}
-  selectListTwoObject: {fileID: 1930900390}
-  selectListThreeObject: {fileID: 406595279}
+  skipButton: {fileID: 807491537}
   nextButtonBackGround: {fileID: 730344829}
 --- !u!4 &1463860092
 Transform:
@@ -6750,14 +6743,21 @@ MonoBehaviour:
   nextObject: {fileID: 1596433652}
   characterObject: {fileID: 624023524}
   skipObject: {fileID: 1769679917}
-  contextObject: {fileID: 1317053143}
-  choicetListObject: {fileID: 0}
+  contextUpObject: {fileID: 1317053143}
+  contextDownObject: {fileID: 1535440609}
+  letterObject: {fileID: 1626498808}
+  narrationObject: {fileID: 1314363523}
+  choicetListObject: {fileID: 284963308}
   nextButtonBackGround: {fileID: 730344829}
   selectListOneButton: {fileID: 950869624}
   selectListTwoButton: {fileID: 1930900392}
   selectListThreeButton: {fileID: 406595281}
-  backgroundText: {fileID: 286760926}
-  nameText: {fileID: 1354820002}
+  nameUpText: {fileID: 1354820002}
+  contextUpText: {fileID: 286760926}
+  nameDownText: {fileID: 478700651}
+  contextDownText: {fileID: 547342521}
+  letterText: {fileID: 1902276652}
+  narrationText: {fileID: 187415732}
   tempTaregt: {fileID: 4842669}
   tempCamera: {fileID: 274301226}
   dialogueEvent:
@@ -11021,7 +11021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1769679918
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13970,7 +13970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
