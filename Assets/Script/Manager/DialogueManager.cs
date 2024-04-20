@@ -46,6 +46,7 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator dialogueCoroutine = null;
 
+    MainUIManager mainUIManager;
     ChoiceManager choiceManager;
 
     SpriteManager spriteManager;
@@ -75,6 +76,7 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         //
+        mainUIManager = FindObjectOfType<MainUIManager>();
         playerAction = FindObjectOfType<PlayerAction>();
 
         // Set
@@ -262,6 +264,11 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogues[lineIndex].dialogueType != DialogueType.None)
             currentDialogueType = dialogues[lineIndex].dialogueType;
+
+        if (dialogues[lineIndex].skipContext != "") {
+            mainUIManager.OptionMainText = dialogues[lineIndex].skipContext;
+            mainUIManager.OptionSubText = "스토리를 Skip 하시겠습니?";
+        }
 
         SetDialogue(true);
 

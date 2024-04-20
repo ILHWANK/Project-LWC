@@ -16,18 +16,24 @@ public class MainUIManager : MonoBehaviour
     [SerializeField]
     GameObject topObject, bottomObject, interactionObject;
 
-    [SerializeField] 
+    [SerializeField]
     Button interactionButton, backButton, skipButton;
 
-    // StoryUI
-    //[SerializeField]
-    //GameObject nextObject, skipObject, contextObject, selectListOneObject, selectListTwoObject, selectListThreeObject;
+    // OptionPopup
+    [SerializeField]
+    GameObject optionPopup;
+
+    [SerializeField]
+    Text optionMainText, optionSubText;
 
     [SerializeField]
     Button nextButtonBackGround;
 
     DialogueManager dialogueManager;
     SplashManager splashManager;
+
+    public string OptionMainText { get; set; }
+    public string OptionSubText  { get; set; }
 
     void Start()
     {
@@ -49,6 +55,7 @@ public class MainUIManager : MonoBehaviour
         
     }
 
+    // OnClick
     void OnClick_ButtonUI_Button_Interaction()
     { 
         dialogueManager.TempPlayStory();
@@ -68,7 +75,31 @@ public class MainUIManager : MonoBehaviour
 
     void OnClick_BottomUI_Button_Skip()
     {
+        OpenOptionPopup();
+    }
+
+    public void OnClick_NoButton()
+    {
+        optionPopup.SetActive(false);
+    }
+
+    public void OnClick_YesClick()
+    {
         dialogueManager.SetDialogue(false);
         splashManager.Reset();
+
+        optionPopup.SetActive(false);
+
+        OptionMainText = "";
+        OptionSubText = "";
+    }
+
+    // Evnet
+    public void OpenOptionPopup()
+    {
+        optionPopup.SetActive(true);
+
+        optionMainText.text = OptionMainText;
+        optionSubText.text = OptionSubText;
     }
 }

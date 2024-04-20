@@ -25,6 +25,7 @@ public class CSVParse : MonoBehaviour
                     Dialogue dialogue = new Dialogue();
                     dialogue.characterName = row[3];
                     dialogue.dialogueType = GetDialogueType(row[8]);
+                    dialogue.skipContext = row[9].Replace("\\n", "\n");
 
                     List<string> contextList = new List<string>();
                     List<CameraType> cameraActionList = new List<CameraType>();
@@ -32,7 +33,7 @@ public class CSVParse : MonoBehaviour
 
                     do
                     {
-                        contextList.Add(row[4]); // column
+                        contextList.Add(row[4].Replace("\\n", "\n")); // column
                         spriteList.Add(row[5]);
                         cameraActionList.Add(GetCameraType(row[6]));
 
@@ -196,8 +197,6 @@ public class CSVParse : MonoBehaviour
         DialogueType dialogueType;
 
         string dialogueTypeString = pDialogueType.ToString();
-
-        Debug.Log("확인용 : " + dialogueTypeString);
 
         switch (dialogueTypeString)
         {
