@@ -68,7 +68,7 @@ public class MainUIManager : MonoBehaviour
 
     void OnClick_BottomUI_Button_Back()
     {
-        Backend.BMember.Logout();
+        //Backend.BMember.Logout();
 
         GameManager.Instance.LoadScene(SceneType.Title, StageManager.Instance.ChangeStage(), StageManager.Instance.OnChangeTitleScene);
     }

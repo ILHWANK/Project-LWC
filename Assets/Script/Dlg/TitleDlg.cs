@@ -136,7 +136,7 @@ public class TitleDlg : MonoBehaviour
             }
             else
             {
-                errorText.text = "구글 회원가입 실패";
+                errorText.text = "???? ???????? ????";
 
                 enableErrorPanel();
             }
@@ -178,7 +178,7 @@ public class TitleDlg : MonoBehaviour
             }
             else
             {
-                errorText.text = "구글 로그인 에러!";
+                errorText.text = "???? ?????? ????!";
                 enableErrorPanel();
             }
         });
@@ -194,7 +194,7 @@ public class TitleDlg : MonoBehaviour
             }
             else
             {
-                errorText.text = "게스트 로그인 에러!";
+                errorText.text = "?????? ?????? ????!";
 
                 Backend.BMember.DeleteGuestInfo();
 
@@ -212,18 +212,27 @@ public class TitleDlg : MonoBehaviour
     {
         saveLoadPanel.SetActive(true);
 
-        loadGameButton.interactable = !ServerManager.Instance.isFirstLogin;
+        //FixMe
+        //loadGameButton.interactable = !ServerManager.Instance.isFirstLogin;
     }
 
     public void LoadNewGame()
     {
-        ServerManager.Instance.isFirstLogin = true;
-        LoadGame();
+        var inventorys = new List<string>();
+
+        PlayerData playerData = new PlayerData(1, "WakeUp", inventorys);
+
+        SaveDataManager.FileSave(playerData, "playerData");
+
+        //ServerManager.Instance.isFirstLogin = true;
+        //LoadGame();
     }
 
     public void LoadGame()
     {
-        saveLoadPanel.SetActive(false);
+        //saveLoadPanel.SetActive(false);
+
+        var loadData = SaveDataManager.FileLoad("playerData");
 
         GameManager.Instance.TitleController.LoadComplete = true;
     }

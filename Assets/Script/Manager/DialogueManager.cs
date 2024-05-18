@@ -129,7 +129,7 @@ public class DialogueManager : MonoBehaviour
 
     public Dialogue[] GetStory()
     {
-        CSVDataManager.Instance.SetDialogueData(playerAction.currentDialogueGroup);
+        CSVDataManager.Instance.SetDialogueData(playerAction?.currentDialogueGroup);
 
         int endIndex = CSVDataManager.Instance.GetEndIndex(CSVDataManager.DataType.Dialogue);
 
