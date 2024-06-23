@@ -29,6 +29,14 @@ public class MainUIManager : MonoBehaviour
     [SerializeField]
     Button nextButtonBackGround;
 
+    // MiniGame
+    [SerializeField]
+    Minigame miniGame;
+
+    // Player
+    [SerializeField]
+    PlayerAction playerAction;
+
     DialogueManager dialogueManager;
     SplashManager splashManager;
 
@@ -37,6 +45,8 @@ public class MainUIManager : MonoBehaviour
 
     void Start()
     {
+        playerAction = FindObjectOfType<PlayerAction>();
+
         dialogueManager = FindObjectOfType<DialogueManager>();
         splashManager = FindObjectOfType<SplashManager>();
 
@@ -57,8 +67,39 @@ public class MainUIManager : MonoBehaviour
 
     // OnClick
     void OnClick_ButtonUI_Button_Interaction()
-    { 
-        dialogueManager.TempPlayStory();
+    {
+        var objectType = playerAction.InteractionType;
+
+        Debug.Log(objectType);
+
+        if (objectType == ObjectController.ObjectType.Letter)
+        {
+            dialogueManager.TempPlayStory();
+        }
+        else if (objectType == ObjectController.ObjectType.MiniGame1)
+        {
+            miniGame.SetLevel(0);
+
+            miniGame.Open();
+
+            miniGame.GameStart();
+        }
+        else if (objectType == ObjectController.ObjectType.MiniGame2)
+        {
+            miniGame.SetLevel(1);
+
+            miniGame.Open();
+
+            miniGame.GameStart();
+        }
+        else if (objectType == ObjectController.ObjectType.MiniGame3)
+        {
+            miniGame.SetLevel(2);
+
+            miniGame.Open();
+
+            miniGame.GameStart();
+        }
     }
 
     void OnClick_Next_Button_BackGround()

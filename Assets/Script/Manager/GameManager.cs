@@ -18,7 +18,7 @@ namespace WHDle.Util
     {
         public TitleController TitleController;
 
-        public LoginType loginType = LoginType.Null;
+        public LoginType loginType = LoginType.Guest;
 
         [SerializeField]
         private VOUser boUser;

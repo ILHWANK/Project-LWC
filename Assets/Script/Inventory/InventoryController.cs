@@ -36,7 +36,7 @@ namespace WHDle.Controller
 
         private ItemType currentInventoryType = ItemType.PI;
 
-        public void OpenInventory()
+        public void OpenInventor()
         {
             inventoryObject.SetActive(true);
 

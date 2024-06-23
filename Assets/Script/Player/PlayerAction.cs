@@ -5,17 +5,19 @@ using UnityEngine;
 public class PlayerAction : MonoBehaviour
 {
     // Joystick
-    public DynamicJoystick joyStick;
-    public float speed;
+    [SerializeField] DynamicJoystick joyStick;
+    [SerializeField] float speed;
 
-    Rigidbody2D rb;
-    Vector2 moveVec;
+    [SerializeField] Rigidbody2D rb;
+    [SerializeField] Vector2 moveVec;
 
     // MoveAnimation
-    Animator animator;
+    [SerializeField] Animator animator;
 
-    [SerializeField]
     public string currentDialogueGroup;
+
+    public ObjectController.ObjectType InteractionType;
+
 
     void Awake()
     {
@@ -73,7 +75,8 @@ public class PlayerAction : MonoBehaviour
 
     void Update()
     {
-        
+
+
     }
 
     void LateUpdate()

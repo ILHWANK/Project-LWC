@@ -12,7 +12,7 @@ public class Minigame : MonoBehaviour
 
     [SerializeField] private GameObject movedBar;
 
-    [SerializeField] private Button stopButton;
+    [SerializeField] private Button stopButton, closeButton;
 
     private float outterRadius = 0f;
     private float averageRadius = 0f;
@@ -88,6 +88,16 @@ public class Minigame : MonoBehaviour
 
     #endregion
 
+    public void Open()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void OnClickClose()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void SetLevel(Level level) { this.level = level; }
     public void GameStart() 
     { 
@@ -124,7 +134,7 @@ public class Minigame : MonoBehaviour
         correctRangeImage.fillAmount = maxCorrectRange / 100f;
     }
 
-    public void PushButton()
+    public void OnClickPush()
     {
         //TEST
         buttons.ForEach(button => button.interactable = true);

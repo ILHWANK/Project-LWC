@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Letter
   - Interaction
+  - MiniGame1
   layers:
   - Default
   - TransparentFX

@@ -15,9 +15,11 @@ public class InteractionController : MonoBehaviour
     bool isCollide = false;
     bool isInteraction = false;
 
+    PlayerAction playerAction;
     DialogueManager dialogueManager;
 
     void Start(){
+        playerAction = FindObjectOfType<PlayerAction>();
         dialogueManager = FindObjectOfType<DialogueManager>();
         interactionButton.interactable = false;
     }
@@ -46,6 +48,12 @@ public class InteractionController : MonoBehaviour
         if (pCollider2D.gameObject.tag == "Interaction"){
             if(!isCollide){
                 isCollide = true;
+
+                var objectController = pCollider2D.gameObject.GetComponent<ObjectController>();
+                var objectType = objectController.GetObjectType();
+
+                playerAction.InteractionType = objectType;
+
                 interactionButton.interactable = true;
             }
         }
