@@ -146,10 +146,14 @@ public class Minigame : MonoBehaviour
         if ((moveProgress >= minCorrectRange) && (moveProgress <= maxCorrectRange))
         {
             Debug.Log($"Success");
+
+            SoundManager.instance.SFXPlay(SoundManager.SFXType.Success);
         }
         else
         {
             Debug.Log($"Faild");
+
+            SoundManager.instance.SFXPlay(SoundManager.SFXType.Fail);
         }
     }
 }

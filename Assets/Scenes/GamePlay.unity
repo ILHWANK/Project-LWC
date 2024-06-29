@@ -2299,7 +2299,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   moveVec: {x: 0, y: 0}
   animator: {fileID: 0}
-  currentDialogueGroup: Day1_Western
+  currentDialogueGroup: Prologue_Intro
   InteractionType: 0
 --- !u!95 &235201603
 Animator:
@@ -7521,7 +7521,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1115445569}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1674966939}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1115445569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10819,6 +10831,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a214356bf00406f8e953b21d4883c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bgmClip: {fileID: 8300000, guid: 475f4837af487ce4a9e68bb227455e4c, type: 3}
+  bgmVolume: 0.15
+  sfxClips:
+  - {fileID: 8300000, guid: 2352822feb4caa14ebdbc0c713289f8d, type: 3}
+  - {fileID: 8300000, guid: 35cf7766e9e2aa542811e896fde57989, type: 3}
+  - {fileID: 8300000, guid: b83bf8726a7fac349a54389f0c57cda6, type: 3}
+  - {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
+  - {fileID: 8300000, guid: c5cb2ac29e89dbf43a9b644caaad45e6, type: 3}
+  sfxVolume: 2
+  channelCount: 6
 --- !u!114 &1675803463 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2117547185660225037, guid: 4b367c73d26bd453cbe433f41c8edd4d, type: 3}
@@ -10964,6 +10986,7 @@ GameObject:
   - component: {fileID: 1713883215}
   - component: {fileID: 1713883216}
   - component: {fileID: 1713883217}
+  - component: {fileID: 1713883218}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -11068,6 +11091,38 @@ MonoBehaviour:
   choiceTextOne: {fileID: 1096700622}
   choiceTextTwo: {fileID: 360161760}
   choiceTextThree: {fileID: 1767597070}
+--- !u!114 &1713883218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713883211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f7d5222ba5b00a47b73811bf3cc0644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TitleController: {fileID: 0}
+  loginType: 2
+  boUser:
+    VoAccount:
+      UId: 
+      Gold: 0
+      Day: 0
+    VoInventory:
+      voPlaceItem: []
+      voMake: []
+      SlotCounter: 0
+    VoFavorability:
+      OrientalFavorability: 0
+      RenaissanceFavorability: 0
+      AnimalsKingdomFavorability: 0
+      ScientificCityFavorability: 0
+  sd:
+    sdMakes: []
+    sdPlaces: []
+    sdPlaceItems: []
 --- !u!1001 &1740064795
 PrefabInstance:
   m_ObjectHideFlags: 0

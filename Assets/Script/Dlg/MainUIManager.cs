@@ -70,6 +70,8 @@ public class MainUIManager : MonoBehaviour
     {
         var objectType = playerAction.InteractionType;
 
+        SoundManager.instance.SFXPlay(SoundManager.SFXType.Interaction);
+
         Debug.Log(objectType);
 
         if (objectType == ObjectController.ObjectType.Letter)
@@ -111,7 +113,8 @@ public class MainUIManager : MonoBehaviour
     {
         //Backend.BMember.Logout();
 
-        GameManager.Instance.LoadScene(SceneType.Title, StageManager.Instance.ChangeStage(), StageManager.Instance.OnChangeTitleScene);
+        //GameManager.Instance.LoadScene(SceneType.Title, StageManager.Instance.ChangeStage(), StageManager.Instance.OnChangeTitleScene);
+        GameManager.Instance.LoadScene(SceneType.Title, null, StageManager.Instance.OnChangeTitleScene);
     }
 
     void OnClick_BottomUI_Button_Skip()

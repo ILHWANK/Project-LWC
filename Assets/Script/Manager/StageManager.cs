@@ -29,6 +29,7 @@ namespace WHDle.Stage
             titleController.RestartLogin();
         }
 
+        /*
         public IEnumerator ChangeStage()
         {
             SceneManager.MoveGameObjectToScene(currentStage, SceneManager.GetSceneByName(SceneType.GamePlay.ToString()));
@@ -38,5 +39,6 @@ namespace WHDle.Stage
 
             yield return null;
         }
+        */
     }
 }

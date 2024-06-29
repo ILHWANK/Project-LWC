@@ -37,6 +37,8 @@ namespace WHDle.Util
 
             if (gameObject != null)
                 SendQueue.StartSendQueue(true);
+
+            SoundManager.instance.BGMPlay(true);
         }
 
         public void Start()

@@ -107,7 +107,8 @@ namespace WHDle.Controller {
                     break;
                 case IntroPhase.Complete:
                     var stageManager = StageManager.Instance;
-                    GameManager.Instance.LoadScene(SceneType.GamePlay, stageManager.ChangeStage());
+                    //GameManager.Instance.LoadScene(SceneType.GamePlay, stageManager.ChangeStage());
+                    GameManager.Instance.LoadScene(SceneType.GamePlay);
                     allLoaded = true;
                     LoadComplete = true;
                     break;
@@ -128,7 +129,8 @@ namespace WHDle.Controller {
                 //onPhase(++introPhase);
 
                 var stageManager = StageManager.Instance;
-                GameManager.Instance.LoadScene(SceneType.GamePlay, stageManager.ChangeStage());
+                //GameManager.Instance.LoadScene(SceneType.GamePlay, stageManager.ChangeStage());
+                GameManager.Instance.LoadScene(SceneType.GamePlay);
             }
         }
 
