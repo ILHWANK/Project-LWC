@@ -99,6 +99,13 @@ public class DialogueManager : MonoBehaviour
 
                 ResetText();
 
+                if (dialogueCoroutine != null)
+                {
+                    StopCoroutine(dialogueCoroutine);
+
+                    dialogueCoroutine = null;
+                }
+
                 dialogueCoroutine = DialoguePlayCoroutine();
 
                 if (++contextIndex < dialogues[lineIndex].contexts.Length)
@@ -248,7 +255,7 @@ public class DialogueManager : MonoBehaviour
             SplashManager.isFinish = true;
         }
     }
-
+    
     public void EndStory()
     {
         isStoryPlay = false;
@@ -276,8 +283,11 @@ public class DialogueManager : MonoBehaviour
 
         dialogues = pStorys;
 
+
         if (dialogueCoroutine != null)
         {
+            StopCoroutine(dialogueCoroutine);
+
             dialogueCoroutine = null;
         }
 
@@ -503,6 +513,7 @@ public class DialogueManager : MonoBehaviour
 
     public void TempPlayStory()
     {
+        lineIndex = 0;
         isNext = true;
         isStoryPlay = true;
         ShowStory(GetStory());

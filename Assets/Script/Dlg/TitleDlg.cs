@@ -88,7 +88,7 @@ public class TitleDlg : MonoBehaviour
 
         /*Backend.BMember.DeleteGuestInfo();*/
 
-        var guestId = Backend.BMember.GetGuestID();
+        string guestId = string.Empty; //Backend.BMember.GetGuestID();
 
         if (guestId != null && guestId != string.Empty)
         {

@@ -66,11 +66,11 @@ public class SoundManager : MonoBehaviour
     {
         if (isPlay)
         {
-            bgmPlayer.Play();
+            bgmPlayer?.Play();
         }
         else
         {
-            bgmPlayer.Stop();
+            bgmPlayer?.Stop();
         }
     }
 

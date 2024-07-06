@@ -58,6 +58,8 @@ public class MainUIManager : MonoBehaviour
 
         // Set
         dialogueManager.SetDialogue(false);
+
+        SoundManager.instance?.BGMPlay(true);
     }
 
     void Update()
@@ -85,6 +87,8 @@ public class MainUIManager : MonoBehaviour
             miniGame.Open();
 
             miniGame.GameStart();
+
+            playerAction.currentDialogueGroup = "Day1_Animal";
         }
         else if (objectType == ObjectController.ObjectType.MiniGame2)
         {
@@ -93,6 +97,8 @@ public class MainUIManager : MonoBehaviour
             miniGame.Open();
 
             miniGame.GameStart();
+
+            playerAction.currentDialogueGroup = "Day1_Western";
         }
         else if (objectType == ObjectController.ObjectType.MiniGame3)
         {
@@ -101,6 +107,8 @@ public class MainUIManager : MonoBehaviour
             miniGame.Open();
 
             miniGame.GameStart();
+
+            playerAction.currentDialogueGroup = "Day1_Oriental";
         }
     }
 

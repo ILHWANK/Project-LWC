@@ -148,12 +148,16 @@ public class Minigame : MonoBehaviour
             Debug.Log($"Success");
 
             SoundManager.instance.SFXPlay(SoundManager.SFXType.Success);
+
+            gameObject.SetActive(false);
         }
         else
         {
             Debug.Log($"Faild");
 
             SoundManager.instance.SFXPlay(SoundManager.SFXType.Fail);
+
+            gameObject.SetActive(false);
         }
     }
 }
