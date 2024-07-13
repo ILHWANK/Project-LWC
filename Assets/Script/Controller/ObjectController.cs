@@ -1,22 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectController : MonoBehaviour
+namespace Script.Controller
 {
-    public enum ObjectType
+    public class ObjectController : MonoBehaviour
     {
-        None,
-        Letter,
-        MiniGame1,
-        MiniGame2,
-        MiniGame3
-    }
+        public enum ObjectType
+        {
+            None,
+            Letter,
+            MiniGame1,
+            MiniGame2,
+            MiniGame3,
+            Witch
+        }
 
-    public ObjectType _objectType = ObjectType.None;
+        public ObjectType _objectType = ObjectType.None;
 
-    public ObjectType GetObjectType()
-    {
-        return _objectType;
+        public ObjectType GetObjectType()
+        {
+            return _objectType;
+        }
     }
 }

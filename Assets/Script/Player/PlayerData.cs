@@ -2,16 +2,22 @@ using System.Collections.Generic;
 
 public class PlayerData
 {
-    public int _day;
+    public int Day;
 
-    public string _triggerType;
+    public string TriggerType;
+    public string CurrentStoryGroup;
+    public string NextStoryGroup;
 
-    public List<string> _inventorys;
+    public List<string> Inventorys;
 
-    public PlayerData(int day, string triggerType, List<string> inventorys)
+    public PlayerData(int day, 
+                      string triggerType, string currentStoryGroup, string nextStoryGroup, 
+                      List<string> inventorys)
     {
-        _day = day;
-        _triggerType = triggerType;
-        _inventorys = inventorys;
+        Day = day;
+        TriggerType = triggerType;
+        CurrentStoryGroup = currentStoryGroup;
+        NextStoryGroup = nextStoryGroup;
+        Inventorys = inventorys;
     }
 }

@@ -219,14 +219,14 @@ public class TitleDlg : MonoBehaviour
 
     public void LoadNewGame()
     {
-        var inventorys = new List<string>();
+        var inventory = new List<string>();
 
-        PlayerData playerData = new PlayerData(1, "WakeUp", inventorys);
+        var playerData = new PlayerData(1, "WakeUp", "CurrentStoryGroup", "NextStoryGroup", inventory);
 
         SaveDataManager.FileSave(playerData, "playerData");
 
         //ServerManager.Instance.isFirstLogin = true;
-        //LoadGame();
+        LoadGame();
     }
 
     public void LoadGame()
