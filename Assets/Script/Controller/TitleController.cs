@@ -37,7 +37,7 @@ namespace WHDle.Controller {
                 
                 if (!allLoaded)
                 {
-                    nextPhase();
+                    //nextPhase();
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace WHDle.Controller {
         private IntroPhase introPhase = IntroPhase.Start;
 
         // ??????
-        public void Initialize() => onPhase(introPhase);
+        //public void Initialize() => onPhase(introPhase);
 
         public void RestartLogin()
         {
@@ -67,7 +67,11 @@ namespace WHDle.Controller {
         // introPhase?????? ???? ?????? ????
         private void onPhase(IntroPhase phase)
         {
-            switch (phase)
+            GameManager.Instance.LoadScene(SceneType.GamePlay);
+            allLoaded = true;
+            LoadComplete = true;
+            
+            /*switch (phase)
             {
                 case IntroPhase.Start:
                     LoadComplete = true;
@@ -114,7 +118,7 @@ namespace WHDle.Controller {
                     break;
                 default:
                     break;
-            }
+            }*/
         }
 
         private void nextPhase()

@@ -40,7 +40,8 @@ public class TitleDlg : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        GameManager.Instance.TitleController.LoadComplete = false;
+        
         devCloseButton.onClick.AddListener(OnClick_Announcement_Button_Close);
 
         EnablePanelAnnouncement(false);
@@ -236,6 +237,8 @@ public class TitleDlg : MonoBehaviour
         var loadData = SaveDataManager.FileLoad("playerData");
 
         GameManager.Instance.TitleController.LoadComplete = true;
+        
+        GameManager.Instance.LoadScene(SceneType.GamePlay);
     }
 
     #endregion

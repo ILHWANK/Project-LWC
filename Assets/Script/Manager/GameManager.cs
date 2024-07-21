@@ -63,22 +63,22 @@ namespace WHDle.Util
 
                 yield return SceneManager.LoadSceneAsync(SceneType.Loading.ToString());
 
-                var asyncOper = SceneManager.LoadSceneAsync(sceneType.ToString(), LoadSceneMode.Additive);
+                var asyncOpen = SceneManager.LoadSceneAsync(sceneType.ToString(), LoadSceneMode.Additive);
 
-                asyncOper.allowSceneActivation = false;
+                asyncOpen.allowSceneActivation = false;
 
                 if(loadCoroutine != null) { yield return StartCoroutine(loadCoroutine); }
 
-                while (!asyncOper.isDone)
+                while (!asyncOpen.isDone)
                 {
                     if (loadProgress >= .9f)
                     {
                         loadProgress = 1;
-                        asyncOper.allowSceneActivation = true;
+                        asyncOpen.allowSceneActivation = true;
                     }
                     else
                     {
-                        loadProgress = asyncOper.progress;
+                        loadProgress = asyncOpen.progress;
                     }
 
                     yield return null;
