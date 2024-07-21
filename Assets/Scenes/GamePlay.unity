@@ -2299,7 +2299,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   moveVec: {x: 0, y: 0}
   animator: {fileID: 0}
-  currentDialogueGroup: Prologue_Intro
+  currentDialogueGroup: Prologue1
   InteractionType: 0
 --- !u!95 &235201603
 Animator:
@@ -4509,7 +4509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff81cfcfa9a3d45cba1b8644bc0c6fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectType: 4
+  _objectType: 2
 --- !u!1 &707428412
 GameObject:
   m_ObjectHideFlags: 0
@@ -5539,7 +5539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff81cfcfa9a3d45cba1b8644bc0c6fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectType: 2
+  _objectType: 3
 --- !u!61 &811288864
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8604,7 +8604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff81cfcfa9a3d45cba1b8644bc0c6fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectType: 3
+  _objectType: 4
 --- !u!61 &1508830228
 BoxCollider2D:
   m_ObjectHideFlags: 0
