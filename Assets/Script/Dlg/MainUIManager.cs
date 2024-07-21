@@ -83,33 +83,39 @@ public class MainUIManager : MonoBehaviour
         }
         else if (objectType == ObjectController.ObjectType.MiniGame1)
         {
-            miniGame.SetLevel(0);
+            /*miniGame.SetLevel(0);
 
             miniGame.Open();
 
-            miniGame.GameStart();
-
-            playerAction.currentDialogueGroup = "Day1_Animal";
+            miniGame.GameStart();*/
+            
+            playerAction.currentDialogueGroup = "Prologue1";
+            
+            dialogueManager.TempPlayStory();
         }
         else if (objectType == ObjectController.ObjectType.MiniGame2)
         {
-            miniGame.SetLevel(1);
+            /*miniGame.SetLevel(1);
 
             miniGame.Open();
 
-            miniGame.GameStart();
+            miniGame.GameStart();*/
 
-            playerAction.currentDialogueGroup = "Day1_Western";
+            playerAction.currentDialogueGroup = "Prologue2";
+            
+            dialogueManager.TempPlayStory();
         }
         else if (objectType == ObjectController.ObjectType.MiniGame3)
         {
-            miniGame.SetLevel(2);
+            /*miniGame.SetLevel(2);
 
             miniGame.Open();
 
-            miniGame.GameStart();
+            miniGame.GameStart();*/
 
-            playerAction.currentDialogueGroup = "Day1_Oriental";
+            playerAction.currentDialogueGroup = "Prologue3";
+            
+            dialogueManager.TempPlayStory();
         }
     }
 
