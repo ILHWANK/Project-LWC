@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using BackEnd;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using WHDle.Util;
 using TMPro;
 using WHDle.Util.Define;
-using WHDle.Server;
 
 public class TitleDlg : MonoBehaviour
 {
@@ -57,6 +55,15 @@ public class TitleDlg : MonoBehaviour
         PlayGamesPlatform.DebugLogEnabled = true;
 
         PlayGamesPlatform.Activate();
+        
+        //
+        
+        var loadData = SaveDataManager.FileLoad("playerData");
+
+        var isLoadData = loadData != null;
+        
+        newGameButton.interactable = true;
+        loadGameButton.interactable = isLoadData;
     }
 
     public void EnablePanelAnnouncement(bool pBool)
@@ -73,44 +80,6 @@ public class TitleDlg : MonoBehaviour
     {
         EnablePanelAnnouncement(false);
     }
-
-
-    #region Before Login
-
-    public void BeforeLogin()
-    {
-        if (PlayGamesPlatform.Instance.localUser.authenticated)
-        {
-            GameManager.Instance.loginType = LoginType.Google;
-            SkipRegister();
-
-            return;
-        }
-
-        /*Backend.BMember.DeleteGuestInfo();*/
-
-        string guestId = string.Empty; //Backend.BMember.GetGuestID();
-
-        if (guestId != null && guestId != string.Empty)
-        {
-            GameManager.Instance.loginType = LoginType.Guest;
-            SkipRegister();
-
-            return;
-        }
-
-        GameManager.Instance.TitleController.LoadComplete = true;
-    }
-
-    private void SkipRegister()
-    {
-        GameManager.Instance.TitleController.SkipRegister();
-        GameManager.Instance.TitleController.LoadComplete = true;
-
-        ServerManager.Instance.isFirstLogin = false;
-    }
-
-    #endregion
 
     #region Register
 
@@ -137,7 +106,7 @@ public class TitleDlg : MonoBehaviour
             }
             else
             {
-                errorText.text = "???? ???????? ????";
+                errorText.text = "Error";
 
                 enableErrorPanel();
             }
@@ -148,61 +117,6 @@ public class TitleDlg : MonoBehaviour
     {
         GameManager.Instance.TitleController.LoadComplete = true;
         GameManager.Instance.loginType = LoginType.Guest;
-    }
-
-    #endregion
-
-    #region AfterLogin
-
-    public void AfterLogin()
-    {
-        registerPanel.gameObject.SetActive(false);
-
-        switch (GameManager.Instance.loginType)
-        {
-            case LoginType.Google:
-                googleLogin();
-                break;
-            case LoginType.Guest:
-                guestLogin();
-                break;
-        }
-    }
-
-    private void googleLogin()
-    {
-        Backend.BMember.AuthorizeFederation(getToken(), FederationType.Google, callback =>
-        {
-            if (callback.IsSuccess())
-            {
-                GameManager.Instance.TitleController.LoadComplete = true;
-            }
-            else
-            {
-                errorText.text = "???? ?????? ????!";
-                enableErrorPanel();
-            }
-        });
-    }
-
-    private void guestLogin()
-    {
-        Backend.BMember.GuestLogin("GuestLogin", callback =>
-        {
-            if (callback.IsSuccess())
-            {
-                GameManager.Instance.TitleController.LoadComplete = true;
-            }
-            else
-            {
-                errorText.text = "?????? ?????? ????!";
-
-                Backend.BMember.DeleteGuestInfo();
-
-                guestLogin();
-                /*enableErrorPanel();*/
-            }
-        });
     }
 
     #endregion
@@ -218,6 +132,8 @@ public class TitleDlg : MonoBehaviour
         //loadGameButton.interactable = !ServerManager.Instance.isFirstLogin;
     }
 
+    // OnClick
+    
     public void LoadNewGame()
     {
         var inventory = new List<string>();
@@ -226,14 +142,11 @@ public class TitleDlg : MonoBehaviour
 
         SaveDataManager.FileSave(playerData, "playerData");
 
-        //ServerManager.Instance.isFirstLogin = true;
         LoadGame();
     }
 
     public void LoadGame()
     {
-        //saveLoadPanel.SetActive(false);
-
         var loadData = SaveDataManager.FileLoad("playerData");
 
         GameManager.Instance.TitleController.LoadComplete = true;
@@ -250,19 +163,4 @@ public class TitleDlg : MonoBehaviour
     }
 
     #endregion
-
-    private string getToken()
-    {
-        if (PlayGamesPlatform.Instance.localUser.authenticated)
-        {
-            string _IDtoken = PlayGamesPlatform.Instance.GetIdToken();
-
-            if (ServerManager.Instance.isFirstLogin && _IDtoken.Length <= 0)
-                _IDtoken = PlayGamesPlatform.Instance.GetIdToken();
-
-            return _IDtoken;
-        }
-
-        return string.Empty;
-    }
 }

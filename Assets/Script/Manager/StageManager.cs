@@ -26,7 +26,7 @@ namespace WHDle.Stage
             if(titleController == null)
                 titleController = FindObjectOfType<TitleController>();
 
-            titleController.RestartLogin();
+            //titleController.RestartLogin();
         }
 
         /*
