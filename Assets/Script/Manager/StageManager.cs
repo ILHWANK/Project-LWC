@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using WHDle.Controller;
 using WHDle.Util;
-using WHDle.Util.Define;
-
 namespace WHDle.Stage
 {
     public class StageManager : Singleton<StageManager>

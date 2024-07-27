@@ -144,7 +144,9 @@ public class MainUIManager : MonoBehaviour
 
     public void OnClick_YesClick()
     {
+        dialogueManager.EndStory();
         dialogueManager.SetDialogue(false);
+        
         splashManager.Reset();
 
         optionPopup.SetActive(false);

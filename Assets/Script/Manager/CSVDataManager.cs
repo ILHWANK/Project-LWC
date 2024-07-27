@@ -9,6 +9,7 @@ public class CSVDataManager : MonoBehaviour
         Dialogue,
         Letter,
         Choice,
+        DialogueProceeding,
         None
     }
 
@@ -85,7 +86,6 @@ public class CSVDataManager : MonoBehaviour
         return choiceList.ToArray();
     }
 
-
     //
     public int GetStartIndex()
     {
@@ -101,18 +101,23 @@ public class CSVDataManager : MonoBehaviour
             case DataType.Dialogue:
                 {
                     endIndex = dialogueDictionary.Count;
-                    break;
                 }
+                break;
             case DataType.Letter:
                 {
                     endIndex = 0;
-                    break;
                 }
+                break;
             case DataType.Choice:
                 {
                     endIndex = choiceDictionary.Count;
-                    break;
                 }
+                break;
+            case DataType.DialogueProceeding:
+                {
+                    endIndex = 0;
+                }
+                break;
             default:
                 {
                     endIndex = 0;
