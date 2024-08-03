@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class CSVDataManager : MonoBehaviour
@@ -15,12 +16,15 @@ public class CSVDataManager : MonoBehaviour
 
     public static CSVDataManager Instance;
 
-    [SerializeField]
-    public string dialoguefilePath, letterfilePath, choicefilePath;
+    [SerializeField] private string dialoguefilePath;
+    [SerializeField] private string letterfilePath;
+    [SerializeField] private string choicefilePath;
+    [SerializeField] private string dialogueProceedings;
 
-    Dictionary<int, Dialogue> dialogueDictionary = new Dictionary<int, Dialogue>();
-    Dictionary<int, Choice> choiceDictionary = new Dictionary<int, Choice>();
-    Dictionary<int, Letter> letterDictionary = new Dictionary<int, Letter>();
+    private Dictionary<int, Dialogue> _dialogueDictionaryMap;
+    private Dictionary<int, Choice> _choiceDictionaryMap;
+    private Dictionary<int, Letter> _letterDictionaryMap;
+    private Dictionary<int, DialogueProceeding> _dialogueProceedingsMap;
 
     CSVParse csvParse = new CSVParse();
 
@@ -36,16 +40,39 @@ public class CSVDataManager : MonoBehaviour
         }
     }
 
+    // DialogueProceedings
+    // Choice
+    public void SetDialogueProceedingData(string pChoiceGroup)
+    {
+        _choiceDictionaryMap.Clear();
+
+        Choice[] choices = csvParse.ChoiceParse(choicefilePath, pChoiceGroup);
+
+        for (int i = 0; i < choices.Length; ++i)
+        {
+            _choiceDictionaryMap.Add(i + 1, choices[i]);
+        }
+    }
+
+    public DialogueProceeding GetDialogueProceedingData(string currentStoryGroup)
+    {
+        var dialogueProceeding = new DialogueProceeding();
+        
+        
+        
+        return dialogueProceeding;
+    }
+    
     // Dialogue
     public void SetDialogueData(string pDialougeGroup)
     {
-        dialogueDictionary.Clear();
+        _dialogueDictionaryMap.Clear();
 
         Dialogue[] dialogues = csvParse.DialogueParse(dialoguefilePath, pDialougeGroup);
 
         for (int i = 0; i < dialogues.Length; ++i)
         {
-            dialogueDictionary.Add(i + 1, dialogues[i]);
+            _dialogueDictionaryMap.Add(i + 1, dialogues[i]);
         }
 
         isEnd = true;
@@ -55,7 +82,7 @@ public class CSVDataManager : MonoBehaviour
         List<Dialogue> dialogueList = new List<Dialogue>();
 
         for (int i = 0 ; i <= pEndIndex - pStartIndex ; ++i){
-            dialogueList.Add(dialogueDictionary[pStartIndex + i]);
+            dialogueList.Add(_dialogueDictionaryMap[pStartIndex + i]);
         }
 
         return dialogueList.ToArray();
@@ -64,13 +91,13 @@ public class CSVDataManager : MonoBehaviour
     // Choice
     public void SetChoiceData(string pChoiceGroup)
     {
-        choiceDictionary.Clear();
+        _choiceDictionaryMap.Clear();
 
         Choice[] choices = csvParse.ChoiceParse(choicefilePath, pChoiceGroup);
 
         for (int i = 0; i < choices.Length; ++i)
         {
-            choiceDictionary.Add(i + 1, choices[i]);
+            _choiceDictionaryMap.Add(i + 1, choices[i]);
         }
     }
 
@@ -80,12 +107,12 @@ public class CSVDataManager : MonoBehaviour
 
         for (int i = 0; i <= pEndIndex - pStartIndex; ++i)
         {
-            choiceList.Add(choiceDictionary[pStartIndex + i]);
+            choiceList.Add(_choiceDictionaryMap[pStartIndex + i]);
         }
 
         return choiceList.ToArray();
     }
-
+    
     //
     public int GetStartIndex()
     {
@@ -100,7 +127,7 @@ public class CSVDataManager : MonoBehaviour
         {
             case DataType.Dialogue:
                 {
-                    endIndex = dialogueDictionary.Count;
+                    endIndex = _dialogueDictionaryMap.Count;
                 }
                 break;
             case DataType.Letter:
@@ -110,7 +137,7 @@ public class CSVDataManager : MonoBehaviour
                 break;
             case DataType.Choice:
                 {
-                    endIndex = choiceDictionary.Count;
+                    endIndex = _choiceDictionaryMap.Count;
                 }
                 break;
             case DataType.DialogueProceeding:

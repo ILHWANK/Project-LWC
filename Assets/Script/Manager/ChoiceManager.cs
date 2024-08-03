@@ -1,22 +1,24 @@
-using System.Collections;
 using System.Collections.Generic;
+using Script.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ChoiceManager : MonoBehaviour
 {
-    [SerializeField]
-    ChoiceEvent choiceEvent;
+    [SerializeField] ChoiceEvent choiceEvent;
 
-    // Temp ObjectPool 적용 예정
-    [SerializeField]
-    GameObject choiceObject, choiceObjectOne, choiceObjectTwo, choiceObjectThree;
+    [SerializeField] private GameObject choiceObject;
+    [SerializeField] private GameObject choiceObjectOne;
+    [SerializeField] private GameObject choiceObjectTwo;
+    [SerializeField] private GameObject choiceObjectThree;
 
-    [SerializeField]
-    Button choiceButtonOne, choiceButtonTwo, choiceButtonThree;
+    [SerializeField] private Button choiceButtonOne;
+    [SerializeField] private Button choiceButtonTwo; 
+    [SerializeField] private Button choiceButtonThree;
 
-    [SerializeField]
-    Text choiceTextOne, choiceTextTwo, choiceTextThree;
+    [SerializeField] private Text choiceTextOne;
+    [SerializeField] private Text choiceTextTwo;
+    [SerializeField] private Text choiceTextThree;
 
     PlayerAction playerAction;
 

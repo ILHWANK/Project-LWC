@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Script.Controller;
+using Script.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 

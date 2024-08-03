@@ -1,191 +1,197 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogueManager : MonoBehaviour
-{ 
-    // BottomUI
-    [SerializeField]
-    GameObject topObject, bottomObject;
+namespace Script.Manager
+{
+    public class DialogueManager : MonoBehaviour
+    { 
+        // BottomUI
+        [SerializeField] private GameObject topObject;
+        [SerializeField] private GameObject bottomObject;
 
-    // StoryUI
-    [SerializeField]
-    GameObject nextObject, characterObject, skipObject, contextUpObject, contextDownObject, letterObject, narrationObject, choicetListObject;
+        // StoryUI
+        [SerializeField] private GameObject nextObject;
+        [SerializeField] private GameObject characterObject;
+        [SerializeField] private GameObject skipObject;
+        [SerializeField] private GameObject contextUpObject;
+        [SerializeField] private GameObject contextDownObject;
+        [SerializeField] private GameObject letterObject;
+        [SerializeField] private GameObject narrationObject;
+        [SerializeField] private GameObject choicetListObject;
 
-    [SerializeField]
-    Button nextButtonBackGround, selectListOneButton, selectListTwoButton, selectListThreeButton;
+        [SerializeField] private Button nextButtonBackGround;
+        [SerializeField] private Button selectListOneButton;
+        [SerializeField] private Button selectListTwoButton;
+        [SerializeField] private Button selectListThreeButton;
 
-    [SerializeField]
-    Text nameUpText, contextUpText, nameDownText, contextDownText, letterText, narrationText;
+        [SerializeField] private Text nameUpText;
+        [SerializeField] private Text contextUpText;
+        [SerializeField] private Text nameDownText;
+        [SerializeField] private Text contextDownText;
+        [SerializeField] private Text letterText;
+        [SerializeField] private Text narrationText;
 
-    [SerializeField]
-    Transform tempTaregt;
+        [SerializeField] Transform tempTaregt;
+        [SerializeField] Camera tempCamera;
+        [SerializeField] DialogueEvent dialogueEvent;
 
-    [SerializeField]
-    Camera tempCamera;
+        PlayerAction playerAction;
 
-    //
-    [SerializeField] DialogueEvent dialogueEvent;
-
-    //
-    PlayerAction playerAction;
-
-    //
-    DialogueType currentDialogueType = DialogueType.ContextUp;
-
-    Dialogue[] dialogues;
-    bool isStoryPlay = false;
-    bool isNext = false;
-    bool isNextStory = false;
-    bool isStoryContextEnd = false;
-
-    int lineIndex = 0;
-    int contextIndex = 0;
-    float textDelay = 0.05f;
-
-    IEnumerator dialogueCoroutine = null;
-
-    MainUIManager mainUIManager;
-    ChoiceManager choiceManager;
-
-    SpriteManager spriteManager;
-    SplashManager splashManager;
-
-    public enum FontStyle
-    {
-        None,
-        Bold,
-        Italic,
-        BoldAndItalic
-    }
-
-    public enum FontColor
-    {
-        None,
-        White,
-        Black
-    }
-
-    public struct FontConfiguration
-    {
-        public FontStyle fontStyle;
-        public FontColor fontColor;
-    }
-
-    void Start()
-    {
         //
-        mainUIManager = FindObjectOfType<MainUIManager>();
-        playerAction = FindObjectOfType<PlayerAction>();
+        DialogueType currentDialogueType = DialogueType.ContextUp;
 
-        // Set
-        SetDialogue(false);
+        Dialogue[] dialogues;
+        bool isStoryPlay = false;
+        bool isNext = false;
+        bool isNextStory = false;
+        bool isStoryContextEnd = false;
 
-        choiceManager = FindObjectOfType<ChoiceManager>();
+        int lineIndex = 0;
+        int contextIndex = 0;
+        float textDelay = 0.05f;
 
-        spriteManager = FindObjectOfType<SpriteManager>();
-        splashManager = FindObjectOfType<SplashManager>();
-    }
+        IEnumerator dialogueCoroutine = null;
 
-    void Update()
-    {
-        if (isStoryPlay)
+        MainUIManager mainUIManager;
+        ChoiceManager choiceManager;
+
+        SpriteManager spriteManager;
+        SplashManager splashManager;
+
+        public enum FontStyle
         {
-            if (isNext && isNextStory)
+            None,
+            Bold,
+            Italic,
+            BoldAndItalic
+        }
+
+        public enum FontColor
+        {
+            None,
+            White,
+            Black
+        }
+
+        public struct FontConfiguration
+        {
+            public FontStyle fontStyle;
+            public FontColor fontColor;
+        }
+
+        void Start()
+        {
+            //
+            mainUIManager = FindObjectOfType<MainUIManager>();
+            playerAction = FindObjectOfType<PlayerAction>();
+
+            // Set
+            SetDialogue(false);
+
+            choiceManager = FindObjectOfType<ChoiceManager>();
+            spriteManager = FindObjectOfType<SpriteManager>();
+            splashManager = FindObjectOfType<SplashManager>();
+        }
+
+        void Update()
+        {
+            if (isStoryPlay)
             {
-                isNext = false;
-                isNextStory = false;
-
-                ResetText();
-
-                if (dialogueCoroutine != null)
+                if (isNext && isNextStory)
                 {
-                    StopCoroutine(dialogueCoroutine);
+                    isNext = false;
+                    isNextStory = false;
 
-                    dialogueCoroutine = null;
-                }
+                    ResetText();
 
-                dialogueCoroutine = DialoguePlayCoroutine();
+                    if (dialogueCoroutine != null)
+                    {
+                        StopCoroutine(dialogueCoroutine);
 
-                if (++contextIndex < dialogues[lineIndex].contexts.Length)
-                {
-                    StartCoroutine(dialogueCoroutine);
-                    StartCoroutine(CameraAction());
-                }
-                else
-                {
-                    contextIndex = 0;
-                    if (++lineIndex < dialogues.Length)
+                        dialogueCoroutine = null;
+                    }
+
+                    dialogueCoroutine = DialoguePlayCoroutine();
+
+                    if (++contextIndex < dialogues[lineIndex].contexts.Length)
                     {
                         StartCoroutine(dialogueCoroutine);
                         StartCoroutine(CameraAction());
                     }
                     else
                     {
-                        EndStory();
+                        contextIndex = 0;
+                        if (++lineIndex < dialogues.Length)
+                        {
+                            StartCoroutine(dialogueCoroutine);
+                            StartCoroutine(CameraAction());
+                        }
+                        else
+                        {
+                            EndStory();
+                        }
                     }
                 }
+
+                Vector3 characterPosition = new Vector3(tempCamera.transform.position.x, tempCamera.transform.position.y -1.5f, 0);
+
+                characterObject.transform.position = characterPosition;
             }
-
-            Vector3 characterPosition = new Vector3(tempCamera.transform.position.x, tempCamera.transform.position.y -1.5f, 0);
-
-            characterObject.transform.position = characterPosition;
         }
-    }
 
-    public Dialogue[] GetStory()
-    {
-        CSVDataManager.Instance.SetDialogueData(playerAction?.currentDialogueGroup);
-
-        int endIndex = CSVDataManager.Instance.GetEndIndex(CSVDataManager.DataType.Dialogue);
-
-        dialogueEvent.dialogues = CSVDataManager.Instance.GetDialogue(1, endIndex);
-
-        return dialogueEvent.dialogues;
-    }
-
-    public void SetDialogue(bool pIsStoryShow)
-    {
-        // false
-        topObject.SetActive(!pIsStoryShow);
-        bottomObject.SetActive(!pIsStoryShow);
-
-        // true
-        nextObject.SetActive(pIsStoryShow);
-        skipObject.SetActive(pIsStoryShow);
-        characterObject.SetActive(pIsStoryShow);
-
-        if (pIsStoryShow)
+        public Dialogue[] GetStory()
         {
-            contextUpObject.SetActive(false);
-            contextDownObject.SetActive(false);
-            letterObject.SetActive(false);
-            narrationObject.SetActive(false);
+            CSVDataManager.Instance.SetDialogueData(playerAction?.currentDialogueGroup);
 
-            switch (currentDialogueType)
+            int endIndex = CSVDataManager.Instance.GetEndIndex(CSVDataManager.DataType.Dialogue);
+
+            dialogueEvent.dialogues = CSVDataManager.Instance.GetDialogue(1, endIndex);
+
+            return dialogueEvent.dialogues;
+        }
+
+        public void SetDialogue(bool pIsStoryShow)
+        {
+            // false
+            topObject.SetActive(!pIsStoryShow);
+            bottomObject.SetActive(!pIsStoryShow);
+
+            // true
+            nextObject.SetActive(pIsStoryShow);
+            skipObject.SetActive(pIsStoryShow);
+            characterObject.SetActive(pIsStoryShow);
+
+            if (pIsStoryShow)
             {
-                case DialogueType.ContextUp:
+                contextUpObject.SetActive(false);
+                contextDownObject.SetActive(false);
+                letterObject.SetActive(false);
+                narrationObject.SetActive(false);
+
+                switch (currentDialogueType)
+                {
+                    case DialogueType.ContextUp:
                     {
                         contextUpObject.SetActive(true);
                         break;
                     }
-                case DialogueType.ContextDown:
+                    case DialogueType.ContextDown:
                     {
                         contextDownObject.SetActive(true);
                         break;
                     }
-                case DialogueType.Letter:
+                    case DialogueType.Letter:
                     {
                         letterObject.SetActive(true);
                         break;
                     }
-                case DialogueType.Narration:
+                    case DialogueType.Narration:
                     {
                         narrationObject.SetActive(true);
                         break;
                     }
-                default:
+                    default:
                     {
                         contextUpObject.SetActive(true);
                         contextDownObject.SetActive(false);
@@ -193,28 +199,28 @@ public class DialogueManager : MonoBehaviour
                         narrationObject.SetActive(false);
                         break;
                     }
+                }
             }
-        }
-        else
-        {
-            contextUpObject.SetActive(false);
-            contextDownObject.SetActive(false);
-            letterObject.SetActive(false);
-            narrationObject.SetActive(false);
-        }
-
-        StartCoroutine(CameraAction());
-    }
-
-    IEnumerator CameraAction()
-    {
-        dialogues = GetStory();
-
-        if (isStoryPlay && dialogues != null && splashManager != null)
-        {
-            switch (dialogues[lineIndex].cameraActions[contextIndex])
+            else
             {
-                case CameraType.FadeOut:
+                contextUpObject.SetActive(false);
+                contextDownObject.SetActive(false);
+                letterObject.SetActive(false);
+                narrationObject.SetActive(false);
+            }
+
+            StartCoroutine(CameraAction());
+        }
+
+        IEnumerator CameraAction()
+        {
+            dialogues = GetStory();
+
+            if (isStoryPlay && dialogues != null && splashManager != null)
+            {
+                switch (dialogues[lineIndex].cameraActions[contextIndex])
+                {
+                    case CameraType.FadeOut:
                     {
                         SplashManager.isFinish = false;
                         StartCoroutine(splashManager.FadeOut(false, true));
@@ -222,7 +228,7 @@ public class DialogueManager : MonoBehaviour
                         yield return new WaitUntil(() => SplashManager.isFinish);
                         break;
                     }
-                case CameraType.FadeIn:
+                    case CameraType.FadeIn:
                     {
                         SplashManager.isFinish = false;
                         StartCoroutine(splashManager.FadeIn(false, true));
@@ -230,7 +236,7 @@ public class DialogueManager : MonoBehaviour
                         yield return new WaitUntil(() => SplashManager.isFinish);
                         break;
                     }
-                case CameraType.FlashOut:
+                    case CameraType.FlashOut:
                     {
                         SplashManager.isFinish = false;
                         StartCoroutine(splashManager.FadeOut(true, true));
@@ -238,7 +244,7 @@ public class DialogueManager : MonoBehaviour
                         yield return new WaitUntil(() => SplashManager.isFinish);
                         break;
                     }
-                case CameraType.FlashIn:
+                    case CameraType.FlashIn:
                     {
                         SplashManager.isFinish = false;
                         StartCoroutine(splashManager.FadeIn(true, true));
@@ -246,287 +252,288 @@ public class DialogueManager : MonoBehaviour
                         yield return new WaitUntil(() => SplashManager.isFinish);
                         break;
                     }
-                default:
+                    default:
                     {
                         break;
                     }
+                }
+
+                SplashManager.isFinish = true;
+            }
+        }
+    
+        public void EndStory()
+        {
+            isStoryPlay = false;
+            contextIndex = 0;
+            lineIndex = 0;
+            dialogues = null;
+            isNext = false;
+
+            SetDialogue(false);
+        }
+
+        void ShowStory(Dialogue[] pStorys)
+        {
+            if (dialogues[lineIndex].dialogueType != DialogueType.None)
+                currentDialogueType = dialogues[lineIndex].dialogueType;
+
+            if (dialogues[lineIndex].skipContext != "") {
+                mainUIManager.OptionMainText = dialogues[lineIndex].skipContext;
+                mainUIManager.OptionSubText = "스토리를 Skip 하시겠습니?";
             }
 
-            SplashManager.isFinish = true;
-        }
-    }
-    
-    public void EndStory()
-    {
-        isStoryPlay = false;
-        contextIndex = 0;
-        lineIndex = 0;
-        dialogues = null;
-        isNext = false;
+            SetDialogue(true);
 
-        SetDialogue(false);
-    }
+            ResetText();
 
-    void ShowStory(Dialogue[] pStorys)
-    {
-        if (dialogues[lineIndex].dialogueType != DialogueType.None)
-            currentDialogueType = dialogues[lineIndex].dialogueType;
+            dialogues = pStorys;
 
-        if (dialogues[lineIndex].skipContext != "") {
-            mainUIManager.OptionMainText = dialogues[lineIndex].skipContext;
-            mainUIManager.OptionSubText = "스토리를 Skip 하시겠습니?";
+
+            if (dialogueCoroutine != null)
+            {
+                StopCoroutine(dialogueCoroutine);
+
+                dialogueCoroutine = null;
+            }
+
+            dialogueCoroutine = DialoguePlayCoroutine();
+            StartCoroutine(dialogueCoroutine);
         }
 
-        SetDialogue(true);
-
-        ResetText();
-
-        dialogues = pStorys;
-
-
-        if (dialogueCoroutine != null)
+        void ChangeSprite()
         {
-            StopCoroutine(dialogueCoroutine);
-
-            dialogueCoroutine = null;
+            if(dialogues[lineIndex].spriteNames[contextIndex] != "")
+            {
+                StartCoroutine(spriteManager.SpriteChangeCoroutine(tempTaregt, dialogues[lineIndex].spriteNames[contextIndex]));
+            }
         }
 
-        dialogueCoroutine = DialoguePlayCoroutine();
-        StartCoroutine(dialogueCoroutine);
-    }
-
-    void ChangeSprite()
-    {
-        if(dialogues[lineIndex].spriteNames[contextIndex] != "")
+        void ShowChoice(string _choiceGroup)
         {
-            StartCoroutine(spriteManager.SpriteChangeCoroutine(tempTaregt, dialogues[lineIndex].spriteNames[contextIndex]));
+            if (_choiceGroup != null && _choiceGroup != "")
+            {
+                choiceManager.SetChoiceData(_choiceGroup);
+            }
         }
-    }
 
-    void ShowChoice(string _choiceGroup)
-    {
-        if (_choiceGroup != null && _choiceGroup != "")
+        IEnumerator DialoguePlayCoroutine()
         {
-            choiceManager.SetChoiceData(_choiceGroup);
-        }
-    }
+            ChangeSprite();
 
-    IEnumerator DialoguePlayCoroutine()
-    {
-        ChangeSprite();
+            string context = dialogues[lineIndex].contexts[contextIndex];
 
-        string context = dialogues[lineIndex].contexts[contextIndex];
+            context = context.Replace("\\", ",");
 
-        context = context.Replace("\\", ",");
+            FontConfiguration fontConfiguration = new FontConfiguration();
 
-        FontConfiguration fontConfiguration = new FontConfiguration();
+            fontConfiguration.fontColor = FontColor.Black;
 
-        fontConfiguration.fontColor = FontColor.Black;
+            string nameText = dialogues[lineIndex].characterName;
 
-        string nameText = dialogues[lineIndex].characterName;
+            currentDialogueType
+                = dialogues[lineIndex].dialogueType != DialogueType.None ? dialogues[lineIndex].dialogueType : currentDialogueType;
 
-        currentDialogueType
-            = dialogues[lineIndex].dialogueType != DialogueType.None ? dialogues[lineIndex].dialogueType : currentDialogueType;
+            SetDialogue(true);
 
-        SetDialogue(true);
-
-        switch (currentDialogueType)
-        {
-            case DialogueType.ContextUp:
+            switch (currentDialogueType)
+            {
+                case DialogueType.ContextUp:
                 {
                     nameUpText.text = nameText;
 
                     break;
                 }
-            case DialogueType.ContextDown:
+                case DialogueType.ContextDown:
                 {
                     nameDownText.text = nameText;
 
                     break;
                 }
-            default:
+                default:
                 {
                     nameUpText.text = "";
                     nameDownText.text = "";
 
                     break;
                 }
-        }
+            }
 
-        SetDialogue(true);
+            SetDialogue(true);
 
-        for (int i = 0; i < context.Length; ++i)
-        {
-            bool isWrite = false;
-
-            string letter = context[i].ToString();
-
-            switch (letter)
+            for (int i = 0; i < context.Length; ++i)
             {
-                case "ⓑ":
+                bool isWrite = false;
+
+                string letter = context[i].ToString();
+
+                switch (letter)
+                {
+                    case "ⓑ":
                     {
                         fontConfiguration.fontColor = FontColor.Black;
 
                         break;
                     }
-                case "ⓦ":
+                    case "ⓦ":
                     {
                         fontConfiguration.fontColor = FontColor.White;
 
                         break;
                     }
-                case "ⓝ":
+                    case "ⓝ":
                     {
                         fontConfiguration.fontStyle = FontStyle.None;
 
                         break;
                     }
-                case "ⓜ":
+                    case "ⓜ":
                     {
                         fontConfiguration.fontStyle = FontStyle.Bold;
 
                         break;
                     }
-                case "ⓘ":
+                    case "ⓘ":
                     {
                         fontConfiguration.fontStyle = FontStyle.Italic;
 
                         break;
                     }
-                default:
+                    default:
                     {
                         isWrite = true;
 
                         break;
                     }
-            }
+                }
 
-            if (isWrite)
-            {
-                letter = letterFont(letter, fontConfiguration);
-
-                switch (currentDialogueType)
+                if (isWrite)
                 {
-                    case DialogueType.ContextUp:
+                    letter = letterFont(letter, fontConfiguration);
+
+                    switch (currentDialogueType)
+                    {
+                        case DialogueType.ContextUp:
                         {
                             contextUpText.text += letter;
                             break;
                         }
-                    case DialogueType.ContextDown:
+                        case DialogueType.ContextDown:
                         {
                             contextDownText.text += letter;
                             break;
                         }
-                    case DialogueType.Narration:
+                        case DialogueType.Narration:
                         {
                             narrationText.text += letter;
                             break;
                         }
-                    case DialogueType.Letter:
+                        case DialogueType.Letter:
                         {
                             letterText.text += letter;
                             break;
                         }
-                    default:
+                        default:
                         {
                             contextUpText.text += letter;
                             break;
                         }
-                }
+                    }
 
-                yield return new WaitForSeconds(textDelay);
+                    yield return new WaitForSeconds(textDelay);
+                }
+                else
+                {
+                    continue;
+                }
             }
-            else
-            {
-                continue;
-            }
+
+            ShowChoice(dialogues[lineIndex].choiceGroup);
+
+            isNext = true;
         }
 
-        ShowChoice(dialogues[lineIndex].choiceGroup);
-
-        isNext = true;
-    }
-
-    string letterFont(string pLetter, FontConfiguration pFontConfiguration)
-    {
-        switch (pFontConfiguration.fontColor)
+        string letterFont(string pLetter, FontConfiguration pFontConfiguration)
         {
-            case FontColor.Black:
+            switch (pFontConfiguration.fontColor)
+            {
+                case FontColor.Black:
                 {
                     pLetter = "<color=#000000>" + pLetter + "</color>";
 
                     break;
                 }
-            case FontColor.White:
+                case FontColor.White:
                 {
                     pLetter = "<color=#ffffff>" + pLetter + "</color>";
 
                     break;
                 }
-            default:
+                default:
                 {
                     break;
                 }
-        }
+            }
 
-        switch (pFontConfiguration.fontStyle)
-        {
-            case FontStyle.None:
+            switch (pFontConfiguration.fontStyle)
+            {
+                case FontStyle.None:
                 {
                     break;
                 }
-            case FontStyle.Bold:
+                case FontStyle.Bold:
                 {
                     pLetter = "<b>" + pLetter + "</b>";
 
                     break;
                 }
-            case FontStyle.Italic:
+                case FontStyle.Italic:
                 {
                     pLetter = "<i>" + pLetter + "</i>";
 
                     break;
                 }
-            default:
+                default:
                 {
                     break;
                 }
+            }
+
+            return pLetter;
         }
 
-        return pLetter;
-    }
+        void ResetText()
+        {
+            nameUpText.text = "";
+            contextUpText.text = "";
+            nameDownText.text = "";
+            contextDownText.text = "";
+            letterText.text = "";
+            narrationText.text = "";
+        }
 
-    void ResetText()
-    {
-        nameUpText.text = "";
-        contextUpText.text = "";
-        nameDownText.text = "";
-        contextDownText.text = "";
-        letterText.text = "";
-        narrationText.text = "";
-    }
+        public void SetIsNextStory()
+        {
+            isNextStory = true;
+        }
 
-    public void SetIsNextStory()
-    {
-        isNextStory = true;
-    }
+        public void TempPlayStory()
+        {
+            lineIndex = 0;
+            isNext = true;
+            isStoryPlay = true;
+            ShowStory(GetStory());
+        }
 
-    public void TempPlayStory()
-    {
-        lineIndex = 0;
-        isNext = true;
-        isStoryPlay = true;
-        ShowStory(GetStory());
-    }
+        void OnClick_ButtonUI_Button_Interaction()
+        {
+            if (isNext)
+                TempPlayStory();
+        }
 
-    void OnClick_ButtonUI_Button_Interaction()
-    {
-        if (isNext)
-            TempPlayStory();
-    }
-
-    void OnClick_Next_Button_BackGround()
-    {
-        SetIsNextStory();
+        void OnClick_Next_Button_BackGround()
+        {
+            SetIsNextStory();
+        }
     }
 }

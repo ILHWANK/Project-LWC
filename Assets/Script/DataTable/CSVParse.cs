@@ -7,6 +7,36 @@ public class CSVParse : MonoBehaviour
     [SerializeField]
     string tempDialogueGroup;
     
+    public DialogueProceeding[] DialogueProceedingsParse(string dialougeProceeding_File, string currentStoryGroup)
+    {
+        List<DialogueProceeding> dialogueProceedingsList = new List<DialogueProceeding>();
+        TextAsset dialogueProceedingCsvData = Resources.Load<TextAsset>(dialougeProceeding_File);
+
+        if (dialogueProceedingCsvData != null)
+        {
+            string[] dialogueData = dialogueProceedingCsvData.text.Remove(dialogueProceedingCsvData.text.Length - 1, 1).Split(new char[] { '\n' });
+
+            for (int i = 1; i < dialogueData.Length; ++i)
+            {
+                var row = dialogueData[i].Split(new[] { ',' });
+
+                DialogueProceeding dialogueProceeding = new DialogueProceeding
+                {
+                    currentStoryGroup = row[1],
+                    dialogueContext = row[2],
+                    nextDialogue = row[3],
+                    witchSpot = row[4],
+                    ramSpot = row[5],
+                    trigger = row[6]
+                };
+
+                dialogueProceedingsList.Add(dialogueProceeding);
+            }
+        }
+
+        return dialogueProceedingsList.ToArray();
+    }
+    
     public Dialogue[] DialogueParse(string dialouge_File, string pDialogueGorup)
     {
         List<Dialogue> dialogueList = new List<Dialogue>();

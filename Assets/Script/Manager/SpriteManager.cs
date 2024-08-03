@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class SpriteManager : MonoBehaviour
 {
-    [SerializeField]
-    float fadeSpeed;
+    [SerializeField] float fadeSpeed;
 
     bool CheckSameSprite(SpriteRenderer pSpriteRenderer, Sprite pSprite)
     {

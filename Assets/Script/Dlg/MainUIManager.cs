@@ -8,6 +8,7 @@ using WHDle.Util.Define;
 using WHDle.Stage;
 using BackEnd;
 using Script.Controller;
+using Script.Manager;
 
 public class MainUIManager : MonoBehaviour
 {
