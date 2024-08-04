@@ -1,0 +1,6 @@
+﻿Index,Day,Routine1,Routine2,Routine3,Routine4,Routine5,Routine6,Routine7,Routine8,Routine9,Routine10
+1,Prologue,WitchTalk,GiftOpen,Sleep,End,,,,,,
+2,Day1,WakeUp,LetterGet,LetterCheck,Lunch,MiniGame,Sleep,End,,,
+3,Day2,Morning,LetterCheck,MiniGame,Sleep,End,,,,,
+4,Day3_Type1,,,,,,,,,,
+5,Day3_Type2,,,,,,,,,,

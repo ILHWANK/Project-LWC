@@ -1,14 +1,14 @@
-﻿Index,Current_Dialogue,Dialogue_Context,Next_Dialogue,Witch_Spot,Ram_Spot,Trigger
+﻿Index,Current_Dialogue,Dialogue_Context,Next_Dialogue,Witch_Spot,Ram_Spot,Current_Trigger
 1,Prologue1,마녀에게 다가가자,Prologue2,Default,None,WitchTalk
-2,Prologue2,선물을 열어보자,Prologue3,Default,Default,GiftGet
-3,Prologue3,이제 잘 시간이다,Day1_WakeUp,Default,Default,WakeUp
-4,Day1_WakeUp,마녀에게 다가가자,Day1_Morning,Default,Default,Morning
+2,Prologue2,선물을 열어보자,Prologue3,Default,Default,GiftOpen
+3,Prologue3,이제 잘 시간이다,Day1_WakeUp,Default,Default,Sleep
+4,Day1_WakeUp,마녀에게 다가가자,Day1_Morning,Default,Default,WakeUp
 5,Day1_Morning,편지를 확인하자,Day1_LetterGet,Default,Default,LetterGet
 6,Day1_LetterGet,원하는 편지부터 읽어보자,Day1_LetterCheck,Default,Default,LetterCheck
-7,Day1_LetterCheck,식탁으로 향하자,Day1_Lunch,Default,Default,Dinner
-8,Day1_Lunch,요청한 물건을 만들자,Day1_Dinner,Default,Default,Dinner
-9,Day1_Dinner,침대로 향하자,Day2_WakeUp,Default,Default,WakeUp
+7,Day1_LetterCheck,식탁으로 향하자,Day1_Lunch,Default,Default,Lunch
+8,Day1_Lunch,요청한 물건을 만들자,Day1_Dinner,Default,Default,MiniGame
+9,Day1_Dinner,침대로 향하자,Day2_WakeUp,Default,Default,Sleep
 10,Day2_WakeUp,식탁으로 향하자,Day2_Morning,Default,Default,Morning
-11,Day2_Morning,원하는 편지부터 읽어보자,Day2_Lunch,Default,Default,Lunch
-12,Day2_Lunch,요청한 물건을 만들자,Day2_Sleep,Default,Default,Sleep
-13,Day2_Sleep,침대로 향하자,Day3_WakeUp,Default,Default,WakeUp
+11,Day2_Morning,원하는 편지부터 읽어보자,Day2_Lunch,Default,Default,LetterCheck
+12,Day2_Lunch,요청한 물건을 만들자,Day2_Sleep,Default,Default,MiniGame
+13,Day2_Sleep,침대로 향하자,Day3_WakeUp,Default,Default,Sleep
