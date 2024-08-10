@@ -26,7 +26,7 @@ public class CSVDataManager : MonoBehaviour
     private Dictionary<int, Letter> _letterDictionaryMap;
     private Dictionary<int, DialogueProceeding> _dialogueProceedingsMap;
 
-    CSVParse csvParse = new CSVParse();
+    CSVParse _csvParse = gameObject.AddComponent<CSVParse>();
 
     public static bool isEnd = false;
 
@@ -34,31 +34,28 @@ public class CSVDataManager : MonoBehaviour
         if(Instance == null){
             Instance = this;
 
-            csvParse = GetComponent<CSVParse>();
+            _csvParse = GetComponent<CSVParse>();
 
             SetDialogueData(dialoguefilePath);
         }
     }
 
     // DialogueProceedings
-    // Choice
     public void SetDialogueProceedingData(string pChoiceGroup)
     {
-        _choiceDictionaryMap.Clear();
+        _dialogueProceedingsMap.Clear();
 
-        Choice[] choices = csvParse.ChoiceParse(choicefilePath, pChoiceGroup);
+        var dialogueProceedings = _csvParse.DialogueProceedingsParse(choicefilePath, pChoiceGroup);
 
-        for (int i = 0; i < choices.Length; ++i)
+        for (int i = 0; i < dialogueProceedings.Length; ++i)
         {
-            _choiceDictionaryMap.Add(i + 1, choices[i]);
+            _dialogueProceedingsMap.Add(i + 1, dialogueProceedings[i]);
         }
     }
 
     public DialogueProceeding GetDialogueProceedingData(string currentStoryGroup)
     {
         var dialogueProceeding = new DialogueProceeding();
-        
-        
         
         return dialogueProceeding;
     }
@@ -68,7 +65,7 @@ public class CSVDataManager : MonoBehaviour
     {
         _dialogueDictionaryMap.Clear();
 
-        Dialogue[] dialogues = csvParse.DialogueParse(dialoguefilePath, pDialougeGroup);
+        Dialogue[] dialogues = _csvParse.DialogueParse(dialoguefilePath, pDialougeGroup);
 
         for (int i = 0; i < dialogues.Length; ++i)
         {
@@ -93,7 +90,7 @@ public class CSVDataManager : MonoBehaviour
     {
         _choiceDictionaryMap.Clear();
 
-        Choice[] choices = csvParse.ChoiceParse(choicefilePath, pChoiceGroup);
+        Choice[] choices = _csvParse.ChoiceParse(choicefilePath, pChoiceGroup);
 
         for (int i = 0; i < choices.Length; ++i)
         {
@@ -111,12 +108,6 @@ public class CSVDataManager : MonoBehaviour
         }
 
         return choiceList.ToArray();
-    }
-    
-    //
-    public int GetStartIndex()
-    {
-        return 0;
     }
 
     public int GetEndIndex(DataType pDataType)
