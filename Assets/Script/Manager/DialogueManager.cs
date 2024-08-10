@@ -36,10 +36,10 @@ namespace Script.Manager
         [SerializeField] Camera tempCamera;
         [SerializeField] DialogueEvent dialogueEvent;
 
-        PlayerAction playerAction;
+        PlayerAction _playerAction;
 
         //
-        DialogueType currentDialogueType = DialogueType.ContextUp;
+        DialogueType _currentDialogueType = DialogueType.ContextUp;
 
         Dialogue[] dialogues;
         bool isStoryPlay = false;
@@ -84,7 +84,7 @@ namespace Script.Manager
         {
             //
             mainUIManager = FindObjectOfType<MainUIManager>();
-            playerAction = FindObjectOfType<PlayerAction>();
+            _playerAction = FindObjectOfType<PlayerAction>();
 
             // Set
             SetDialogue(false);
@@ -140,9 +140,9 @@ namespace Script.Manager
             }
         }
 
-        public Dialogue[] GetStory()
+        private Dialogue[] GetStory()
         {
-            CSVDataManager.Instance.SetDialogueData(playerAction?.currentDialogueGroup);
+            CSVDataManager.Instance.SetDialogueData(_playerAction?.currentDialogueGroup);
 
             int endIndex = CSVDataManager.Instance.GetEndIndex(CSVDataManager.DataType.Dialogue);
 
@@ -169,7 +169,7 @@ namespace Script.Manager
                 letterObject.SetActive(false);
                 narrationObject.SetActive(false);
 
-                switch (currentDialogueType)
+                switch (_currentDialogueType)
                 {
                     case DialogueType.ContextUp:
                     {
@@ -271,12 +271,16 @@ namespace Script.Manager
             isNext = false;
 
             SetDialogue(false);
+
+            var dialogueProceeding = CSVDataManager.Instance.GetDialogueProceedingData(_playerAction?.currentDialogueGroup);
+            
+            Debug.Log("확인용 : " + dialogueProceeding.nextDialogue);
         }
 
         void ShowStory(Dialogue[] pStorys)
         {
             if (dialogues[lineIndex].dialogueType != DialogueType.None)
-                currentDialogueType = dialogues[lineIndex].dialogueType;
+                _currentDialogueType = dialogues[lineIndex].dialogueType;
 
             if (dialogues[lineIndex].skipContext != "") {
                 mainUIManager.OptionMainText = dialogues[lineIndex].skipContext;
@@ -331,12 +335,12 @@ namespace Script.Manager
 
             string nameText = dialogues[lineIndex].characterName;
 
-            currentDialogueType
-                = dialogues[lineIndex].dialogueType != DialogueType.None ? dialogues[lineIndex].dialogueType : currentDialogueType;
+            _currentDialogueType
+                = dialogues[lineIndex].dialogueType != DialogueType.None ? dialogues[lineIndex].dialogueType : _currentDialogueType;
 
             SetDialogue(true);
 
-            switch (currentDialogueType)
+            switch (_currentDialogueType)
             {
                 case DialogueType.ContextUp:
                 {
@@ -411,7 +415,7 @@ namespace Script.Manager
                 {
                     letter = letterFont(letter, fontConfiguration);
 
-                    switch (currentDialogueType)
+                    switch (_currentDialogueType)
                     {
                         case DialogueType.ContextUp:
                         {

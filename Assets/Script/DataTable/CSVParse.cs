@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CSVParse : MonoBehaviour
 {
-    [SerializeField]
-    string tempDialogueGroup;
+    [SerializeField] private string tempDialogueGroup;
     
     public DialogueProceeding[] DialogueProceedingsParse(string dialougeProceeding_File, string currentStoryGroup)
     {
@@ -115,33 +114,33 @@ public class CSVParse : MonoBehaviour
         List<Letter> letterList = new List<Letter>();
         TextAsset letterData = Resources.Load<TextAsset>(letter_File);
 
-        if (letterData != null)
+        if (letterData == null) 
+            return letterList.ToArray();
+        
+        var dialogueData = letterData.text.Remove(letterData.text.Length - 1, 1).Split(new char[] { '\n' });
+
+        for (var i = 1; i < dialogueData.Length;)
         {
-            string[] dialogueData = letterData.text.Remove(letterData.text.Length - 1, 1).Split(new char[] { '\n' });
+            var row = dialogueData[i].Split(new char[] { ',' });
 
-            for (int i = 1; i < dialogueData.Length;)
+            if (row[1].ToString() == tempDialogueGroup)
             {
-                string[] row = dialogueData[i].Split(new char[] { ',' });
 
-                if (row[1].ToString() == tempDialogueGroup)
+            }
+            else
+            {
+                do
                 {
-
-                }
-                else
-                {
-                    do
+                    if (++i < dialogueData.Length)
                     {
-                        if (++i < dialogueData.Length)
-                        {
-                            row = dialogueData[i].Split(new char[] { ',' });
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        row = dialogueData[i].Split(new char[] { ',' });
                     }
-                    while (row[2] == "");
+                    else
+                    {
+                        break;
+                    }
                 }
+                while (row[2] == "");
             }
         }
 

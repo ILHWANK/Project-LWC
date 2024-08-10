@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
+[RequireComponent(typeof(CSVParse))]
 public class CSVDataManager : MonoBehaviour
 {
     public enum DataType
@@ -19,14 +20,14 @@ public class CSVDataManager : MonoBehaviour
     [SerializeField] private string dialoguefilePath;
     [SerializeField] private string letterfilePath;
     [SerializeField] private string choicefilePath;
-    [SerializeField] private string dialogueProceedings;
+    [SerializeField] private string dialogueProceedingsPath;
 
-    private Dictionary<int, Dialogue> _dialogueDictionaryMap;
-    private Dictionary<int, Choice> _choiceDictionaryMap;
-    private Dictionary<int, Letter> _letterDictionaryMap;
-    private Dictionary<int, DialogueProceeding> _dialogueProceedingsMap;
+    private Dictionary<int, Dialogue> _dialogueDictionaryMap = new Dictionary<int, Dialogue>();
+    private Dictionary<int, Choice> _choiceDictionaryMap = new Dictionary<int, Choice>();
+    private Dictionary<int, Letter> _letterDictionaryMap = new Dictionary<int, Letter>();
+    private Dictionary<int, DialogueProceeding> _dialogueProceedingsMap = new Dictionary<int, DialogueProceeding>();
 
-    CSVParse _csvParse = gameObject.AddComponent<CSVParse>();
+    CSVParse _csvParse;
 
     public static bool isEnd = false;
 
@@ -55,7 +56,9 @@ public class CSVDataManager : MonoBehaviour
 
     public DialogueProceeding GetDialogueProceedingData(string currentStoryGroup)
     {
-        var dialogueProceeding = new DialogueProceeding();
+        var dialogueProceedingList = _csvParse.DialogueProceedingsParse(dialogueProceedingsPath, currentStoryGroup);
+        
+        var dialogueProceeding = dialogueProceedingList[0];
         
         return dialogueProceeding;
     }

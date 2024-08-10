@@ -8267,10 +8267,10 @@ MonoBehaviour:
   topObject: {fileID: 1517977034}
   bottomObject: {fileID: 1681279880}
   interactionObject: {fileID: 996736816}
+  optionPopup: {fileID: 3965461}
   interactionButton: {fileID: 1115445568}
   backButton: {fileID: 157707582}
   skipButton: {fileID: 807491537}
-  optionPopup: {fileID: 3965461}
   optionMainText: {fileID: 1503167539}
   optionSubText: {fileID: 646764795}
   nextButtonBackGround: {fileID: 730344829}
@@ -11198,6 +11198,7 @@ MonoBehaviour:
   dialoguefilePath: DataTable/DialogueTable
   letterfilePath: DataTable/LetterTable
   choicefilePath: DataTable/ChoiceTable
+  dialogueProceedingsPath: DataTable/DialogueProceedingsTable
 --- !u!114 &1713883215
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ public class PlayerData
 {
     public int Day;
 
-    public string TriggerType;
+    public string TriggerType; // 추후 Gorup 변경 될 가능성 있음
     public string CurrentStoryGroup;
     public string NextStoryGroup;
 

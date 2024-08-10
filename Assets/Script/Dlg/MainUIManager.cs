@@ -12,32 +12,23 @@ using Script.Manager;
 
 public class MainUIManager : MonoBehaviour
 {
-    public static MainUIManager Instance;
+    [SerializeField] private GameObject topObject;
+    [SerializeField] private GameObject bottomObject; 
+    [SerializeField] private GameObject interactionObject;
+    [SerializeField] private GameObject optionPopup;
 
-    // BottomUI
-    [SerializeField]
-    GameObject topObject, bottomObject, interactionObject;
+    [SerializeField] private Button interactionButton;
+    [SerializeField] private Button backButton; 
+    [SerializeField] private Button skipButton;
 
-    [SerializeField]
-    Button interactionButton, backButton, skipButton;
+    [SerializeField] private Text optionMainText;
+    [SerializeField] private Text optionSubText;
 
-    // OptionPopup
-    [SerializeField]
-    GameObject optionPopup;
-
-    [SerializeField]
-    Text optionMainText, optionSubText;
-
-    [SerializeField]
-    Button nextButtonBackGround;
-
-    // MiniGame
-    [SerializeField]
-    Minigame miniGame;
-
-    // Player
-    [SerializeField]
-    PlayerAction playerAction;
+    [SerializeField] private Button nextButtonBackGround;
+    
+    [SerializeField] private Minigame miniGame;
+    
+    [SerializeField] private PlayerAction playerAction;
 
     DialogueManager dialogueManager;
     SplashManager splashManager;
@@ -45,18 +36,22 @@ public class MainUIManager : MonoBehaviour
     public string OptionMainText { get; set; }
     public string OptionSubText  { get; set; }
 
-    void Start()
+
+    private void AddListener()
     {
-        playerAction = FindObjectOfType<PlayerAction>();
-
-        dialogueManager = FindObjectOfType<DialogueManager>();
-        splashManager = FindObjectOfType<SplashManager>();
-
-        // Add Event
         interactionButton.onClick.AddListener(OnClick_ButtonUI_Button_Interaction);
         nextButtonBackGround.onClick.AddListener(OnClick_Next_Button_BackGround);
         backButton.onClick.AddListener(OnClick_BottomUI_Button_Back);
         skipButton.onClick.AddListener(OnClick_BottomUI_Button_Skip);
+    }
+    
+    void Start()
+    {
+        AddListener();
+        
+        playerAction = FindObjectOfType<PlayerAction>();
+        dialogueManager = FindObjectOfType<DialogueManager>();
+        splashManager = FindObjectOfType<SplashManager>();
 
         // Set
         dialogueManager.SetDialogue(false);
@@ -72,51 +67,46 @@ public class MainUIManager : MonoBehaviour
     // OnClick
     void OnClick_ButtonUI_Button_Interaction()
     {
-        var objectType = playerAction.InteractionType;
+        var interactionType = playerAction.InteractionType;
+        var playerData = SaveDataManager.FileLoad("PlayerData");
 
         SoundManager.instance.SFXPlay(SoundManager.SFXType.Interaction);
 
-        Debug.Log(objectType);
-
-        if (objectType == ObjectController.ObjectType.Letter)
+        switch (interactionType)
         {
-            dialogueManager.TempPlayStory();
-        }
-        else if (objectType == ObjectController.ObjectType.MiniGame1)
-        {
-            /*miniGame.SetLevel(0);
+            case ObjectController.ObjectType.Letter:
+                {
+                    if (ObjectController.ObjectType.Letter.ToString() == playerData.TriggerType)
+                    {
+                        dialogueManager.TempPlayStory();
+                    }
+                    else
+                    {
+                        Debug.Log("지금은 확인할 편지가 없어");
+                    }
+                }
+                break;
+            case ObjectController.ObjectType.MiniGame1:
+                {
+                    playerAction.currentDialogueGroup = "Prologue1";
+                    
+                    dialogueManager.TempPlayStory();
+                }            
+                break;
+            case ObjectController.ObjectType.MiniGame2:
+                {
+                    playerAction.currentDialogueGroup = "Prologue2";
+                
+                    dialogueManager.TempPlayStory();
+                }
+                break;
+            case ObjectController.ObjectType.MiniGame3:
+                {
+                    playerAction.currentDialogueGroup = "Prologue3";
 
-            miniGame.Open();
-
-            miniGame.GameStart();*/
-            
-            playerAction.currentDialogueGroup = "Prologue1";
-            
-            dialogueManager.TempPlayStory();
-        }
-        else if (objectType == ObjectController.ObjectType.MiniGame2)
-        {
-            /*miniGame.SetLevel(1);
-
-            miniGame.Open();
-
-            miniGame.GameStart();*/
-
-            playerAction.currentDialogueGroup = "Prologue2";
-            
-            dialogueManager.TempPlayStory();
-        }
-        else if (objectType == ObjectController.ObjectType.MiniGame3)
-        {
-            /*miniGame.SetLevel(2);
-
-            miniGame.Open();
-
-            miniGame.GameStart();*/
-
-            playerAction.currentDialogueGroup = "Prologue3";
-            
-            dialogueManager.TempPlayStory();
+                    dialogueManager.TempPlayStory();
+                }
+                break;
         }
     }
 
