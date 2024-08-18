@@ -5,6 +5,56 @@ using UnityEngine;
 public class CSVParse : MonoBehaviour
 {
     [SerializeField] private string tempDialogueGroup;
+
+    public DayRoutine[] DayRoutineParse(string dayRoutine_File, string dayGroup)
+    {
+        var dayRoutineList = new List<DayRoutine>();
+        var dayRoutineCsvData = Resources.Load<TextAsset>(dayRoutine_File);
+
+        if (dayRoutineCsvData == null) 
+            return dayRoutineList.ToArray();
+        
+        var dialogueData = dayRoutineCsvData.text.Remove(dayRoutineCsvData.text.Length - 1, 1).Split(new char[] { '\n' });
+
+        for (int i = 1; i < dialogueData.Length;)
+        {
+            var row = dialogueData[i].Split(new char[] { ',' });
+
+            if (row[1] == dayGroup)
+            {
+                var dayRoutine = new DayRoutine();
+                var routine1List = new List<string>();
+                var routine2List = new List<string>();
+                var routine3List = new List<string>();
+                var routine4List = new List<string>();
+                var routine5List = new List<string>();
+                var routine6List = new List<string>();
+                var routine7List = new List<string>();
+                var routine8List = new List<string>();
+                var routine9List = new List<string>();
+                var routine10List = new List<string>();
+                
+                dayRoutineList.Add(dayRoutine);
+            }
+            else
+            {
+                do
+                {
+                    if (++i < dialogueData.Length)
+                    {
+                        row = dialogueData[i].Split(new char[] { ',' });
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                while (row[2] == "");
+            }
+        }
+
+        return dayRoutineList.ToArray();
+    }
     
     public DialogueProceeding[] DialogueProceedingsParse(string dialougeProceeding_File, string currentStoryGroup)
     {

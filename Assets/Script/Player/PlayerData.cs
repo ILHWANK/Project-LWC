@@ -3,21 +3,21 @@ using System.Collections.Generic;
 public class PlayerData
 {
     public int Day;
+    
+    public List<string> Inventorys;
+    public List<string> Routine; // 추후 Gorup 변경 될 가능성 있음
 
-    public string TriggerType; // 추후 Gorup 변경 될 가능성 있음
     public string CurrentStoryGroup;
     public string NextStoryGroup;
 
-    public List<string> Inventorys;
-
     public PlayerData(int day, 
-                      string triggerType, string currentStoryGroup, string nextStoryGroup, 
-                      List<string> inventorys)
+                      List<string> routine, string currentStoryGroup, string nextStoryGroup, 
+                      List<string> inventoryList)
     {
         Day = day;
-        TriggerType = triggerType;
+        Routine = routine;
         CurrentStoryGroup = currentStoryGroup;
         NextStoryGroup = nextStoryGroup;
-        Inventorys = inventorys;
+        Inventorys = inventoryList;
     }
 }

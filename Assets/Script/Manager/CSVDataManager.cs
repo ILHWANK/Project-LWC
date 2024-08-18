@@ -40,7 +40,18 @@ public class CSVDataManager : MonoBehaviour
             SetDialogueData(dialoguefilePath);
         }
     }
+    
+    // DayRoutine
+    public void SetDayRoutine(string routineGroup)
+    {
+        
+    }
 
+    public void GetDayRoutine()
+    {
+        
+    }
+    
     // DialogueProceedings
     public void SetDialogueProceedingData(string pChoiceGroup)
     {

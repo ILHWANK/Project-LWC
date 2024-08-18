@@ -69,6 +69,7 @@ public class MainUIManager : MonoBehaviour
     {
         var interactionType = playerAction.InteractionType;
         var playerData = SaveDataManager.FileLoad("PlayerData");
+        var routineList = playerData.Routine;
 
         SoundManager.instance.SFXPlay(SoundManager.SFXType.Interaction);
 
@@ -76,14 +77,16 @@ public class MainUIManager : MonoBehaviour
         {
             case ObjectController.ObjectType.Letter:
                 {
-                    if (ObjectController.ObjectType.Letter.ToString() == playerData.TriggerType)
+                    /*routineList.Exists(x => ObjectController.ObjectType.Letter.ToString())
+                    
+                    if (playerData.Routine.Exists(ObjectController.ObjectType.Letter.ToString()))
                     {
                         dialogueManager.TempPlayStory();
                     }
                     else
                     {
                         Debug.Log("지금은 확인할 편지가 없어");
-                    }
+                    }*/
                 }
                 break;
             case ObjectController.ObjectType.MiniGame1:
