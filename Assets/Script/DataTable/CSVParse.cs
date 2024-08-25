@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CSVParse : MonoBehaviour
@@ -15,43 +17,72 @@ public class CSVParse : MonoBehaviour
             return dayRoutineList.ToArray();
         
         var dialogueData = dayRoutineCsvData.text.Remove(dayRoutineCsvData.text.Length - 1, 1).Split(new char[] { '\n' });
-
-        for (int i = 1; i < dialogueData.Length;)
+        
+        var routine1List = new List<string>();
+        if (routine1List == null) throw new ArgumentNullException(nameof(routine1List));
+            
+        var routine2List = new List<string>();
+        if (routine2List == null) throw new ArgumentNullException(nameof(routine2List));
+            
+        var routine3List = new List<string>();
+        if (routine3List == null) throw new ArgumentNullException(nameof(routine3List));
+            
+        var routine4List = new List<string>();
+        if (routine4List == null) throw new ArgumentNullException(nameof(routine4List));
+            
+        var routine5List = new List<string>();
+        if (routine5List == null) throw new ArgumentNullException(nameof(routine5List));
+            
+        var routine6List = new List<string>();
+        if (routine6List == null) throw new ArgumentNullException(nameof(routine6List));
+            
+        var routine7List = new List<string>();
+        if (routine7List == null) throw new ArgumentNullException(nameof(routine7List));
+            
+        var routine8List = new List<string>();
+        if (routine8List == null) throw new ArgumentNullException(nameof(routine8List));
+            
+        var routine9List = new List<string>();
+        if (routine9List == null) throw new ArgumentNullException(nameof(routine9List));
+            
+        var routine10List = new List<string>();
+        if (routine10List == null) throw new ArgumentNullException(nameof(routine10List));
+        
+        for (var i = 1; i < dialogueData.Length;)
         {
-            var row = dialogueData[i].Split(new char[] { ',' });
+            var row = dialogueData[i].Split(new [] { ',' });
 
-            if (row[1] == dayGroup)
+            do
             {
-                var dayRoutine = new DayRoutine();
-                var routine1List = new List<string>();
-                var routine2List = new List<string>();
-                var routine3List = new List<string>();
-                var routine4List = new List<string>();
-                var routine5List = new List<string>();
-                var routine6List = new List<string>();
-                var routine7List = new List<string>();
-                var routine8List = new List<string>();
-                var routine9List = new List<string>();
-                var routine10List = new List<string>();
-                
-                dayRoutineList.Add(dayRoutine);
+                if (row[2] != "") routine1List.Add(row[2]);
+                if (row[3] != "") routine2List.Add(row[3]);
+                if (row[4] != "") routine3List.Add(row[4]);
+                if (row[5] != "") routine4List.Add(row[5]);
+                if (row[6] != "") routine5List.Add(row[6]);
+                if (row[7] != "") routine6List.Add(row[7]);
+                if (row[8] != "") routine7List.Add(row[8]);
+                if (row[9] != "") routine8List.Add(row[9]);
+                if (row[10] != "") routine9List.Add(row[10]);
+                if (row[11] != "") routine10List.Add(row[11]);
             }
-            else
-            {
-                do
-                {
-                    if (++i < dialogueData.Length)
-                    {
-                        row = dialogueData[i].Split(new char[] { ',' });
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                while (row[2] == "");
-            }
+            while (row[1] == dayGroup);
         }
+
+        var dayRoutine = new DayRoutine
+        {
+            routine1List = routine1List,
+            routine2List = routine2List,
+            routine3List = routine3List,
+            routine4List = routine4List,
+            routine5List = routine5List,
+            routine6List = routine6List,
+            routine7List = routine7List,
+            routine8List = routine8List,
+            routine9List = routine9List,
+            routine10List = routine10List
+        };
+        
+        dayRoutineList.Add(dayRoutine);
 
         return dayRoutineList.ToArray();
     }
@@ -88,71 +119,69 @@ public class CSVParse : MonoBehaviour
     
     public Dialogue[] DialogueParse(string dialouge_File, string pDialogueGorup)
     {
-        List<Dialogue> dialogueList = new List<Dialogue>();
-        TextAsset dialogueCsvData = Resources.Load<TextAsset>(dialouge_File);
+        var dialogueList = new List<Dialogue>();
+        var dialogueCsvData = Resources.Load<TextAsset>(dialouge_File);
 
-        if (dialogueCsvData != null)
+        if (dialogueCsvData == null) return dialogueList.ToArray();
+        var dialogueData = dialogueCsvData.text.Remove(dialogueCsvData.text.Length - 1, 1).Split(new char[] { '\n' });
+
+        for (int i = 1; i < dialogueData.Length;)
         {
-            string[] dialogueData = dialogueCsvData.text.Remove(dialogueCsvData.text.Length - 1, 1).Split(new char[] { '\n' });
+            var row = dialogueData[i].Split(new [] { ',' });
 
-            for (int i = 1; i < dialogueData.Length;)
+            if (row[1] == pDialogueGorup)
             {
-                string[] row = dialogueData[i].Split(new char[] { ',' });
+                var dialogue = new Dialogue();
+                dialogue.contextName = row[3];
+                dialogue.dialogueType = GetDialogueType(row[8]);
+                dialogue.skipContext = row[9].Replace("\\n", "\n");
 
-                if (row[1].ToString() == pDialogueGorup)
+                var contextList = new List<string>();
+                var cameraActionList = new List<CameraType>();
+                var spriteList = new List<string>();
+
+                do
                 {
-                    Dialogue dialogue = new Dialogue();
-                    dialogue.characterName = row[3];
-                    dialogue.dialogueType = GetDialogueType(row[8]);
-                    dialogue.skipContext = row[9].Replace("\\n", "\n");
+                    contextList.Add(row[4].Replace("\\n", "\n")); // column
+                    spriteList.Add(row[5]);
+                    cameraActionList.Add(GetCameraType(row[6]));
 
-                    List<string> contextList = new List<string>();
-                    List<CameraType> cameraActionList = new List<CameraType>();
-                    List<string> spriteList = new List<string>();
+                    if (row[7] != "")
+                        dialogue.choiceGroup = row[7];
 
-                    do
+                    //dialogueTypeList.Add(GetDialogueType(row[8]));
+
+                    if (++i < dialogueData.Length)
                     {
-                        contextList.Add(row[4].Replace("\\n", "\n")); // column
-                        spriteList.Add(row[5]);
-                        cameraActionList.Add(GetCameraType(row[6]));
-
-                        if (row[7] != "")
-                            dialogue.choiceGroup = row[7].ToString();
-
-                        //dialogueTypeList.Add(GetDialogueType(row[8]));
-
-                        if (++i < dialogueData.Length)
-                        {
-                            row = dialogueData[i].Split(new char[] { ',' });
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        row = dialogueData[i].Split(new[] { ',' });
                     }
-                    while (row[2] == "");
-
-                    dialogue.contexts = contextList.ToArray();
-                    dialogue.spriteNames = spriteList.ToArray();
-                    dialogue.cameraActions = cameraActionList.ToArray();
-
-                    dialogueList.Add(dialogue);
+                    else
+                    {
+                        break;
+                    }
                 }
-                else
+                while (row[2] == "");
+
+                dialogue.contexts = contextList.ToArray();
+                dialogue.spriteNames = spriteList.ToArray();
+                dialogue.cameraActions = cameraActionList.ToArray();
+
+                dialogueList.Add(dialogue);
+            }
+            else
+            {
+                do
                 {
-                    do
+                    if (++i < dialogueData.Length)
                     {
-                        if (++i < dialogueData.Length)
-                        {
-                            row = dialogueData[i].Split(new char[] { ',' });
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        row = dialogueData[i].Split(new [] { ',' });
                     }
-                    while (row[2] == "");
+                    else
+                    {
+                        break;
+                    }
                 }
+                while (row[2] == "");
             }
         }
 
@@ -161,19 +190,19 @@ public class CSVParse : MonoBehaviour
 
     public Letter[] LetterParse(string letter_File, string pLetterGroup)
     {
-        List<Letter> letterList = new List<Letter>();
-        TextAsset letterData = Resources.Load<TextAsset>(letter_File);
+        var letterList = new List<Letter>();
+        var letterData = Resources.Load<TextAsset>(letter_File);
 
         if (letterData == null) 
             return letterList.ToArray();
         
-        var dialogueData = letterData.text.Remove(letterData.text.Length - 1, 1).Split(new char[] { '\n' });
+        var dialogueData = letterData.text.Remove(letterData.text.Length - 1, 1).Split(new [] { '\n' });
 
         for (var i = 1; i < dialogueData.Length;)
         {
-            var row = dialogueData[i].Split(new char[] { ',' });
+            var row = dialogueData[i].Split(new [] { ',' });
 
-            if (row[1].ToString() == tempDialogueGroup)
+            if (row[1] == tempDialogueGroup)
             {
 
             }
@@ -183,7 +212,7 @@ public class CSVParse : MonoBehaviour
                 {
                     if (++i < dialogueData.Length)
                     {
-                        row = dialogueData[i].Split(new char[] { ',' });
+                        row = dialogueData[i].Split(new [] { ',' });
                     }
                     else
                     {
@@ -199,30 +228,29 @@ public class CSVParse : MonoBehaviour
 
     public Choice[] ChoiceParse(string choice_File, string pChoiceGroup)
     {
-        List<Choice> choiceList = new List<Choice>();
-        TextAsset choiceData = Resources.Load<TextAsset>(choice_File);
+        var choiceList = new List<Choice>();
+        var choiceData = Resources.Load<TextAsset>(choice_File);
 
-        if (choiceData != null)
+        if (!choiceData) 
+            return choiceList.ToArray();
+        
+        var dialogueData = choiceData.text.Remove(choiceData.text.Length - 1, 1).Split(new [] { '\n' });
+
+        for (var i = 1; i < dialogueData.Length; ++i)
         {
-            string[] dialogueData = choiceData.text.Remove(choiceData.text.Length - 1, 1).Split(new char[] { '\n' });
+            var row = dialogueData[i].Split(new [] { ',' });
 
-            for (int i = 1; i < dialogueData.Length; ++i)
+            if (row[1] != pChoiceGroup) continue;
+            var choice = new Choice
             {
-                string[] row = dialogueData[i].Split(new char[] { ',' });
+                context = row[3],
+                item = row[4],
+                dialogueGroup = row[5],
+                likeabilityWorld = row[6],
+                likeabilityValue = row[7]
+            };
 
-                if (row[1].ToString() == pChoiceGroup)
-                {
-                    Choice choice = new Choice();
-
-                    choice.context = row[3];
-                    choice.item = row[4];
-                    choice.dialogueGroup = row[5];
-                    choice.likeabilityWorld = row[6];
-                    choice.likeabilityValue = row[7];
-
-                    choiceList.Add(choice);
-                }
-            }
+            choiceList.Add(choice);
         }
 
         return choiceList.ToArray();
@@ -230,88 +258,28 @@ public class CSVParse : MonoBehaviour
 
     CameraType GetCameraType(string pCameraType)
     {
-        CameraType cameraType;
-
-        string cameraTypeString = pCameraType.ToString();
-
-        switch (cameraTypeString)
+        var cameraType = pCameraType switch
         {
-            case "FadeIn":
-                {
-                    cameraType = CameraType.FadeIn;
-
-                    break;
-                }
-            case "FadeOut":
-                {
-                    cameraType = CameraType.FadeOut;
-
-                    break;
-                }
-            case "FlashIn":
-                {
-                    cameraType = CameraType.FlashIn;
-
-                    break;
-                }
-            case "FlashOut":
-                {
-                    cameraType = CameraType.FlashOut;
-
-                    break;
-                }
-            default:
-                {
-                    cameraType = CameraType.None;
-
-                    break;
-                }
-        }
+            "FadeIn" => CameraType.FadeIn,
+            "FadeOut" => CameraType.FadeOut,
+            "FlashIn" => CameraType.FlashIn,
+            "FlashOut" => CameraType.FlashOut,
+            _ => CameraType.None
+        };
 
         return cameraType;
     }
 
     DialogueType GetDialogueType(string pDialogueType)
     {
-        DialogueType dialogueType;
-
-        string dialogueTypeString = pDialogueType.ToString();
-
-        switch (dialogueTypeString)
+        var dialogueType = pDialogueType switch
         {
-            case "ContextUp":
-                {
-                    dialogueType = DialogueType.ContextUp;
-
-                    break;
-                }
-            case "ContextDown":
-                {
-                    dialogueType = DialogueType.ContextDown;
-
-                    break;
-                }
-            case "Narration":
-                {
-                    dialogueType = DialogueType.Narration;
-
-                    break;
-                }
-
-            case "Letter" :
-                {
-                    dialogueType = DialogueType.Letter;
-
-                    break;
-                }
-
-            default:
-                {
-                    dialogueType = DialogueType.None;
-
-                    break;
-                }
-        }
+            "ContextUp" => DialogueType.ContextUp,
+            "ContextDown" => DialogueType.ContextDown,
+            "Narration" => DialogueType.Narration,
+            "Letter" => DialogueType.Letter,
+            _ => DialogueType.None
+        };
 
         return dialogueType;
     }

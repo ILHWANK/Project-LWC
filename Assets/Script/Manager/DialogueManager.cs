@@ -333,7 +333,7 @@ namespace Script.Manager
 
             fontConfiguration.fontColor = FontColor.Black;
 
-            string nameText = dialogues[lineIndex].characterName;
+            string nameText = dialogues[lineIndex].contextName;
 
             _currentDialogueType
                 = dialogues[lineIndex].dialogueType != DialogueType.None ? dialogues[lineIndex].dialogueType : _currentDialogueType;

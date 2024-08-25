@@ -23,7 +23,7 @@ public class Dialogue
 {
     public CameraType cameraType;
 
-    [HideInInspector] public string characterName;
+    [HideInInspector] public string contextName;
     [HideInInspector] public string choiceGroup;
     [HideInInspector] public string skipContext;
 

@@ -21,6 +21,6 @@ public class DayRoutine
 [System.Serializable]
 public class DayRoutineEvent
 {
-    
+    public DayRoutine[] DayRoutines;
 }
 

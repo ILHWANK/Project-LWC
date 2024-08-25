@@ -69,7 +69,7 @@ public class MainUIManager : MonoBehaviour
     {
         var interactionType = playerAction.InteractionType;
         var playerData = SaveDataManager.FileLoad("PlayerData");
-        var routineList = playerData.Routine;
+        var routineMap = playerData.RoutineMapMap;
 
         SoundManager.instance.SFXPlay(SoundManager.SFXType.Interaction);
 

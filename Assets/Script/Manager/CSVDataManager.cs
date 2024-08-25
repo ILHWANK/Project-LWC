@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,12 +22,14 @@ public class CSVDataManager : MonoBehaviour
     [SerializeField] private string letterfilePath;
     [SerializeField] private string choicefilePath;
     [SerializeField] private string dialogueProceedingsPath;
-
+    [SerializeField] private string dayRoutinePath;
+    
     private Dictionary<int, Dialogue> _dialogueDictionaryMap = new Dictionary<int, Dialogue>();
     private Dictionary<int, Choice> _choiceDictionaryMap = new Dictionary<int, Choice>();
     private Dictionary<int, Letter> _letterDictionaryMap = new Dictionary<int, Letter>();
     private Dictionary<int, DialogueProceeding> _dialogueProceedingsMap = new Dictionary<int, DialogueProceeding>();
-
+    private Dictionary<int, DayRoutine> _dayRoutineMap = new Dictionary<int, DayRoutine>();
+    
     CSVParse _csvParse;
 
     public static bool isEnd = false;
@@ -44,12 +47,23 @@ public class CSVDataManager : MonoBehaviour
     // DayRoutine
     public void SetDayRoutine(string routineGroup)
     {
-        
+        _dayRoutineMap.Clear();
+
+        var dayRoutineList = _csvParse.DayRoutineParse(dayRoutinePath, routineGroup);
+
+        for (var i = 0; i < dayRoutineList.Length; ++i)
+        {
+            _dayRoutineMap.Add(i + 1, dayRoutineList[i]);
+        }
     }
 
-    public void GetDayRoutine()
+    public DayRoutine GetDayRoutine(string dayRoutineGroup)
     {
-        
+        var dayRoutineList = _csvParse.DayRoutineParse(dayRoutinePath, dayRoutineGroup);
+
+        var dayRoutine = dayRoutineList[0];
+
+        return dayRoutine;
     }
     
     // DialogueProceedings
@@ -57,7 +71,8 @@ public class CSVDataManager : MonoBehaviour
     {
         _dialogueProceedingsMap.Clear();
 
-        var dialogueProceedings = _csvParse.DialogueProceedingsParse(choicefilePath, pChoiceGroup);
+        var dialogueProceedings 
+            = _csvParse.DialogueProceedingsParse(choicefilePath, pChoiceGroup);
 
         for (int i = 0; i < dialogueProceedings.Length; ++i)
         {
@@ -67,7 +82,8 @@ public class CSVDataManager : MonoBehaviour
 
     public DialogueProceeding GetDialogueProceedingData(string currentStoryGroup)
     {
-        var dialogueProceedingList = _csvParse.DialogueProceedingsParse(dialogueProceedingsPath, currentStoryGroup);
+        var dialogueProceedingList 
+            = _csvParse.DialogueProceedingsParse(dialogueProceedingsPath, currentStoryGroup);
         
         var dialogueProceeding = dialogueProceedingList[0];
         
