@@ -3,4 +3,4 @@
 2,Day1,WakeUp,Morning,LetterGet,LetterCheck,Lunch,Dinner,,,,
 3,Day2,WakeUp,Morning,Lunch,Sleep,,,,,,
 4,Day3,WakeUp,Morning,Lunch,,,,,,,
-5,Day3,,LetterGet,,,,,,,,
+5,Day3,,LetterGet,,"",,,,,,
