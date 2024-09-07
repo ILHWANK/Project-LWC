@@ -8,7 +8,7 @@ public class DialogueProceedingsManager : MonoBehaviour
 
     private int _day;
     private Dictionary<string, bool> _routineMap = new();
-    private List<string> _inventoryList = new();
+    private Dictionary<string, int> _inventoryMap = new();
     private string _currentStoryGroup;
     private string _nextStoryGroup;
     
@@ -21,7 +21,7 @@ public class DialogueProceedingsManager : MonoBehaviour
         _currentStoryGroup = dialogueProceeding.currentStoryGroup;
         _nextStoryGroup = dialogueProceeding.nextDialogue;
         
-        var playerData = new PlayerData(_day, _routineMap, _currentStoryGroup, _nextStoryGroup, _inventoryList);
+        var playerData = new PlayerData(_day, _routineMap, _currentStoryGroup, _nextStoryGroup, _inventoryMap);
         
         SaveDataManager.FileSave(playerData, "PlayerData");
     }

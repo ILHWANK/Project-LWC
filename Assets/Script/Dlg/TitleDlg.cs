@@ -135,11 +135,11 @@ public class TitleDlg : MonoBehaviour
     public void LoadNewGame()
     {
         var routineMap = new Dictionary<string, bool>();
-        var inventory = new List<string>();
+        var inventoryMap = new Dictionary<string, int>();
 
         routineMap.Add("WitchTalk", false);
         
-        var playerData = new PlayerData(1, routineMap, "CurrentStoryGroup", "NextStoryGroup", inventory);
+        var playerData = new PlayerData(1, routineMap, "CurrentStoryGroup", "NextStoryGroup", inventoryMap);
 
         SaveDataManager.FileSave(playerData, "playerData");
 

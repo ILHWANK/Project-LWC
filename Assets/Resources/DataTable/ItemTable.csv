@@ -1,0 +1,15 @@
+﻿Index,Item_Id,Item_Name,Item_Desc,Item_SubDesc,Item_Image,Item_Type
+1,Day1_Oriental,어린 세자,고풍스러운 종이에 적힌 편지다.,어린 세자,,Letter
+2,Day1_Western,용사가 된 검사,눅눅한 종이에 적힌 편지다.,용사가 된 검사,,Letter
+3,Day1_Animal,도그 부부,금색 털이 잔뜩 붙어있는 편지다.,도그 부부,,Letter
+4,Day1_Future,영양 분석 연구원,검은 종이에 형광빛의 로고가 그려진 편지다.,영양 분석 연구원,,Letter
+5,Day2_Oriental,공부해야 하는 양반,버석거리는 종이에 먹물이 묻어 있다.,공부해야 하는 양반,,Letter
+6,Day2_Western,혼자 있고 싶은 신관,새벽 풀내음이 나는 편지다.,혼자 있고 싶은 신관,,Letter
+7,Day2_Animal,사랑에 빠진 햄스터,아기자기한 스티커가 붙어있는 편지다.,사랑에 빠진 햄스터,,Letter
+8,Day2_Future,과거가 그리운 노인,먼지가 묻어나오는 낡은 편지다.,과거가 그리운 노인,,Letter
+9,Day3_Oriental,암행어사,돌돌 말려 있는 편지다. 묘하게 축축하다.,암행어사,,Letter
+10,Day3_Western,엘프 마법사,커다란 나뭇잎에 적힌 편지다. 글자에서 열매 향이 난다.,엘프 마법사,,Letter
+11,Day3_Animal,늙은 곰,정갈한 글씨체로 적힌 편지다.,늙은 곰,,Letter
+12,Day3_Future,신체 개조 담당 연구원,검은 종이에 하얀 글씨로 적힌 편지다.,신체 개조 담당 연구원,,Letter
+13,Animal_Gift,선물,동물 친구에게서 온 선물,,,Gift
+14,Item1,테스트 아이템,테스트 아이템 설명,,,None

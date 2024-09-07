@@ -1,8 +1,8 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class DayRoutine
 {
     [HideInInspector] public string dayGroup;
@@ -18,7 +18,7 @@ public class DayRoutine
     [HideInInspector] public List<string> routine10List;
 }
 
-[System.Serializable]
+[Serializable]
 public class DayRoutineEvent
 {
     public DayRoutine[] DayRoutines;

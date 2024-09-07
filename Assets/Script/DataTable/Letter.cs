@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class Letter : MonoBehaviour
+public enum LetterType
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    None,
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+[Serializable]
+public class Letter
+{
+    [HideInInspector] public string id;
+    [HideInInspector] public string world;
+    [HideInInspector] public string from;
+    [HideInInspector] public string info;
+    [HideInInspector] public LetterType letterType;
+    [HideInInspector] public string dialogueGroup;
 }
