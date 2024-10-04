@@ -19,15 +19,11 @@ public class InteractionController : MonoBehaviour
 
     PlayerAction playerAction;
     DialogueManager dialogueManager;
-    private CsvTable dialogueTable = new CsvTable();
 
     void Start(){
         playerAction = FindObjectOfType<PlayerAction>();
         dialogueManager = FindObjectOfType<DialogueManager>();
         interactionButton.interactable = false;
-        
-        //
-        dialogueTable.ReadCsv("Assets/Resources/DataTable/DialogueTable.csv");
     }
 
     void Update()
@@ -54,7 +50,6 @@ public class InteractionController : MonoBehaviour
         if (pCollider2D.gameObject.tag == "Interaction"){
             if(!isCollide){
                 isCollide = true;
-
 
                 var objectController = pCollider2D.gameObject.GetComponent<ObjectController>();
                 var objectType = objectController.GetObjectType();

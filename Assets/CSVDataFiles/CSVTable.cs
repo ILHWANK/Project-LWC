@@ -18,27 +18,13 @@ public class CsvTable
 
             for (int j = 0; j < headers.Length; j++)
             {
-                row[headers[j]] = fields[j]; // 동적으로 컬럼을 추가
+                row[headers[j]] = fields[j];
             }
 
             table.Add(row);
         }
     }
 
-    // 단일 컬럼 값을 기준으로 row를 찾아 TableData로 반환
-    public TableData GetByColumnSingle(string columnName, string value)
-    {
-        foreach (var row in table)
-        {
-            if (row.ContainsKey(columnName) && row[columnName] == value)
-            {
-                return new TableData(row); // row 데이터를 TableData로 반환
-            }
-        }
-        return null; // 데이터가 없을 경우 null 반환
-    }
-
-    // 특정 컬럼 값으로 그룹화된 row들을 TableData 리스트로 반환
     public List<TableData> GetByColumnGroup(string columnName, string value)
     {
         List<TableData> results = new List<TableData>();
@@ -47,7 +33,38 @@ public class CsvTable
         {
             if (row.ContainsKey(columnName) && row[columnName] == value)
             {
-                results.Add(new TableData(row)); // 각 row를 TableData로 변환하여 리스트에 추가
+                results.Add(new TableData(row));
+            }
+        }
+
+        return results;
+    }
+
+    public List<TableData> GetByMultipleColumnsGroup(Dictionary<string, string> columnCriteria)
+    {
+        List<TableData> results = new List<TableData>();
+
+        foreach (var row in table)
+        {
+            bool match = true;
+
+            // 모든 조건을 만족해야 함
+            foreach (var criteria in columnCriteria)
+            {
+                string columnName = criteria.Key;
+                string expectedValue = criteria.Value;
+
+                if (!row.ContainsKey(columnName) || row[columnName] != expectedValue)
+                {
+                    match = false;
+                    break; // 조건이 하나라도 맞지 않으면 중단
+                }
+            }
+
+            // 조건이 모두 맞는 경우에만 결과 리스트에 추가
+            if (match)
+            {
+                results.Add(new TableData(row));
             }
         }
 

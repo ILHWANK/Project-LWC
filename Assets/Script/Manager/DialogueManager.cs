@@ -148,6 +148,13 @@ namespace Script.Manager
 
             dialogueEvent.dialogues = CSVDataManager.Instance.GetDialogue(1, endIndex);
 
+            foreach (var dialogue in dialogueEvent.dialogues)
+            {
+                Debug.Log("확인용 : " + dialogue.contextName + " / " + dialogue.contexts.Length);
+            }
+
+            Debug.Log("확인용 Null" + endIndex);
+            
             return dialogueEvent.dialogues;
         }
 

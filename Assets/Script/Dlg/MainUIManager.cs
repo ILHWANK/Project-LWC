@@ -29,17 +29,18 @@ public class MainUIManager : MonoBehaviour
     [SerializeField] private Minigame miniGame;
     
     [SerializeField] private PlayerAction playerAction;
-
+    
+    private CsvTable dialogueTable = new CsvTable();
+    
     DialogueManager dialogueManager;
     SplashManager splashManager;
 
     public string OptionMainText { get; set; }
     public string OptionSubText  { get; set; }
-
-
+    
     private void AddListener()
     {
-        interactionButton.onClick.AddListener(OnClick_ButtonUI_Button_Interaction);
+        interactionButton.onClick.AddListener(OnClickButtonUIButtonInteraction);
         nextButtonBackGround.onClick.AddListener(OnClick_Next_Button_BackGround);
         backButton.onClick.AddListener(OnClick_BottomUI_Button_Back);
         skipButton.onClick.AddListener(OnClick_BottomUI_Button_Skip);
@@ -48,6 +49,8 @@ public class MainUIManager : MonoBehaviour
     void Start()
     {
         AddListener();
+        
+        dialogueTable.ReadCsv("Assets/Resources/DataTable/DialogueTable.csv");
         
         playerAction = FindObjectOfType<PlayerAction>();
         dialogueManager = FindObjectOfType<DialogueManager>();
@@ -65,7 +68,7 @@ public class MainUIManager : MonoBehaviour
     }
 
     // OnClick
-    void OnClick_ButtonUI_Button_Interaction()
+    void OnClickButtonUIButtonInteraction()
     {
         var interactionType = playerAction.InteractionType;
         var playerData = SaveDataManager.FileLoad("PlayerData");
@@ -76,18 +79,27 @@ public class MainUIManager : MonoBehaviour
         switch (interactionType)
         {
             case ObjectController.ObjectType.Letter:
+            {
+                var dialogueList= dialogueTable.GetByColumnGroup("Dialogue_Group", "Prologue_Start");
+
+                foreach (var dialogueData in dialogueList)
                 {
-                    /*routineList.Exists(x => ObjectController.ObjectType.Letter.ToString())
-                    
-                    if (playerData.Routine.Exists(ObjectController.ObjectType.Letter.ToString()))
-                    {
-                        dialogueManager.TempPlayStory();
-                    }
-                    else
-                    {
-                        Debug.Log("지금은 확인할 편지가 없어");
-                    }*/
+                    Debug.Log($"Dialogue Data : {dialogueData["Context_Text"]}");
                 }
+
+                dialogueManager.TempPlayStory();
+                
+                /*routineList.Exists(x => ObjectController.ObjectType.Letter.ToString());
+
+                if (playerData.Routine.Exists(ObjectController.ObjectType.Letter.ToString()))
+                {
+                    dialogueManager.TempPlayStory();
+                }
+                else
+                {
+                    Debug.Log("지금은 확인할 편지가 없어");
+                }*/
+            }
                 break;
             case ObjectController.ObjectType.MiniGame1:
                 {
