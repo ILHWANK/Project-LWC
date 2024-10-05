@@ -30,10 +30,10 @@ public class MainUIManager : MonoBehaviour
     
     [SerializeField] private PlayerAction playerAction;
     
-    private CsvTable dialogueTable = new CsvTable();
+    private CsvTable _dialogueTable = new CsvTable();
     
-    DialogueManager dialogueManager;
-    SplashManager splashManager;
+    DialogueManager _dialogueManager;
+    SplashManager _splashManager;
 
     public string OptionMainText { get; set; }
     public string OptionSubText  { get; set; }
@@ -50,14 +50,14 @@ public class MainUIManager : MonoBehaviour
     {
         AddListener();
         
-        dialogueTable.ReadCsv("Assets/Resources/DataTable/DialogueTable.csv");
+        _dialogueTable.ReadCsv("Assets/Resources/DataTable/DialogueTable.csv");
         
         playerAction = FindObjectOfType<PlayerAction>();
-        dialogueManager = FindObjectOfType<DialogueManager>();
-        splashManager = FindObjectOfType<SplashManager>();
+        _dialogueManager = FindObjectOfType<DialogueManager>();
+        _splashManager = FindObjectOfType<SplashManager>();
 
         // Set
-        dialogueManager.SetDialogue(false);
+        _dialogueManager.SetDialogue(false);
 
         SoundManager.instance?.BGMPlay(true);
     }
@@ -80,14 +80,14 @@ public class MainUIManager : MonoBehaviour
         {
             case ObjectController.ObjectType.Letter:
             {
-                var dialogueList= dialogueTable.GetByColumnGroup("Dialogue_Group", "Prologue_Start");
+                var dialogueList = _dialogueTable.GetByColumnGroup("Dialogue_Group", "Prologue_Start");
 
                 foreach (var dialogueData in dialogueList)
                 {
                     Debug.Log($"Dialogue Data : {dialogueData["Context_Text"]}");
                 }
 
-                dialogueManager.TempPlayStory();
+                _dialogueManager.TempPlayStory();
                 
                 /*routineList.Exists(x => ObjectController.ObjectType.Letter.ToString());
 
@@ -105,21 +105,21 @@ public class MainUIManager : MonoBehaviour
                 {
                     playerAction.currentDialogueGroup = "Prologue1";
                     
-                    dialogueManager.TempPlayStory();
+                    _dialogueManager.TempPlayStory();
                 }            
                 break;
             case ObjectController.ObjectType.MiniGame2:
                 {
                     playerAction.currentDialogueGroup = "Prologue2";
                 
-                    dialogueManager.TempPlayStory();
+                    _dialogueManager.TempPlayStory();
                 }
                 break;
             case ObjectController.ObjectType.MiniGame3:
                 {
                     playerAction.currentDialogueGroup = "Prologue3";
 
-                    dialogueManager.TempPlayStory();
+                    _dialogueManager.TempPlayStory();
                 }
                 break;
         }
@@ -127,13 +127,11 @@ public class MainUIManager : MonoBehaviour
 
     void OnClick_Next_Button_BackGround()
     {
-        dialogueManager.SetIsNextStory();
+        _dialogueManager.SetIsNextStory();
     }
 
     void OnClick_BottomUI_Button_Back()
     {
-        //Backend.BMember.Logout();
-
         //GameManager.Instance.LoadScene(SceneType.Title, StageManager.Instance.ChangeStage(), StageManager.Instance.OnChangeTitleScene);
         GameManager.Instance.LoadScene(SceneType.Title, null, StageManager.Instance.OnChangeTitleScene);
     }
@@ -150,10 +148,10 @@ public class MainUIManager : MonoBehaviour
 
     public void OnClick_YesClick()
     {
-        dialogueManager.EndStory();
-        dialogueManager.SetDialogue(false);
+        _dialogueManager.EndStory();
+        _dialogueManager.SetDialogue(false);
         
-        splashManager.Reset();
+        _splashManager.Reset();
 
         optionPopup.SetActive(false);
 

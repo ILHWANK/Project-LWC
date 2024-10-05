@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -142,16 +143,28 @@ namespace Script.Manager
 
         private Dialogue[] GetStory()
         {
+            var dialogueTable = new CsvTable();
+            
+            var groupMap = new Dictionary<string, string>
+            {
+                { "Dialogue_Group", "Prologue_Start" },
+                { "Context_Index", "1" }
+            };
+            
+            dialogueTable.ReadCsv("Assets/Resources/DataTable/DialogueTable.csv");
+            var dialogueList = dialogueTable.GetByMultipleColumnsGroup(groupMap);
+            
             CSVDataManager.Instance.SetDialogueData(_playerAction?.currentDialogueGroup);
 
-            int endIndex = CSVDataManager.Instance.GetEndIndex(CSVDataManager.DataType.Dialogue);
+            // int endIndex = CSVDataManager.Instance.GetEndIndex(CSVDataManager.DataType.Dialogue);
+            var endIndex = dialogueList.Count;
 
-            dialogueEvent.dialogues = CSVDataManager.Instance.GetDialogue(1, endIndex);
-
-            foreach (var dialogue in dialogueEvent.dialogues)
+            foreach (var dialogue in dialogueList)
             {
-                Debug.Log("확인용 : " + dialogue.contextName + " / " + dialogue.contexts.Length);
+                Debug.Log(string.Format(dialogue["Context_CharacterName"] + " / " + dialogue["Context_Text"]));
             }
+            
+            //dialogueEvent.dialogues = CSVDataManager.Instance.GetDialogue(1, endIndex);
 
             Debug.Log("확인용 Null" + endIndex);
             
