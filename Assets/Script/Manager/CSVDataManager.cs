@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
-[RequireComponent(typeof(CSVParse))]
+[RequireComponent(typeof(CSVParser))]
 public class CSVDataManager : MonoBehaviour
 {
     public enum DataType
@@ -30,7 +30,7 @@ public class CSVDataManager : MonoBehaviour
     private Dictionary<int, DialogueProceeding> _dialogueProceedingsMap = new Dictionary<int, DialogueProceeding>();
     private Dictionary<int, DayRoutine> _dayRoutineMap = new Dictionary<int, DayRoutine>();
     
-    CSVParse _csvParse;
+    CSVParser _csvParse;
 
     public static bool isEnd = false;
 
@@ -38,7 +38,7 @@ public class CSVDataManager : MonoBehaviour
         if(Instance == null){
             Instance = this;
 
-            _csvParse = GetComponent<CSVParse>();
+            _csvParse = GetComponent<CSVParser>();
 
             SetDialogueData(dialoguefilePath);
         }

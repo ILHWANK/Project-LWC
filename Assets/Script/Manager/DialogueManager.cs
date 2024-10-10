@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,7 +41,7 @@ namespace Script.Manager
         PlayerAction _playerAction;
 
         //
-        DialogueType _currentDialogueType = DialogueType.ContextUp;
+        DialogueEnum.DialogueType _currentDialogueType = DialogueEnum.DialogueType.ContextUp;
 
         Dialogue[] dialogues;
         bool isStoryPlay = false;
@@ -143,30 +144,26 @@ namespace Script.Manager
 
         private Dialogue[] GetStory()
         {
-            var dialogueTable = new CsvTable();
+            var dialogueTable = new CsvTable("Assets/Resources/DataTable/DialogueTable.csv");
             
-            var groupMap = new Dictionary<string, string>
+            var groupMap = new []
             {
-                { "Dialogue_Group", "Prologue_Start" },
-                { "Context_Index", "1" }
+                ("Dialogue_Group", "Prologue_Start")
             };
-            
-            dialogueTable.ReadCsv("Assets/Resources/DataTable/DialogueTable.csv");
+
             var dialogueList = dialogueTable.GetByMultipleColumnsGroup(groupMap);
             
             CSVDataManager.Instance.SetDialogueData(_playerAction?.currentDialogueGroup);
-
-            // int endIndex = CSVDataManager.Instance.GetEndIndex(CSVDataManager.DataType.Dialogue);
             var endIndex = dialogueList.Count;
 
-            foreach (var dialogue in dialogueList)
+            foreach (var data in dialogueList.SelectMany(dialogue => dialogue))
             {
-                Debug.Log(string.Format(dialogue["Context_CharacterName"] + " / " + dialogue["Context_Text"]));
+                Debug.Log(string.Format(data["Context_CharacterName"] + " / " + data["Context_Text"]));
             }
             
-            //dialogueEvent.dialogues = CSVDataManager.Instance.GetDialogue(1, endIndex);
+            dialogueEvent.dialogues = CSVDataManager.Instance.GetDialogue(1, endIndex);
 
-            Debug.Log("확인용 Null" + endIndex);
+            Debug.Log("End Index : " + endIndex);
             
             return dialogueEvent.dialogues;
         }
@@ -191,22 +188,22 @@ namespace Script.Manager
 
                 switch (_currentDialogueType)
                 {
-                    case DialogueType.ContextUp:
+                    case DialogueEnum.DialogueType.ContextUp:
                     {
                         contextUpObject.SetActive(true);
                         break;
                     }
-                    case DialogueType.ContextDown:
+                    case DialogueEnum.DialogueType.ContextDown:
                     {
                         contextDownObject.SetActive(true);
                         break;
                     }
-                    case DialogueType.Letter:
+                    case DialogueEnum.DialogueType.Letter:
                     {
                         letterObject.SetActive(true);
                         break;
                     }
-                    case DialogueType.Narration:
+                    case DialogueEnum.DialogueType.Narration:
                     {
                         narrationObject.SetActive(true);
                         break;
@@ -240,7 +237,7 @@ namespace Script.Manager
             {
                 switch (dialogues[lineIndex].cameraActions[contextIndex])
                 {
-                    case CameraType.FadeOut:
+                    case DialogueEnum.CameraActionType.FadeOut:
                     {
                         SplashManager.isFinish = false;
                         StartCoroutine(splashManager.FadeOut(false, true));
@@ -248,7 +245,7 @@ namespace Script.Manager
                         yield return new WaitUntil(() => SplashManager.isFinish);
                         break;
                     }
-                    case CameraType.FadeIn:
+                    case DialogueEnum.CameraActionType.FadeIn:
                     {
                         SplashManager.isFinish = false;
                         StartCoroutine(splashManager.FadeIn(false, true));
@@ -256,7 +253,7 @@ namespace Script.Manager
                         yield return new WaitUntil(() => SplashManager.isFinish);
                         break;
                     }
-                    case CameraType.FlashOut:
+                    case DialogueEnum.CameraActionType.FlashOut:
                     {
                         SplashManager.isFinish = false;
                         StartCoroutine(splashManager.FadeOut(true, true));
@@ -264,7 +261,7 @@ namespace Script.Manager
                         yield return new WaitUntil(() => SplashManager.isFinish);
                         break;
                     }
-                    case CameraType.FlashIn:
+                    case DialogueEnum.CameraActionType.FlashIn:
                     {
                         SplashManager.isFinish = false;
                         StartCoroutine(splashManager.FadeIn(true, true));
@@ -299,7 +296,7 @@ namespace Script.Manager
 
         void ShowStory(Dialogue[] pStorys)
         {
-            if (dialogues[lineIndex].dialogueType != DialogueType.None)
+            if (dialogues[lineIndex].dialogueType != DialogueEnum.DialogueType.None)
                 _currentDialogueType = dialogues[lineIndex].dialogueType;
 
             if (dialogues[lineIndex].skipContext != "") {
@@ -356,19 +353,19 @@ namespace Script.Manager
             string nameText = dialogues[lineIndex].contextName;
 
             _currentDialogueType
-                = dialogues[lineIndex].dialogueType != DialogueType.None ? dialogues[lineIndex].dialogueType : _currentDialogueType;
+                = dialogues[lineIndex].dialogueType != DialogueEnum.DialogueType.None ? dialogues[lineIndex].dialogueType : _currentDialogueType;
 
             SetDialogue(true);
 
             switch (_currentDialogueType)
             {
-                case DialogueType.ContextUp:
+                case DialogueEnum.DialogueType.ContextUp:
                 {
                     nameUpText.text = nameText;
 
                     break;
                 }
-                case DialogueType.ContextDown:
+                case DialogueEnum.DialogueType.ContextDown:
                 {
                     nameDownText.text = nameText;
 
@@ -437,22 +434,22 @@ namespace Script.Manager
 
                     switch (_currentDialogueType)
                     {
-                        case DialogueType.ContextUp:
+                        case DialogueEnum.DialogueType.ContextUp:
                         {
                             contextUpText.text += letter;
                             break;
                         }
-                        case DialogueType.ContextDown:
+                        case DialogueEnum.DialogueType.ContextDown:
                         {
                             contextDownText.text += letter;
                             break;
                         }
-                        case DialogueType.Narration:
+                        case DialogueEnum.DialogueType.Narration:
                         {
                             narrationText.text += letter;
                             break;
                         }
-                        case DialogueType.Letter:
+                        case DialogueEnum.DialogueType.Letter:
                         {
                             letterText.text += letter;
                             break;

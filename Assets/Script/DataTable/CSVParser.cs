@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CSVParse : MonoBehaviour
+public class CSVParser : MonoBehaviour
 {
     [SerializeField] private string tempDialogueGroup;
 
@@ -137,7 +137,7 @@ public class CSVParse : MonoBehaviour
                 dialogue.skipContext = row[9].Replace("\\n", "\n");
 
                 var contextList = new List<string>();
-                var cameraActionList = new List<CameraType>();
+                var cameraActionList = new List<DialogueEnum.CameraActionType>();
                 var spriteList = new List<string>();
 
                 do
@@ -256,29 +256,29 @@ public class CSVParse : MonoBehaviour
         return choiceList.ToArray();
     }
 
-    CameraType GetCameraType(string pCameraType)
+    DialogueEnum.CameraActionType GetCameraType(string pCameraType)
     {
         var cameraType = pCameraType switch
         {
-            "FadeIn" => CameraType.FadeIn,
-            "FadeOut" => CameraType.FadeOut,
-            "FlashIn" => CameraType.FlashIn,
-            "FlashOut" => CameraType.FlashOut,
-            _ => CameraType.None
+            "FadeIn" => DialogueEnum.CameraActionType.FadeIn,
+            "FadeOut" => DialogueEnum.CameraActionType.FadeOut,
+            "FlashIn" => DialogueEnum.CameraActionType.FlashIn,
+            "FlashOut" => DialogueEnum.CameraActionType.FlashOut,
+            _ => DialogueEnum.CameraActionType.None
         };
 
         return cameraType;
     }
 
-    DialogueType GetDialogueType(string pDialogueType)
+    DialogueEnum.DialogueType GetDialogueType(string pDialogueType)
     {
         var dialogueType = pDialogueType switch
         {
-            "ContextUp" => DialogueType.ContextUp,
-            "ContextDown" => DialogueType.ContextDown,
-            "Narration" => DialogueType.Narration,
-            "Letter" => DialogueType.Letter,
-            _ => DialogueType.None
+            "ContextUp" => DialogueEnum.DialogueType.ContextUp,
+            "ContextDown" => DialogueEnum.DialogueType.ContextDown,
+            "Narration" => DialogueEnum.DialogueType.Narration,
+            "Letter" => DialogueEnum.DialogueType.Letter,
+            _ => DialogueEnum.DialogueType.None
         };
 
         return dialogueType;

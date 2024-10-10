@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using WHDle.Util;
 using WHDle.Util.Define;
 using WHDle.Stage;
-using BackEnd;
 using Script.Controller;
 using Script.Manager;
 
@@ -30,8 +26,6 @@ public class MainUIManager : MonoBehaviour
     
     [SerializeField] private PlayerAction playerAction;
     
-    private CsvTable _dialogueTable = new CsvTable();
-    
     DialogueManager _dialogueManager;
     SplashManager _splashManager;
 
@@ -49,8 +43,6 @@ public class MainUIManager : MonoBehaviour
     void Start()
     {
         AddListener();
-        
-        _dialogueTable.ReadCsv("Assets/Resources/DataTable/DialogueTable.csv");
         
         playerAction = FindObjectOfType<PlayerAction>();
         _dialogueManager = FindObjectOfType<DialogueManager>();
@@ -80,13 +72,6 @@ public class MainUIManager : MonoBehaviour
         {
             case ObjectController.ObjectType.Letter:
             {
-                var dialogueList = _dialogueTable.GetByColumnGroup("Dialogue_Group", "Prologue_Start");
-
-                foreach (var dialogueData in dialogueList)
-                {
-                    Debug.Log($"Dialogue Data : {dialogueData["Context_Text"]}");
-                }
-
                 _dialogueManager.TempPlayStory();
                 
                 /*routineList.Exists(x => ObjectController.ObjectType.Letter.ToString());

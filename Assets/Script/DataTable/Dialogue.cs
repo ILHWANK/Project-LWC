@@ -1,27 +1,9 @@
 using UnityEngine;
 
-public enum CameraType
-{
-    None,
-    FadeOut,
-    FadeIn,
-    FlashOut,
-    FlashIn
-}
-
-public enum DialogueType
-{
-    None,
-    ContextUp,
-    ContextDown,
-    Narration,
-    Letter,
-}
-
 [System.Serializable]
 public class Dialogue
 {
-    public CameraType cameraType;
+    public DialogueEnum.CameraActionType cameraType;
 
     [HideInInspector] public string contextName;
     [HideInInspector] public string choiceGroup;
@@ -30,9 +12,9 @@ public class Dialogue
     [HideInInspector] public string[] contexts; 
     [HideInInspector] public string[] spriteNames;
 
-    [HideInInspector] public CameraType[] cameraActions;
+    [HideInInspector] public DialogueEnum.CameraActionType[] cameraActions;
 
-    [HideInInspector] public DialogueType dialogueType;
+    [HideInInspector] public DialogueEnum.DialogueType dialogueType;
 }
 
 [System.Serializable]
