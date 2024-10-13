@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +62,11 @@ namespace Script.Manager
         SpriteManager spriteManager;
         SplashManager splashManager;
 
+        //
+        private int currentLine = 0;
+        private int currentContext = 0;
+        private bool isPlaying = false;
+        
         public enum FontStyle
         {
             None,
@@ -84,6 +90,14 @@ namespace Script.Manager
 
         void Start()
         {
+            LoadDialogueData("Prologue_Start");
+            
+            // 버튼 클릭 이벤트 연결
+            nextButtonBackGround.onClick.AddListener(OnNextButtonClick);
+
+            // 첫 번째 대화 출력
+            ShowCurrentContext();
+            
             //
             mainUIManager = FindObjectOfType<MainUIManager>();
             _playerAction = FindObjectOfType<PlayerAction>();
@@ -141,30 +155,179 @@ namespace Script.Manager
                 characterObject.transform.position = characterPosition;
             }
         }
-
-        private Dialogue[] GetStory()
+        
+        // 다음 Context로 넘어가는 함수
+        private void OnNextButtonClick()
         {
-            var dialogueTable = new CsvTable("Assets/Resources/DataTable/DialogueTable.csv");
-            
-            var groupMap = new []
+            // 현재 Context가 마지막이면 다음 대화로 넘어감
+            if (contextIndex < dialogues[lineIndex].contexts.Length - 1)
             {
-                ("Dialogue_Group", "Prologue_Start")
+                contextIndex++;
+            }
+            else
+            {
+                contextIndex = 0;
+                if (lineIndex < dialogues.Length - 1)
+                {
+                    lineIndex++;
+                }
+                else
+                {
+                    // 모든 대화가 끝났을 때
+                    Debug.Log("대화가 종료되었습니다.");
+                    return;
+                }
+            }
+
+            // 다음 Context 출력
+            ShowCurrentContext();
+        }
+        
+        // 현재 Context를 UI에 표시하는 함수
+        private void ShowCurrentContext()
+        {
+            var currentDialogue = dialogues[lineIndex];
+            contextDownText.text = currentDialogue.contexts[contextIndex];  // UI에 현재 대화 표시
+            Debug.Log($"대화 중: {currentDialogue.contextName} - {currentDialogue.contexts[contextIndex]}");
+        }
+        
+        private void LoadDialogueData(string dialogueGroup)
+        {
+            // CSV 데이터를 로드
+            var dialogueTable = CSVDialogueParser.LoadDialogueTable("Assets/Resources/DataTable/DialogueTable.csv");
+    
+            // 입력된 dialogueGroup에 따라 데이터를 필터링
+            var groupMap = new[] { ("Dialogue_Group", dialogueGroup) };
+            var dialogueList = dialogueTable.GetByMultipleColumnsGroup(groupMap);
+
+            // dialogueEvent에 데이터 매핑
+            dialogueEvent = new DialogueEvent
+            {
+                dialogues = dialogueList.Select(data => new Dialogue
+                {
+                    //cameraType = (DialogueEnum.CameraActionType)Enum.Parse(typeof(DialogueEnum.CameraActionType), data["Dialogue_Action"]),
+                    dialogueType = (DialogueEnum.DialogueType)Enum.Parse(typeof(DialogueEnum.DialogueType), data["Dialogue_Type"]),
+                    contexts = data["Context_Text"].Split('|'),
+                    //spriteNames = data["Context_Sprite"].Split('|'),
+                    contextName = data["Context_CharacterName"]
+                }).ToArray()
             };
 
-            var dialogueList = dialogueTable.GetByMultipleColumnsGroup(groupMap);
-            
-            CSVDataManager.Instance.SetDialogueData(_playerAction?.currentDialogueGroup);
-            var endIndex = dialogueList.Count;
-
-            foreach (var data in dialogueList.SelectMany(dialogue => dialogue))
+            // 추가된 로그: dialogueEvent 데이터 확인
+            foreach (var dialogue in dialogueEvent.dialogues)
             {
-                Debug.Log(string.Format(data["Context_CharacterName"] + " / " + data["Context_Text"]));
+                Debug.Log($"CameraType: {dialogue.cameraType}, DialogueType: {dialogue.dialogueType}, CharacterName: {dialogue.contextName}, Contexts: {string.Join(", ", dialogue.contexts)}");
             }
-            
-            dialogueEvent.dialogues = CSVDataManager.Instance.GetDialogue(1, endIndex);
 
-            Debug.Log("End Index : " + endIndex);
+            Debug.Log($"Total Dialogues Loaded: {dialogueEvent.dialogues.Length}");
+        }
+
+        public void StartDialogue()
+        {
+            SetDialogue(true);
             
+            isPlaying = true;
+            currentLine = 0;
+            currentContext = 0;
+            
+            ShowCurrentDialogue();
+        }
+
+        private void ShowCurrentDialogue()
+        {
+            if (!isPlaying || dialogueEvent.dialogues.Length <= currentLine) 
+                return;
+            
+            var dialogue = dialogueEvent.dialogues[currentLine];
+            
+            /*switch (dialogue.dialogueType)
+            {
+                case DialogueEnum.DialogueType.ContextUp:
+                {
+                    contextUpObject.SetActive(true);
+                    break;
+                }
+                case DialogueEnum.DialogueType.ContextDown:
+                {
+                    contextDownObject.SetActive(true);
+                    break;
+                }
+                case DialogueEnum.DialogueType.Letter:
+                {
+                    letterObject.SetActive(true);
+                    break;
+                }
+                case DialogueEnum.DialogueType.Narration:
+                {
+                    narrationObject.SetActive(true);
+                    break;
+                }
+                default:
+                {
+                    contextUpObject.SetActive(true);
+                    contextDownObject.SetActive(false);
+                    letterObject.SetActive(false);
+                    narrationObject.SetActive(false);
+                    break;
+                }
+            }*/
+            
+            /*if(dialogue.spriteNames[currentContext] != "")
+            {
+                StartCoroutine(spriteManager.SpriteChangeCoroutine(tempTaregt, dialogue.spriteNames[currentContext]));
+            }*/
+            
+            nameUpText.text = dialogue.contextName;
+            contextUpText.text = dialogue.contexts[currentContext];
+            
+            // 카메라 및 대화 스타일 처리 추가 가능
+        }
+
+        public void NextDialogue()
+        {
+            if (++currentContext >= dialogueEvent.dialogues[currentLine].contexts.Length)
+            {
+                currentContext = 0;
+                if (++currentLine >= dialogueEvent.dialogues.Length)
+                {
+                    EndDialogue();
+                }
+                else
+                {
+                    ShowCurrentDialogue();
+                }
+            }
+            else
+            {
+                ShowCurrentDialogue();
+            }
+        }
+
+        private void EndDialogue()
+        {
+            isPlaying = false;
+            
+            SetDialogue(false);
+            // 대화 종료 처리
+        }
+        
+        private Dialogue[] GetStory()
+        {
+            var dialogueTable = CSVDialogueParser.LoadDialogueTable("Assets/Resources/DataTable/DialogueTable.csv");
+            var dialogueList = dialogueTable.GetByMultipleColumnsGroup(new [] 
+            {
+                ("Dialogue_Group", "Prologue_Start")
+            });
+    
+            dialogueEvent.dialogues = dialogueList.Select(data => new Dialogue
+            {
+                cameraType = (DialogueEnum.CameraActionType)Enum.Parse(typeof(DialogueEnum.CameraActionType), data["CameraType"]),
+                dialogueType = (DialogueEnum.DialogueType)Enum.Parse(typeof(DialogueEnum.DialogueType), data["DialogueType"]),
+                contexts = data["Context_Text"].Split('|'),
+                spriteNames = data["Sprite_Name"].Split('|'),
+                contextName = data["Context_CharacterName"]
+            }).ToArray();
+
             return dialogueEvent.dialogues;
         }
 
@@ -226,7 +389,7 @@ namespace Script.Manager
                 narrationObject.SetActive(false);
             }
 
-            StartCoroutine(CameraAction());
+            //StartCoroutine(CameraAction());
         }
 
         IEnumerator CameraAction()
@@ -352,8 +515,9 @@ namespace Script.Manager
 
             string nameText = dialogues[lineIndex].contextName;
 
-            _currentDialogueType
-                = dialogues[lineIndex].dialogueType != DialogueEnum.DialogueType.None ? dialogues[lineIndex].dialogueType : _currentDialogueType;
+            _currentDialogueType = 
+                dialogues[lineIndex].dialogueType != DialogueEnum.DialogueType.None ? 
+                    dialogues[lineIndex].dialogueType : _currentDialogueType;
 
             SetDialogue(true);
 
@@ -540,21 +704,12 @@ namespace Script.Manager
 
         public void TempPlayStory()
         {
-            lineIndex = 0;
-            isNext = true;
-            isStoryPlay = true;
-            ShowStory(GetStory());
-        }
-
-        void OnClick_ButtonUI_Button_Interaction()
-        {
-            if (isNext)
-                TempPlayStory();
-        }
-
-        void OnClick_Next_Button_BackGround()
-        {
-            SetIsNextStory();
+            StartDialogue();
+                
+            // lineIndex = 0;
+            // isNext = true;
+            // isStoryPlay = true;
+            // ShowStory(GetStory());
         }
     }
 }

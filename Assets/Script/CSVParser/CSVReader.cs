@@ -2,22 +2,56 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class CSVReader : MonoBehaviour
+public class CSVReader
 {
-    // CSV 파일을 파싱하는 메소드, 각 행을 문자열 리스트로 반환
-    public List<List<string>> Parse(string filePath)
-    {
-        var data = new List<List<string>>(); // CSV 데이터를 저장할 리스트
+    private List<Dictionary<string, string>> data;
+    private string[] headers;
 
-        // CSV 파일을 한 줄씩 읽어옴
-        using var reader = new StreamReader(filePath);
-        while (reader.ReadLine() is { } line)
+    public CSVReader(string filePath)
+    {
+        data = new List<Dictionary<string, string>>();
+        LoadCSV(filePath);
+    }
+
+    private void LoadCSV(string filePath)
+    {
+        if (!File.Exists(filePath))
         {
-            // 각 줄을 ','로 분리하여 리스트에 저장
-            var fields = line.Split(','); 
-            data.Add(new List<string>(fields)); // 데이터를 리스트로 변환하여 추가
+            Debug.LogError($"File not found at {filePath}");
+            return;
         }
 
-        return data; // 파싱한 데이터 반환
+        var lines = File.ReadAllLines(filePath);
+
+        if (lines.Length == 0)
+        {
+            Debug.LogError("CSV file is empty");
+            return;
+        }
+
+        headers = lines[0].Split(',');
+
+        for (int i = 1; i < lines.Length; i++)
+        {
+            var lineData = lines[i].Split(',');
+            var entry = new Dictionary<string, string>();
+
+            for (int j = 0; j < headers.Length; j++)
+            {
+                entry[headers[j]] = lineData[j];
+            }
+
+            data.Add(entry);
+        }
+    }
+
+    public List<Dictionary<string, string>> GetData()
+    {
+        return data;
+    }
+
+    public string[] GetHeaders()
+    {
+        return headers;
     }
 }
