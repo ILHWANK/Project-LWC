@@ -14,6 +14,8 @@ public class Dialogue
 
     [HideInInspector] public DialogueEnum.CameraActionType[] cameraActions;
 
+    [HideInInspector] public float fadeSpeed = 1.0f;
+
     [HideInInspector] public DialogueEnum.DialogueType dialogueType;
 }
 

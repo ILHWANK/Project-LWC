@@ -46,7 +46,6 @@ namespace Script.Manager
 
         //
         DialogueEnum.DialogueType _currentDialogueType = DialogueEnum.DialogueType.ContextUp;
-        private DialogueEnum.CameraActionType _cameraActionType = DialogueEnum.CameraActionType.None;
 
         
         //Dialogue[] dialogues;
@@ -109,7 +108,6 @@ namespace Script.Manager
 
             choiceManager = FindObjectOfType<ChoiceManager>();
             spriteManager = FindObjectOfType<SpriteManager>();
-            //splashManager = FindObjectOfType<SplashManager>();
         }
         
         private void LoadDialogueData(string dialogueGroup)
@@ -128,6 +126,7 @@ namespace Script.Manager
                 {
                     cameraType = (DialogueEnum.CameraActionType)Enum.Parse(typeof(DialogueEnum.CameraActionType), data["Dialogue_Action"]),
                     dialogueType = (DialogueEnum.DialogueType)Enum.Parse(typeof(DialogueEnum.DialogueType), data["Dialogue_Type"]),
+                    fadeSpeed = Convert.ToSingle(data["Dialogue_FadeSpeed"]),
                     contexts = data["Context_Text"].Split('|'),
                     spriteNames = data["Context_Sprite"].Split('|'),
                     contextName = data["Context_CharacterName"]
@@ -163,21 +162,18 @@ namespace Script.Manager
 
         private IEnumerator ShowCurrentDialogueCoroutine(Dialogue dialogue)
         {
-            isNext = false; // 다음으로 넘어갈 수 없도록 설정
-                
-            ResetText(); // 기존 텍스트 초기화
+            isNext = false;
+            
+            _currentDialogueType = dialogue.dialogueType;
             
             yield return StartCoroutine(CameraAction(dialogue));
 
-            var nameText = dialogue.contextName;
-            
-            _currentDialogueType = dialogue.dialogueType;
-            _cameraActionType = dialogue.cameraType;
-            
-            nameUpText.text = nameText;
+            ResetText();
+
+            nameUpText.text = dialogue.contextName;
             
             SetDialogue();
-
+            
             yield return DialoguePlayCoroutine(dialogue.contexts[currentContext]);
 
             isNext = true;
@@ -224,11 +220,6 @@ namespace Script.Manager
                 
                 yield return new WaitForSeconds(textDelay);
             }
-        }
-
-        private void SetData()
-        {
-            
         }
         
         private void SetDialogue()
@@ -291,6 +282,8 @@ namespace Script.Manager
                 currentContext = 0;
                 if (++currentLine >= dialogueEvent.dialogues.Length)
                 {
+                    _currentDialogueType = DialogueEnum.DialogueType.None;
+                    
                     EndDialogue();
                 }
                 else
@@ -322,6 +315,11 @@ namespace Script.Manager
             nextObject.SetActive(pIsStoryShow);
             skipObject.SetActive(pIsStoryShow);
             characterObject.SetActive(pIsStoryShow);
+            
+            contextUpObject.SetActive(false);
+            contextDownObject.SetActive(false);
+            letterObject.SetActive(false);
+            narrationObject.SetActive(false);
 
             if (pIsStoryShow)
             {
@@ -364,42 +362,42 @@ namespace Script.Manager
         {
             var white = new Color(1, 1, 1, 1);
             var black = new Color(0, 0, 0, 1);
+
+            if (_currentDialogueType != DialogueEnum.DialogueType.None)
+            {
+                contextUpObject.SetActive(false);
+                contextDownObject.SetActive(false);
+                letterObject.SetActive(false);
+                narrationObject.SetActive(false);
+            }
             
             switch (dialogue.cameraType)
             {
                 case DialogueEnum.CameraActionType.FadeOut:
                 {
-                    SetDialogue();
-                    
                     fadeImage.color = black;
-                    yield return StartCoroutine(fadeManager.FadeOut(fadeImage, 1f));
+                    yield return StartCoroutine(fadeManager.FadeOut(fadeImage, dialogue.fadeSpeed));
                     
                     break;
                 }
                 case DialogueEnum.CameraActionType.FadeIn:
                 {
-                    SetDialogue();
-
                     fadeImage.color = black;
-                    yield return StartCoroutine(fadeManager.FadeIn(fadeImage, 1f));
+                    yield return StartCoroutine(fadeManager.FadeIn(fadeImage, dialogue.fadeSpeed));
                     
                     break;
                 }
                 case DialogueEnum.CameraActionType.FlashOut:
                 {
-                    SetDialogue();
-                    
                     fadeImage.color = white;
-                    yield return StartCoroutine(fadeManager.FadeOut(fadeImage, 1f));
+                    yield return StartCoroutine(fadeManager.FadeOut(fadeImage, dialogue.fadeSpeed));
                     
                     break;
                 }
                 case DialogueEnum.CameraActionType.FlashIn:
                 {
-                    SetDialogue();
-
                     fadeImage.color = white;
-                    yield return StartCoroutine(fadeManager.FadeIn(fadeImage, 1f));
+                    yield return StartCoroutine(fadeManager.FadeIn(fadeImage, dialogue.fadeSpeed));
                     
                     break;
                 }
