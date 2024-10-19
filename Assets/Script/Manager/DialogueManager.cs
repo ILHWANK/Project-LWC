@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +12,8 @@ namespace Script.Manager
         [SerializeField] private GameObject topObject;
         [SerializeField] private GameObject bottomObject;
 
+        [SerializeField] private Image fadeImage;
+        
         // StoryUI
         [SerializeField] private GameObject nextObject;
         [SerializeField] private GameObject characterObject;
@@ -39,13 +40,16 @@ namespace Script.Manager
         [SerializeField] Camera tempCamera;
         [SerializeField] DialogueEvent dialogueEvent;
 
+        public FadeManager fadeManager;
+        
         PlayerAction _playerAction;
 
         //
         DialogueEnum.DialogueType _currentDialogueType = DialogueEnum.DialogueType.ContextUp;
+        private DialogueEnum.CameraActionType _cameraActionType = DialogueEnum.CameraActionType.None;
 
-        Dialogue[] dialogues;
-        bool isStoryPlay = false;
+        
+        //Dialogue[] dialogues;
         bool isNext = false;
         bool isNextStory = false;
         bool isStoryContextEnd = false;
@@ -60,7 +64,7 @@ namespace Script.Manager
         ChoiceManager choiceManager;
 
         SpriteManager spriteManager;
-        SplashManager splashManager;
+        //SplashManager splashManager;
 
         //
         private int currentLine = 0;
@@ -90,13 +94,11 @@ namespace Script.Manager
 
         void Start()
         {
+            isNext = true;
             LoadDialogueData("Prologue_Start");
             
             // 버튼 클릭 이벤트 연결
-            nextButtonBackGround.onClick.AddListener(OnNextButtonClick);
-
-            // 첫 번째 대화 출력
-            ShowCurrentContext();
+            nextButtonBackGround.onClick.AddListener(NextDialogue);
             
             //
             mainUIManager = FindObjectOfType<MainUIManager>();
@@ -107,88 +109,7 @@ namespace Script.Manager
 
             choiceManager = FindObjectOfType<ChoiceManager>();
             spriteManager = FindObjectOfType<SpriteManager>();
-            splashManager = FindObjectOfType<SplashManager>();
-        }
-
-        void Update()
-        {
-            if (isStoryPlay)
-            {
-                if (isNext && isNextStory)
-                {
-                    isNext = false;
-                    isNextStory = false;
-
-                    ResetText();
-
-                    if (dialogueCoroutine != null)
-                    {
-                        StopCoroutine(dialogueCoroutine);
-
-                        dialogueCoroutine = null;
-                    }
-
-                    dialogueCoroutine = DialoguePlayCoroutine();
-
-                    if (++contextIndex < dialogues[lineIndex].contexts.Length)
-                    {
-                        StartCoroutine(dialogueCoroutine);
-                        StartCoroutine(CameraAction());
-                    }
-                    else
-                    {
-                        contextIndex = 0;
-                        if (++lineIndex < dialogues.Length)
-                        {
-                            StartCoroutine(dialogueCoroutine);
-                            StartCoroutine(CameraAction());
-                        }
-                        else
-                        {
-                            EndStory();
-                        }
-                    }
-                }
-
-                Vector3 characterPosition = new Vector3(tempCamera.transform.position.x, tempCamera.transform.position.y -1.5f, 0);
-
-                characterObject.transform.position = characterPosition;
-            }
-        }
-        
-        // 다음 Context로 넘어가는 함수
-        private void OnNextButtonClick()
-        {
-            // 현재 Context가 마지막이면 다음 대화로 넘어감
-            if (contextIndex < dialogues[lineIndex].contexts.Length - 1)
-            {
-                contextIndex++;
-            }
-            else
-            {
-                contextIndex = 0;
-                if (lineIndex < dialogues.Length - 1)
-                {
-                    lineIndex++;
-                }
-                else
-                {
-                    // 모든 대화가 끝났을 때
-                    Debug.Log("대화가 종료되었습니다.");
-                    return;
-                }
-            }
-
-            // 다음 Context 출력
-            ShowCurrentContext();
-        }
-        
-        // 현재 Context를 UI에 표시하는 함수
-        private void ShowCurrentContext()
-        {
-            var currentDialogue = dialogues[lineIndex];
-            contextDownText.text = currentDialogue.contexts[contextIndex];  // UI에 현재 대화 표시
-            Debug.Log($"대화 중: {currentDialogue.contextName} - {currentDialogue.contexts[contextIndex]}");
+            //splashManager = FindObjectOfType<SplashManager>();
         }
         
         private void LoadDialogueData(string dialogueGroup)
@@ -205,21 +126,13 @@ namespace Script.Manager
             {
                 dialogues = dialogueList.Select(data => new Dialogue
                 {
-                    //cameraType = (DialogueEnum.CameraActionType)Enum.Parse(typeof(DialogueEnum.CameraActionType), data["Dialogue_Action"]),
+                    cameraType = (DialogueEnum.CameraActionType)Enum.Parse(typeof(DialogueEnum.CameraActionType), data["Dialogue_Action"]),
                     dialogueType = (DialogueEnum.DialogueType)Enum.Parse(typeof(DialogueEnum.DialogueType), data["Dialogue_Type"]),
                     contexts = data["Context_Text"].Split('|'),
-                    //spriteNames = data["Context_Sprite"].Split('|'),
+                    spriteNames = data["Context_Sprite"].Split('|'),
                     contextName = data["Context_CharacterName"]
                 }).ToArray()
             };
-
-            // 추가된 로그: dialogueEvent 데이터 확인
-            foreach (var dialogue in dialogueEvent.dialogues)
-            {
-                Debug.Log($"CameraType: {dialogue.cameraType}, DialogueType: {dialogue.dialogueType}, CharacterName: {dialogue.contextName}, Contexts: {string.Join(", ", dialogue.contexts)}");
-            }
-
-            Debug.Log($"Total Dialogues Loaded: {dialogueEvent.dialogues.Length}");
         }
 
         public void StartDialogue()
@@ -230,61 +143,149 @@ namespace Script.Manager
             currentLine = 0;
             currentContext = 0;
             
+            contextUpObject.SetActive(false);
+            contextDownObject.SetActive(false);
+            letterObject.SetActive(false);
+            narrationObject.SetActive(false);
+            
             ShowCurrentDialogue();
         }
-
         private void ShowCurrentDialogue()
         {
-            if (!isPlaying || dialogueEvent.dialogues.Length <= currentLine) 
+            if (!isPlaying || dialogueEvent.dialogues.Length <= currentLine)
                 return;
-            
+
             var dialogue = dialogueEvent.dialogues[currentLine];
-            
-            /*switch (dialogue.dialogueType)
-            {
-                case DialogueEnum.DialogueType.ContextUp:
-                {
-                    contextUpObject.SetActive(true);
-                    break;
-                }
-                case DialogueEnum.DialogueType.ContextDown:
-                {
-                    contextDownObject.SetActive(true);
-                    break;
-                }
-                case DialogueEnum.DialogueType.Letter:
-                {
-                    letterObject.SetActive(true);
-                    break;
-                }
-                case DialogueEnum.DialogueType.Narration:
-                {
-                    narrationObject.SetActive(true);
-                    break;
-                }
-                default:
-                {
-                    contextUpObject.SetActive(true);
-                    contextDownObject.SetActive(false);
-                    letterObject.SetActive(false);
-                    narrationObject.SetActive(false);
-                    break;
-                }
-            }*/
-            
-            /*if(dialogue.spriteNames[currentContext] != "")
-            {
-                StartCoroutine(spriteManager.SpriteChangeCoroutine(tempTaregt, dialogue.spriteNames[currentContext]));
-            }*/
-            
-            nameUpText.text = dialogue.contextName;
-            contextUpText.text = dialogue.contexts[currentContext];
-            
-            // 카메라 및 대화 스타일 처리 추가 가능
+
+            StartCoroutine(spriteManager.SpriteChangeCoroutine(tempTaregt, dialogue.spriteNames[currentContext]));
+            StartCoroutine(ShowCurrentDialogueCoroutine(dialogue));
         }
 
-        public void NextDialogue()
+        private IEnumerator ShowCurrentDialogueCoroutine(Dialogue dialogue)
         {
+            isNext = false; // 다음으로 넘어갈 수 없도록 설정
+                
+            ResetText(); // 기존 텍스트 초기화
+            
+            yield return StartCoroutine(CameraAction(dialogue));
+
+            var nameText = dialogue.contextName;
+            
+            _currentDialogueType = dialogue.dialogueType;
+            _cameraActionType = dialogue.cameraType;
+            
+            nameUpText.text = nameText;
+            
+            SetDialogue();
+
+            yield return DialoguePlayCoroutine(dialogue.contexts[currentContext]);
+
+            isNext = true;
+        }
+
+        private IEnumerator DialoguePlayCoroutine(string context)
+        {
+            var fontConfiguration = new FontConfiguration { fontColor = FontColor.Black };
+
+            context = context.Replace("\\", ",");
+            
+            foreach (var text in context)
+            {
+                var isWrite = false;
+                var letter = text.ToString();
+
+                switch (letter)
+                {
+                    case "ⓑ":
+                        fontConfiguration.fontColor = FontColor.Black;
+                        break;
+                    case "ⓦ":
+                        fontConfiguration.fontColor = FontColor.White;
+                        break;
+                    case "ⓝ":
+                        fontConfiguration.fontStyle = FontStyle.None;
+                        break;
+                    case "ⓜ":
+                        fontConfiguration.fontStyle = FontStyle.Bold;
+                        break;
+                    case "ⓘ":
+                        fontConfiguration.fontStyle = FontStyle.Italic;
+                        break;
+                    default:
+                        isWrite = true;
+                        break;
+                }
+
+                if (!isWrite) 
+                    continue;
+
+                letter = letterFont(letter, fontConfiguration);
+                AddLetterToCurrentDialogue(letter);
+                
+                yield return new WaitForSeconds(textDelay);
+            }
+        }
+
+        private void SetData()
+        {
+            
+        }
+        
+        private void SetDialogue()
+        {
+            contextUpObject.SetActive(false);
+            contextDownObject.SetActive(false);
+            letterObject.SetActive(false);
+            narrationObject.SetActive(false);
+            
+            switch (_currentDialogueType)
+            {
+                case DialogueEnum.DialogueType.ContextUp:
+                    contextUpObject.SetActive(true);
+                    
+                    break;
+                case DialogueEnum.DialogueType.ContextDown:
+                    contextDownObject.SetActive(true);
+                    
+                    break;
+                case DialogueEnum.DialogueType.Letter:
+                    letterObject.SetActive(true);
+                    
+                    break;
+                case DialogueEnum.DialogueType.Narration:
+                    narrationObject.SetActive(true);
+                    
+                    break;
+                case DialogueEnum.DialogueType.None:
+                default: 
+                    break;
+            }
+        }
+        
+        private void AddLetterToCurrentDialogue(string letter)
+        {
+            switch (_currentDialogueType)
+            {
+                case DialogueEnum.DialogueType.ContextUp:
+                    contextUpText.text += letter;
+                    break;
+                case DialogueEnum.DialogueType.ContextDown:
+                    contextDownText.text += letter;
+                    break;
+                case DialogueEnum.DialogueType.Narration:
+                    narrationText.text += letter;
+                    break;
+                case DialogueEnum.DialogueType.Letter:
+                    letterText.text += letter;
+                    break;
+            }
+        }
+
+        private void NextDialogue()
+        {
+            if (!isNext)
+                return;
+            
             if (++currentContext >= dialogueEvent.dialogues[currentLine].contexts.Length)
             {
                 currentContext = 0;
@@ -311,26 +312,6 @@ namespace Script.Manager
             // 대화 종료 처리
         }
         
-        private Dialogue[] GetStory()
-        {
-            var dialogueTable = CSVDialogueParser.LoadDialogueTable("Assets/Resources/DataTable/DialogueTable.csv");
-            var dialogueList = dialogueTable.GetByMultipleColumnsGroup(new [] 
-            {
-                ("Dialogue_Group", "Prologue_Start")
-            });
-    
-            dialogueEvent.dialogues = dialogueList.Select(data => new Dialogue
-            {
-                cameraType = (DialogueEnum.CameraActionType)Enum.Parse(typeof(DialogueEnum.CameraActionType), data["CameraType"]),
-                dialogueType = (DialogueEnum.DialogueType)Enum.Parse(typeof(DialogueEnum.DialogueType), data["DialogueType"]),
-                contexts = data["Context_Text"].Split('|'),
-                spriteNames = data["Sprite_Name"].Split('|'),
-                contextName = data["Context_CharacterName"]
-            }).ToArray();
-
-            return dialogueEvent.dialogues;
-        }
-
         public void SetDialogue(bool pIsStoryShow)
         {
             // false
@@ -344,11 +325,6 @@ namespace Script.Manager
 
             if (pIsStoryShow)
             {
-                contextUpObject.SetActive(false);
-                contextDownObject.SetActive(false);
-                letterObject.SetActive(false);
-                narrationObject.SetActive(false);
-
                 switch (_currentDialogueType)
                 {
                     case DialogueEnum.DialogueType.ContextUp:
@@ -371,9 +347,10 @@ namespace Script.Manager
                         narrationObject.SetActive(true);
                         break;
                     }
+                    case DialogueEnum.DialogueType.None:
                     default:
                     {
-                        contextUpObject.SetActive(true);
+                        contextUpObject.SetActive(false);
                         contextDownObject.SetActive(false);
                         letterObject.SetActive(false);
                         narrationObject.SetActive(false);
@@ -381,116 +358,64 @@ namespace Script.Manager
                     }
                 }
             }
-            else
-            {
-                contextUpObject.SetActive(false);
-                contextDownObject.SetActive(false);
-                letterObject.SetActive(false);
-                narrationObject.SetActive(false);
-            }
-
-            //StartCoroutine(CameraAction());
         }
 
-        IEnumerator CameraAction()
+        IEnumerator CameraAction(Dialogue dialogue)
         {
-            dialogues = GetStory();
-
-            if (isStoryPlay && dialogues != null && splashManager != null)
+            var white = new Color(1, 1, 1, 1);
+            var black = new Color(0, 0, 0, 1);
+            
+            switch (dialogue.cameraType)
             {
-                switch (dialogues[lineIndex].cameraActions[contextIndex])
+                case DialogueEnum.CameraActionType.FadeOut:
                 {
-                    case DialogueEnum.CameraActionType.FadeOut:
-                    {
-                        SplashManager.isFinish = false;
-                        StartCoroutine(splashManager.FadeOut(false, true));
-
-                        yield return new WaitUntil(() => SplashManager.isFinish);
-                        break;
-                    }
-                    case DialogueEnum.CameraActionType.FadeIn:
-                    {
-                        SplashManager.isFinish = false;
-                        StartCoroutine(splashManager.FadeIn(false, true));
-
-                        yield return new WaitUntil(() => SplashManager.isFinish);
-                        break;
-                    }
-                    case DialogueEnum.CameraActionType.FlashOut:
-                    {
-                        SplashManager.isFinish = false;
-                        StartCoroutine(splashManager.FadeOut(true, true));
-
-                        yield return new WaitUntil(() => SplashManager.isFinish);
-                        break;
-                    }
-                    case DialogueEnum.CameraActionType.FlashIn:
-                    {
-                        SplashManager.isFinish = false;
-                        StartCoroutine(splashManager.FadeIn(true, true));
-
-                        yield return new WaitUntil(() => SplashManager.isFinish);
-                        break;
-                    }
-                    default:
-                    {
-                        break;
-                    }
+                    SetDialogue();
+                    
+                    fadeImage.color = black;
+                    yield return StartCoroutine(fadeManager.FadeOut(fadeImage, 1f));
+                    
+                    break;
                 }
+                case DialogueEnum.CameraActionType.FadeIn:
+                {
+                    SetDialogue();
 
-                SplashManager.isFinish = true;
+                    fadeImage.color = black;
+                    yield return StartCoroutine(fadeManager.FadeIn(fadeImage, 1f));
+                    
+                    break;
+                }
+                case DialogueEnum.CameraActionType.FlashOut:
+                {
+                    SetDialogue();
+                    
+                    fadeImage.color = white;
+                    yield return StartCoroutine(fadeManager.FadeOut(fadeImage, 1f));
+                    
+                    break;
+                }
+                case DialogueEnum.CameraActionType.FlashIn:
+                {
+                    SetDialogue();
+
+                    fadeImage.color = white;
+                    yield return StartCoroutine(fadeManager.FadeIn(fadeImage, 1f));
+                    
+                    break;
+                }
+                case DialogueEnum.CameraActionType.None:
+                default:
+                {
+                    break;
+                }
             }
         }
     
         public void EndStory()
         {
-            isStoryPlay = false;
             contextIndex = 0;
             lineIndex = 0;
-            dialogues = null;
             isNext = false;
-
-            SetDialogue(false);
-
-            var dialogueProceeding = CSVDataManager.Instance.GetDialogueProceedingData(_playerAction?.currentDialogueGroup);
-            
-            Debug.Log("확인용 : " + dialogueProceeding.nextDialogue);
-        }
-
-        void ShowStory(Dialogue[] pStorys)
-        {
-            if (dialogues[lineIndex].dialogueType != DialogueEnum.DialogueType.None)
-                _currentDialogueType = dialogues[lineIndex].dialogueType;
-
-            if (dialogues[lineIndex].skipContext != "") {
-                mainUIManager.OptionMainText = dialogues[lineIndex].skipContext;
-                mainUIManager.OptionSubText = "스토리를 Skip 하시겠습니?";
-            }
-
-            SetDialogue(true);
-
-            ResetText();
-
-            dialogues = pStorys;
-
-
-            if (dialogueCoroutine != null)
-            {
-                StopCoroutine(dialogueCoroutine);
-
-                dialogueCoroutine = null;
-            }
-
-            dialogueCoroutine = DialoguePlayCoroutine();
-            StartCoroutine(dialogueCoroutine);
-        }
-
-        void ChangeSprite()
-        {
-            if(dialogues[lineIndex].spriteNames[contextIndex] != "")
-            {
-                StartCoroutine(spriteManager.SpriteChangeCoroutine(tempTaregt, dialogues[lineIndex].spriteNames[contextIndex]));
-            }
         }
 
         void ShowChoice(string _choiceGroup)
@@ -499,143 +424,6 @@ namespace Script.Manager
             {
                 choiceManager.SetChoiceData(_choiceGroup);
             }
-        }
-
-        IEnumerator DialoguePlayCoroutine()
-        {
-            ChangeSprite();
-
-            string context = dialogues[lineIndex].contexts[contextIndex];
-
-            context = context.Replace("\\", ",");
-
-            FontConfiguration fontConfiguration = new FontConfiguration();
-
-            fontConfiguration.fontColor = FontColor.Black;
-
-            string nameText = dialogues[lineIndex].contextName;
-
-            _currentDialogueType = 
-                dialogues[lineIndex].dialogueType != DialogueEnum.DialogueType.None ? 
-                    dialogues[lineIndex].dialogueType : _currentDialogueType;
-
-            SetDialogue(true);
-
-            switch (_currentDialogueType)
-            {
-                case DialogueEnum.DialogueType.ContextUp:
-                {
-                    nameUpText.text = nameText;
-
-                    break;
-                }
-                case DialogueEnum.DialogueType.ContextDown:
-                {
-                    nameDownText.text = nameText;
-
-                    break;
-                }
-                default:
-                {
-                    nameUpText.text = "";
-                    nameDownText.text = "";
-
-                    break;
-                }
-            }
-
-            SetDialogue(true);
-
-            for (int i = 0; i < context.Length; ++i)
-            {
-                bool isWrite = false;
-
-                string letter = context[i].ToString();
-
-                switch (letter)
-                {
-                    case "ⓑ":
-                    {
-                        fontConfiguration.fontColor = FontColor.Black;
-
-                        break;
-                    }
-                    case "ⓦ":
-                    {
-                        fontConfiguration.fontColor = FontColor.White;
-
-                        break;
-                    }
-                    case "ⓝ":
-                    {
-                        fontConfiguration.fontStyle = FontStyle.None;
-
-                        break;
-                    }
-                    case "ⓜ":
-                    {
-                        fontConfiguration.fontStyle = FontStyle.Bold;
-
-                        break;
-                    }
-                    case "ⓘ":
-                    {
-                        fontConfiguration.fontStyle = FontStyle.Italic;
-
-                        break;
-                    }
-                    default:
-                    {
-                        isWrite = true;
-
-                        break;
-                    }
-                }
-
-                if (isWrite)
-                {
-                    letter = letterFont(letter, fontConfiguration);
-
-                    switch (_currentDialogueType)
-                    {
-                        case DialogueEnum.DialogueType.ContextUp:
-                        {
-                            contextUpText.text += letter;
-                            break;
-                        }
-                        case DialogueEnum.DialogueType.ContextDown:
-                        {
-                            contextDownText.text += letter;
-                            break;
-                        }
-                        case DialogueEnum.DialogueType.Narration:
-                        {
-                            narrationText.text += letter;
-                            break;
-                        }
-                        case DialogueEnum.DialogueType.Letter:
-                        {
-                            letterText.text += letter;
-                            break;
-                        }
-                        default:
-                        {
-                            contextUpText.text += letter;
-                            break;
-                        }
-                    }
-
-                    yield return new WaitForSeconds(textDelay);
-                }
-                else
-                {
-                    continue;
-                }
-            }
-
-            ShowChoice(dialogues[lineIndex].choiceGroup);
-
-            isNext = true;
         }
 
         string letterFont(string pLetter, FontConfiguration pFontConfiguration)
@@ -705,11 +493,6 @@ namespace Script.Manager
         public void TempPlayStory()
         {
             StartDialogue();
-                
-            // lineIndex = 0;
-            // isNext = true;
-            // isStoryPlay = true;
-            // ShowStory(GetStory());
         }
     }
 }

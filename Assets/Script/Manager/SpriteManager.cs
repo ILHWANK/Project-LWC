@@ -7,40 +7,36 @@ public class SpriteManager : MonoBehaviour
 
     bool CheckSameSprite(SpriteRenderer pSpriteRenderer, Sprite pSprite)
     {
-        if (pSpriteRenderer.sprite == pSprite)
-            return true;
-        else
-            return false;
+        return pSpriteRenderer.sprite == pSprite;
     }
 
     public IEnumerator SpriteChangeCoroutine(Transform pTarget, string pSpriteName)
     {
-        SpriteRenderer targetSpriteRenderer = pTarget.GetComponent<SpriteRenderer>();
+        var targetSpriteRenderer = pTarget.GetComponent<SpriteRenderer>();
 
-        string resourceName = "Characters/Sprites/" + pSpriteName.ToString();
+        var resourceName = "Characters/Sprites/" + pSpriteName;
 
-        Sprite targetSprite = Resources.Load<Sprite>(resourceName);
-
-
-        if (!CheckSameSprite(targetSpriteRenderer, targetSprite))
+        var targetSprite = Resources.Load<Sprite>(resourceName);
+        
+        var targetColor = targetSpriteRenderer.color;
+        
+        if (!targetSprite)
         {
-            Color targetColor = targetSpriteRenderer.color;
-            targetColor.a = 100;//0;
+            targetColor.a = 0;
+            
             targetSpriteRenderer.color = targetColor;
-
+        }
+        else
+        {
+            if (CheckSameSprite(targetSpriteRenderer, targetSprite)) 
+                yield break;
+        
+            targetColor.a = 100;
+        
+            targetSpriteRenderer.color = targetColor;
             targetSpriteRenderer.sprite = targetSprite;
 
             yield return null;
-
-            /*
-            while (targetColor.a < 1)
-            {
-                targetColor.a += fadeSpeed;
-                targetSpriteRenderer.color = targetColor;
-
-                yield return null;
-            }
-            */
         }
     }
 }

@@ -112,7 +112,7 @@ public class MainUIManager : MonoBehaviour
 
     void OnClick_Next_Button_BackGround()
     {
-        _dialogueManager.SetIsNextStory();
+        //_dialogueManager.SetIsNextStory();
     }
 
     void OnClick_BottomUI_Button_Back()

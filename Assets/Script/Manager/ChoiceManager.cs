@@ -42,7 +42,7 @@ public class ChoiceManager : MonoBehaviour
     {
         CSVDataManager.Instance.SetChoiceData(pChoiceGroup);
 
-        int endIndex = CSVDataManager.Instance.GetEndIndex(CSVDataManager.DataType.Choice);
+        var endIndex = CSVDataManager.Instance.GetEndIndex(CSVDataManager.DataType.Choice);
 
         choiceEvent.choices = CSVDataManager.Instance.GetChoice(1, endIndex);
 
