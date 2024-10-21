@@ -224,27 +224,38 @@ namespace Script.Manager
         
         private void SetDialogue()
         {
-            contextUpObject.SetActive(false);
-            contextDownObject.SetActive(false);
-            letterObject.SetActive(false);
-            narrationObject.SetActive(false);
-            
             switch (_currentDialogueType)
             {
                 case DialogueEnum.DialogueType.ContextUp:
                     contextUpObject.SetActive(true);
                     
+                    contextDownObject.SetActive(false);
+                    letterObject.SetActive(false);
+                    narrationObject.SetActive(false);
+                    
                     break;
                 case DialogueEnum.DialogueType.ContextDown:
                     contextDownObject.SetActive(true);
+                    
+                    contextUpObject.SetActive(false);
+                    letterObject.SetActive(false);
+                    narrationObject.SetActive(false);
                     
                     break;
                 case DialogueEnum.DialogueType.Letter:
                     letterObject.SetActive(true);
                     
+                    contextUpObject.SetActive(false);
+                    contextDownObject.SetActive(false);
+                    narrationObject.SetActive(false);
+                    
                     break;
                 case DialogueEnum.DialogueType.Narration:
                     narrationObject.SetActive(true);
+                    
+                    contextUpObject.SetActive(false);
+                    contextDownObject.SetActive(false);
+                    letterObject.SetActive(false);
                     
                     break;
                 case DialogueEnum.DialogueType.None:
@@ -363,7 +374,7 @@ namespace Script.Manager
             var white = new Color(1, 1, 1, 1);
             var black = new Color(0, 0, 0, 1);
 
-            if (_currentDialogueType != DialogueEnum.DialogueType.None)
+            if (dialogue.cameraType != DialogueEnum.CameraActionType.None)
             {
                 contextUpObject.SetActive(false);
                 contextDownObject.SetActive(false);
