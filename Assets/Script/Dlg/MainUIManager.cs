@@ -1,3 +1,4 @@
+using script.Common;
 using UnityEngine;
 using UnityEngine.UI;
 using WHDle.Util;
@@ -8,12 +9,16 @@ using Script.Manager;
 
 public class MainUIManager : MonoBehaviour
 {
+    [SerializeField] private UIPopup _inventoyPopup;
+    
+    //
     [SerializeField] private GameObject topObject;
     [SerializeField] private GameObject bottomObject; 
     [SerializeField] private GameObject interactionObject;
     [SerializeField] private GameObject optionPopup;
 
     [SerializeField] private Button interactionButton;
+    [SerializeField] private Button inventoryButton;
     [SerializeField] private Button backButton; 
     [SerializeField] private Button skipButton;
 
@@ -22,7 +27,7 @@ public class MainUIManager : MonoBehaviour
 
     [SerializeField] private Button nextButtonBackGround;
     
-    [SerializeField] private Minigame miniGame;
+    [SerializeField] private MinigamePanel miniGame;
     
     [SerializeField] private PlayerAction playerAction;
     
@@ -35,6 +40,8 @@ public class MainUIManager : MonoBehaviour
     private void AddListener()
     {
         interactionButton.onClick.AddListener(OnClickButtonUIButtonInteraction);
+        inventoryButton.onClick.AddListener(OnInventoryButtonClicked);
+        
         nextButtonBackGround.onClick.AddListener(OnClick_Next_Button_BackGround);
         backButton.onClick.AddListener(OnClick_BottomUI_Button_Back);
         skipButton.onClick.AddListener(OnClick_BottomUI_Button_Skip);
@@ -108,6 +115,11 @@ public class MainUIManager : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    void OnInventoryButtonClicked()
+    {
+        UIManager.Instance.OpenPopup(_inventoyPopup);
     }
 
     void OnClick_Next_Button_BackGround()

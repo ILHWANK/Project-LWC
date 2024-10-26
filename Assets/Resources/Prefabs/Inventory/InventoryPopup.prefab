@@ -933,8 +933,9 @@ GameObject:
   - component: {fileID: 3830155907939704484}
   - component: {fileID: 3830155907939704487}
   - component: {fileID: 3830155907939704486}
+  - component: {fileID: 115161935272757175}
   m_Layer: 0
-  m_Name: MainUI_Canvas_Inventory
+  m_Name: InventoryPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1022,6 +1023,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &115161935272757175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3830155907939704480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d7265900f18e4e19b275a21e9d7c6c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupCanvas: {fileID: 0}
+  popupAnimator: {fileID: 0}
+  canvasGroup: {fileID: 0}
 --- !u!1 &3830155908185589522
 GameObject:
   m_ObjectHideFlags: 0

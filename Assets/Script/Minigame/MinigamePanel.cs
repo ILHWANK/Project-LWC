@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Minigame : MonoBehaviour
+public class MinigamePanel : MonoBehaviour
 {
     [SerializeField] private RectTransform outterHalfCircle;
     [SerializeField] private RectTransform innerHalfCircle;

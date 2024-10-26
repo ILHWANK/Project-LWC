@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using WHDle.Util;
 
 namespace script.Common
 {
@@ -29,6 +30,8 @@ namespace script.Common
 
         private void Awake()
         {
+            GameManager.Instance.RegisterManager(this); // GameManager에 자신을 등록
+            
             if (_instance == null)
             {
                 _instance = this;
