@@ -6,10 +6,11 @@ using WHDle.Util.Define;
 using WHDle.Stage;
 using Script.Controller;
 using Script.Manager;
+using Unity.VisualScripting;
 
 public class MainUIManager : MonoBehaviour
 {
-    [SerializeField] private UIPopup _inventoyPopup;
+    [SerializeField] private GameObject _inventoyPopup;
     
     //
     [SerializeField] private GameObject topObject;
@@ -60,7 +61,7 @@ public class MainUIManager : MonoBehaviour
 
         SoundManager.instance?.BGMPlay(true);
     }
-
+    
     void Update()
     {
         
@@ -119,7 +120,9 @@ public class MainUIManager : MonoBehaviour
 
     void OnInventoryButtonClicked()
     {
-        UIManager.Instance.OpenPopup(_inventoyPopup);
+        _inventoyPopup.SetActive(true);
+        
+        var inventoryPopup = UIManager.Instance.CreatePopup(_inventoyPopup);
     }
 
     void OnClick_Next_Button_BackGround()

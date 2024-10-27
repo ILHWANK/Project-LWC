@@ -4052,7 +4052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
@@ -4315,7 +4315,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1314363523 stripped
 GameObject:
@@ -4524,7 +4524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a34e9eded6b64778a87b8a2c0ff0055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoyPopup: {fileID: 115161935272757175, guid: b5cd2270594c8d6498790cf2c2d89bca, type: 3}
+  _inventoyPopup: {fileID: 6029409936988304020, guid: 69b87248e3348954cb8b28250596a7be, type: 3}
   topObject: {fileID: 1517977034}
   bottomObject: {fileID: 1681279880}
   interactionObject: {fileID: 996736816}
@@ -6803,6 +6803,7 @@ GameObject:
   - component: {fileID: 1713883217}
   - component: {fileID: 1713883218}
   - component: {fileID: 1713883219}
+  - component: {fileID: 1713883220}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6836,7 +6837,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1713883214
 MonoBehaviour:
@@ -6953,6 +6954,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f2db13e00eb42ce9407b14d94f7bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1713883220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713883211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb87ca800f83846b38a4ce4fa3d767c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupContainer: {fileID: 0}
 --- !u!114 &1740064797 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7424227598396393075, guid: 53bbca3b07f3445d9a7ea5f78ad9b646, type: 3}
@@ -8027,6 +8041,7 @@ GameObject:
   - component: {fileID: 1794168248}
   - component: {fileID: 1794168247}
   - component: {fileID: 1794168246}
+  - component: {fileID: 1794168249}
   m_Layer: 0
   m_Name: SubUI_Canvas
   m_TagString: Untagged
@@ -8116,6 +8131,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 50
   m_TargetDisplay: 0
+--- !u!114 &1794168249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794168244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb87ca800f83846b38a4ce4fa3d767c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupContainer: {fileID: 1794168245}
 --- !u!1 &1887254804
 GameObject:
   m_ObjectHideFlags: 0
@@ -9895,7 +9923,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2104107826
 GameObject:

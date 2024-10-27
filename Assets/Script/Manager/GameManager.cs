@@ -48,11 +48,11 @@ namespace WHDle.Util
         }
 
         private void Start()
-        {
+        {   
             // TitleController 초기화
             // TitleController?.Initialize();
         }
-
+        
         // 매니저 등록 메서드
         public void RegisterManager(object manager)
         {
