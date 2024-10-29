@@ -1,11 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using script.Common;
-using UnityEngine;
-using UnityEngine.UI;
 
 public class InventoryPopup : UIPopup
 {
+    private void Start()
+    {
+        // UIManager.Instance.OnPopupOpened += OnPopupOpen;
+    }
+    
+    public void OnPopupOpen(UIPopup popup)
+    {
+        popup = this;
+    }
+    
     public void Close()
     {
         UIManager.Instance.ClosePopup(this);

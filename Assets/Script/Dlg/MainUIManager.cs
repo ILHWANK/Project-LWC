@@ -28,7 +28,7 @@ public class MainUIManager : MonoBehaviour
 
     [SerializeField] private Button nextButtonBackGround;
     
-    [SerializeField] private MinigamePanel miniGame;
+    [SerializeField] private MiniGamePanel miniGame;
     
     [SerializeField] private PlayerAction playerAction;
     
@@ -120,9 +120,7 @@ public class MainUIManager : MonoBehaviour
 
     void OnInventoryButtonClicked()
     {
-        _inventoyPopup.SetActive(true);
-        
-        var inventoryPopup = UIManager.Instance.CreatePopup(_inventoyPopup);
+        UIManager.Instance.CreatePopup(_inventoyPopup);
     }
 
     void OnClick_Next_Button_BackGround()
