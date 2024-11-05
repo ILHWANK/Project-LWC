@@ -10,48 +10,49 @@ using Unity.VisualScripting;
 
 public class MainUIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _inventoyPopup;
-    
+    [SerializeField] private UIPanel _miniGamePanel;
+    [SerializeField] private UIPopup _inventoyPopup;
+
     //
     [SerializeField] private GameObject topObject;
-    [SerializeField] private GameObject bottomObject; 
+    [SerializeField] private GameObject bottomObject;
     [SerializeField] private GameObject interactionObject;
     [SerializeField] private GameObject optionPopup;
 
     [SerializeField] private Button interactionButton;
     [SerializeField] private Button inventoryButton;
-    [SerializeField] private Button backButton; 
+    [SerializeField] private Button backButton;
     [SerializeField] private Button skipButton;
 
     [SerializeField] private Text optionMainText;
     [SerializeField] private Text optionSubText;
 
     [SerializeField] private Button nextButtonBackGround;
-    
+
     [SerializeField] private MiniGamePanel miniGame;
-    
+
     [SerializeField] private PlayerAction playerAction;
-    
+
     DialogueManager _dialogueManager;
     SplashManager _splashManager;
 
     public string OptionMainText { get; set; }
-    public string OptionSubText  { get; set; }
-    
+    public string OptionSubText { get; set; }
+
     private void AddListener()
     {
         interactionButton.onClick.AddListener(OnClickButtonUIButtonInteraction);
         inventoryButton.onClick.AddListener(OnInventoryButtonClicked);
-        
+
         nextButtonBackGround.onClick.AddListener(OnClick_Next_Button_BackGround);
         backButton.onClick.AddListener(OnClick_BottomUI_Button_Back);
         skipButton.onClick.AddListener(OnClick_BottomUI_Button_Skip);
     }
-    
+
     void Start()
     {
         AddListener();
-        
+
         playerAction = FindObjectOfType<PlayerAction>();
         _dialogueManager = FindObjectOfType<DialogueManager>();
         _splashManager = FindObjectOfType<SplashManager>();
@@ -61,10 +62,9 @@ public class MainUIManager : MonoBehaviour
 
         SoundManager.instance?.BGMPlay(true);
     }
-    
+
     void Update()
     {
-        
     }
 
     // OnClick
@@ -81,40 +81,27 @@ public class MainUIManager : MonoBehaviour
             case ObjectController.ObjectType.Letter:
             {
                 _dialogueManager.TempPlayStory();
-                
-                /*routineList.Exists(x => ObjectController.ObjectType.Letter.ToString());
-
-                if (playerData.Routine.Exists(ObjectController.ObjectType.Letter.ToString()))
-                {
-                    dialogueManager.TempPlayStory();
-                }
-                else
-                {
-                    Debug.Log("지금은 확인할 편지가 없어");
-                }*/
-            }
-                break;
+            } break;
             case ObjectController.ObjectType.MiniGame1:
-                {
-                    playerAction.currentDialogueGroup = "Prologue1";
-                    
-                    _dialogueManager.TempPlayStory();
-                }            
-                break;
-            case ObjectController.ObjectType.MiniGame2:
-                {
-                    playerAction.currentDialogueGroup = "Prologue2";
-                
-                    _dialogueManager.TempPlayStory();
-                }
-                break;
-            case ObjectController.ObjectType.MiniGame3:
-                {
-                    playerAction.currentDialogueGroup = "Prologue3";
+            {
+                UIManager.Instance.CreatePanel(_miniGamePanel);
 
-                    _dialogueManager.TempPlayStory();
-                }
-                break;
+                // playerAction.currentDialogueGroup = "Prologue1";
+                //
+                // _dialogueManager.TempPlayStory();
+            } break;
+            case ObjectController.ObjectType.MiniGame2:
+            {
+                playerAction.currentDialogueGroup = "Prologue2";
+
+                _dialogueManager.TempPlayStory();
+            } break;
+            case ObjectController.ObjectType.MiniGame3:
+            {
+                playerAction.currentDialogueGroup = "Prologue3";
+
+                _dialogueManager.TempPlayStory();
+            } break;
         }
     }
 
@@ -148,7 +135,7 @@ public class MainUIManager : MonoBehaviour
     {
         _dialogueManager.EndStory();
         _dialogueManager.SetDialogue(false);
-        
+
         _splashManager.Reset();
 
         optionPopup.SetActive(false);

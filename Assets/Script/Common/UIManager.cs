@@ -35,8 +35,9 @@ public class UIManager : MonoBehaviour
     {
         if (!panelPrefab) return null;
 
-        UIPanel newPanel = Instantiate(panelPrefab, transform);
+        UIPanel newPanel = Instantiate(panelPrefab, _container);
         newPanel.Open();
+        
         openPanels.Push(newPanel);
 
         return newPanel;
@@ -66,7 +67,7 @@ public class UIManager : MonoBehaviour
 
     #region UIPopup
 
-    public UIPopup CreatePopup(GameObject popupPrefab)
+    public UIPopup CreatePopup(UIPopup popupPrefab)
     {
         if (!popupPrefab)
         {
@@ -74,7 +75,8 @@ public class UIManager : MonoBehaviour
             return null;
         }
 
-        UIPopup popupInstance = Instantiate(popupPrefab, _container).GetComponent<UIPopup>();
+        // UIPopup popupInstance = Instantiate(popupPrefab, _container).GetComponent<UIPopup>();
+        UIPopup popupInstance = Instantiate(popupPrefab, _container);
 
         OpenPopup(popupInstance);
 

@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using script.Common;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class MiniGamePanel : MonoBehaviour
+public class MiniGamePanel : UIPanel
 {
     [SerializeField] private RectTransform outterHalfCircle;
     [SerializeField] private RectTransform innerHalfCircle;
@@ -12,12 +14,13 @@ public class MiniGamePanel : MonoBehaviour
 
     [SerializeField] private GameObject movedBar;
 
-    [SerializeField] private Button stopButton, closeButton;
+    [SerializeField] private Button _stopButton;
+    [SerializeField] private Button _closeButton;
 
     private float outterRadius = 0f;
     private float averageRadius = 0f;
 
-    private float halfRaduis => outterRadius / 2f;
+    private float halfRaduis => outterRadius / 2f - 250;
     private Vector2 center;
 
     private Vector2 movedBarPosition = Vector2.zero;
@@ -36,7 +39,14 @@ public class MiniGamePanel : MonoBehaviour
 
     private bool negative = false;
 
-    private void Start() { CalculatorMovedBarPosition(); }
+    private void Start()
+    {
+        CalculatorMovedBarPosition();
+
+        SetLevel(1);
+        
+        gameObject.SetActive(true);
+    }
 
     private void Update()
     {
@@ -49,8 +59,14 @@ public class MiniGamePanel : MonoBehaviour
     {
         var delta = Time.deltaTime * speed;
 
-        if (moveProgress >= 100) negative = true;
-        else if (moveProgress <= 0) negative = false;
+        if (moveProgress >= 100)
+        {
+            negative = true;
+        }
+        else if (moveProgress <= 0)
+        {
+            negative = false;
+        }
 
         if (negative) moveProgress -= delta;
         else moveProgress += delta;
@@ -88,14 +104,9 @@ public class MiniGamePanel : MonoBehaviour
 
     #endregion
 
-    public void Open()
-    {
-        gameObject.SetActive(true);
-    }
-
     public void OnClickClose()
     {
-        gameObject.SetActive(false);
+        UIManager.Instance.ClosePanel(this);
     }
 
     public void SetLevel(Level level) { this.level = level; }
@@ -105,7 +116,7 @@ public class MiniGamePanel : MonoBehaviour
 
         isMove = true;
 
-        stopButton.interactable = true;
+        _stopButton.interactable = true;
     }
 
     private void CalculatorMovedBarPosition()
@@ -141,7 +152,7 @@ public class MiniGamePanel : MonoBehaviour
         //TEST
 
         isMove = false;
-        stopButton.interactable = false;
+        _stopButton.interactable = false;
 
         if ((moveProgress >= minCorrectRange) && (moveProgress <= maxCorrectRange))
         {
@@ -149,7 +160,7 @@ public class MiniGamePanel : MonoBehaviour
 
             SoundManager.instance.SFXPlay(SoundManager.SFXType.Success);
 
-            gameObject.SetActive(false);
+            UIManager.Instance.ClosePanel(this);
         }
         else
         {
@@ -157,7 +168,7 @@ public class MiniGamePanel : MonoBehaviour
 
             SoundManager.instance.SFXPlay(SoundManager.SFXType.Fail);
 
-            gameObject.SetActive(false);
+            UIManager.Instance.ClosePanel(this);
         }
     }
 }
