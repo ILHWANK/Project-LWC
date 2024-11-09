@@ -7,7 +7,7 @@ using WHDle.Util;
 
 namespace WHDle.UI.Inventory
 {
-    public class Slot : MonoBehaviour, IPoolableObject
+    public class InventoryItemSlot : MonoBehaviour, IPoolableObject
     {
         public bool CanRecyle { get; set; } = true;
         public Action OnRecyleStart { get; set; }

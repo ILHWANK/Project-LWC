@@ -84,7 +84,7 @@ public class MainUIManager : MonoBehaviour
             } break;
             case ObjectController.ObjectType.MiniGame1:
             {
-                UIManager.Instance.CreatePanel(_miniGamePanel);
+                UIManager.Instance.OpenPanel(_miniGamePanel);
 
                 // playerAction.currentDialogueGroup = "Prologue1";
                 //
@@ -107,17 +107,16 @@ public class MainUIManager : MonoBehaviour
 
     void OnInventoryButtonClicked()
     {
-        UIManager.Instance.CreatePopup(_inventoyPopup);
+        UIManager.Instance.OpenPopup(_inventoyPopup);
     }
 
     void OnClick_Next_Button_BackGround()
     {
-        //_dialogueManager.SetIsNextStory();
+        
     }
 
     void OnClick_BottomUI_Button_Back()
     {
-        //GameManager.Instance.LoadScene(SceneType.Title, StageManager.Instance.ChangeStage(), StageManager.Instance.OnChangeTitleScene);
         GameManager.Instance.LoadScene(SceneType.Title, null, StageManager.Instance.OnChangeTitleScene);
     }
 

@@ -23,7 +23,7 @@ namespace WHDle.Util
             registCount = 0;
             maxRegistCount = 1;
 
-            LoadPoolableObject<Slot>(PoolType.Slot, "Prefabs/Inventory/Slot", 100, CompleteRegist);
+            LoadPoolableObject<InventoryItemSlot>(PoolType.Slot, "Prefabs/Inventory/Slot", 100, CompleteRegist);
         }
 
         private void CompleteRegist()

@@ -11,7 +11,7 @@ namespace WHDle.UI.Inventory
         private Transform gridTransfrom;
 
         [SerializeField]
-        private List<Slot> slots = new List<Slot>();
+        private List<InventoryItemSlot> slots = new List<InventoryItemSlot>();
 
         private bool isFirstEnable = true;
 
