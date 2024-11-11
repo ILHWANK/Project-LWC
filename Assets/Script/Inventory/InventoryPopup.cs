@@ -9,6 +9,6 @@ public class InventoryPopup : UIPopup
     
     public void Close()
     {
-        UIManager.Instance.ClosePopup(this);
+        UIManager.Instance.ClosePopup("InventoryPopup");
     }
 }

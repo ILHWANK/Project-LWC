@@ -12,6 +12,7 @@ public class MainUIManager : MonoBehaviour
 {
     [SerializeField] private UIPanel _miniGamePanel;
     [SerializeField] private UIPopup _inventoyPopup;
+    [SerializeField] private UIPopup _inventoryItemIngfoPopup;
 
     //
     [SerializeField] private GameObject topObject;

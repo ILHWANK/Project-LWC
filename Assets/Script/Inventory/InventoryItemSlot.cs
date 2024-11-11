@@ -1,4 +1,5 @@
 ﻿using System;
+using script.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,10 @@ namespace WHDle.UI.Inventory
 {
     public class InventoryItemSlot : MonoBehaviour, IPoolableObject
     {
+        [SerializeField] private Button _click;
+
+        [SerializeField] private UIPopup _inventoryResult;
+        
         public bool CanRecyle { get; set; } = true;
         public Action OnRecyleStart { get; set; }
 
@@ -18,6 +23,11 @@ namespace WHDle.UI.Inventory
         public GameObject SlotInner;
         public Image ItemImage;
         public TMP_Text AmountText;
+
+        public void Start()
+        {
+            _click.onClick.AddListener(OnClicked);
+        }
 
         public void DeleteItem()
         {
@@ -38,8 +48,17 @@ namespace WHDle.UI.Inventory
 
         public void SlotClear()
         {
-            ItemImage.sprite = null;
-            AmountText.text = string.Empty;
+            //ItemImage.sprite = null;
+            //AmountText.text = string.Empty;
         }
+
+        #region Event
+
+        private void OnClicked()
+        {
+           UIManager.Instance.OpenPopup("InventoryItemInfoPopup"); 
+        }
+
+        #endregion
     }
 }
