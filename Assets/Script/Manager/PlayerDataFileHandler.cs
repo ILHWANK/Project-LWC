@@ -1,8 +1,7 @@
 using System.IO;
-using System.Text;
 using UnityEngine;
 
-public static class SaveDataManager
+public static class PlayerDataFileHandler
 {
     private static string FilePath => Application.dataPath + "/PlayerDatas/";
 
@@ -14,29 +13,16 @@ public static class SaveDataManager
         }
 
         var jsonFile = JsonUtility.ToJson(playerData);
-
-        var stringBilder = new StringBuilder();
-
-        stringBilder.Append(FilePath);
-        stringBilder.Append(saveFileName);
-        stringBilder.Append(".json");
-
-        var saveFilePath = stringBilder.ToString();
-
-        Debug.Log(saveFilePath);
+        var saveFilePath = $"{FilePath}{saveFileName}.json";
 
         File.WriteAllText(saveFilePath, jsonFile);
+
+        PlayerDataManager.UpdateCache(playerData);
     }
 
     public static PlayerData FileLoad(string saveFileName)
     {
-        var stringBilder = new StringBuilder();
-
-        stringBilder.Append(FilePath);
-        stringBilder.Append(saveFileName);
-        stringBilder.Append(".json");
-
-        var saveFilePath = stringBilder.ToString();
+        var saveFilePath = $"{FilePath}{saveFileName}.json";
 
         if (!File.Exists(saveFilePath))
         {
@@ -44,9 +30,11 @@ public static class SaveDataManager
         }
 
         var jsonFile = File.ReadAllText(saveFilePath);
-
         var playerData = JsonUtility.FromJson<PlayerData>(jsonFile);
+
+        PlayerDataManager.UpdateCache(playerData);
 
         return playerData;
     }
 }
+

@@ -54,9 +54,7 @@ public class TitleDlg : MonoBehaviour
 
         PlayGamesPlatform.Activate();
         
-        //
-        
-        var loadData = SaveDataManager.FileLoad("playerData");
+        var loadData = PlayerDataFileHandler.FileLoad("playerData");
 
         var isLoadData = loadData != null;
         
@@ -141,14 +139,14 @@ public class TitleDlg : MonoBehaviour
         
         var playerData = new PlayerData(1, routineMap, "CurrentStoryGroup", "NextStoryGroup", inventoryMap);
 
-        SaveDataManager.FileSave(playerData, "playerData");
+        PlayerDataFileHandler.FileSave(playerData, "playerData");
 
         LoadGame();
     }
 
     public void LoadGame()
     {
-        var loadData = SaveDataManager.FileLoad("playerData");
+        var loadData = PlayerDataFileHandler.FileLoad("playerData");
 
         GameManager.Instance.TitleController.LoadComplete = true;
         

@@ -72,7 +72,7 @@ public class MainUIManager : MonoBehaviour
     void OnClickButtonUIButtonInteraction()
     {
         var interactionType = playerAction.InteractionType;
-        var playerData = SaveDataManager.FileLoad("PlayerData");
+        var playerData = PlayerDataFileHandler.FileLoad("PlayerData");
         var routineMap = playerData.RoutineMapMap;
 
         SoundManager.instance.SFXPlay(SoundManager.SFXType.Interaction);

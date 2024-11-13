@@ -35,7 +35,7 @@ public class LoadingDlg : MonoBehaviour
             loadingSlider.value = loadingValue;
 
             if (loadingValue == 3)
-                SceneManager.LoadScene("GamePlay");
+                SceneManager.LoadScene("StartScene");
 
             yield return new WaitForSeconds(1f);
         }

@@ -23,12 +23,12 @@ public class DialogueProceedingsManager : MonoBehaviour
         
         var playerData = new PlayerData(_day, _routineMap, _currentStoryGroup, _nextStoryGroup, _inventoryMap);
         
-        SaveDataManager.FileSave(playerData, "PlayerData");
+        PlayerDataFileHandler.FileSave(playerData, "PlayerData");
     }
 
     private void UpdateProceeding()
     {
-        var playerData = SaveDataManager.FileLoad("PlayerData");
+        var playerData = PlayerDataFileHandler.FileLoad("PlayerData");
 
         _proceedingText.text = playerData.CurrentStoryGroup;
     }
