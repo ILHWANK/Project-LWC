@@ -8,7 +8,7 @@ namespace script.Common
         [SerializeField] private Animator panelAnimator;
         [SerializeField] private CanvasGroup canvasGroup;
 
-        public void Open()
+        public virtual void Open()
         {
             if (panelCanvas == null)
                 return;
@@ -26,7 +26,7 @@ namespace script.Common
             }
         }
 
-        public void Close()
+        public virtual void Close()
         {
             UIManager.Instance.ClosePanel(this);
         }
@@ -34,11 +34,6 @@ namespace script.Common
         public void OnCloseAnimationFinished()
         {
             UIUtilities.SetUIActive(panelCanvas, false);
-        }
-
-        public void OnClickCloseButton()
-        {
-            Close();
         }
     }
 }

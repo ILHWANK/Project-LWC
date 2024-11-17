@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private Transform _container;
 
+    [SerializeField] private GameObject _loadingPanel;
     [SerializeField] private GameObject _miniGamePanel;
     [SerializeField] private GameObject _inventoryPopup;
     [SerializeField] private GameObject _inventoryItemInfoPopup;
@@ -27,6 +28,7 @@ public class UIManager : MonoBehaviour
     {
         panelPrefabs = new Dictionary<string, GameObject>
         {
+            { "LoadingPanel", _loadingPanel},
             { "MiniGamePanel", _miniGamePanel },
             { "InventoryPopup", _inventoryPopup },
             { "InventoryItemInfoPopup", _inventoryItemInfoPopup }
@@ -41,6 +43,13 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    
+    public void LoadSceneAsync(string sceneName, Action onComplete = null)
+    {
+        var loadingPanel = _loadingPanel?.GetComponent<LoadingPanel>();
+        
+        loadingPanel?.LoadSceneAsync(sceneName, onComplete);
     }
 
     #region UIPanel

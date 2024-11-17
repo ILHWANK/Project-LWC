@@ -3890,7 +3890,7 @@ GameObject:
   - component: {fileID: 1045666544}
   - component: {fileID: 1045666543}
   m_Layer: 0
-  m_Name: MainUI_Canvas
+  m_Name: MainUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7925,7 +7925,7 @@ GameObject:
   - component: {fileID: 1794168246}
   - component: {fileID: 1794168249}
   m_Layer: 0
-  m_Name: SubUI_Canvas
+  m_Name: MainSceneContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8025,6 +8025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _container: {fileID: 1794168245}
+  _loadingPanel: {fileID: 0}
   _miniGamePanel: {fileID: 6765828084501807357, guid: 03202fe568d624f09aa67d9687ce9cea, type: 3}
   _inventoryPopup: {fileID: 6029409936988304020, guid: 69b87248e3348954cb8b28250596a7be, type: 3}
   _inventoryItemInfoPopup: {fileID: 3117110180448880542, guid: 6fdc83015fb9044be97b781b56571518, type: 3}
