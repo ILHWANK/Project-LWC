@@ -5,8 +5,8 @@
     <package>com.google.games:gpgs-plugin-support:0.10.14</package>
   </packages>
   <files>
-    <file>Assets/GeneratedLocalRepo/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/0.10.14/gpgs-plugin-support-0.10.14.aar</file>
-    <file>Assets/GeneratedLocalRepo/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/0.10.14/gpgs-plugin-support-0.10.14.pom</file>
+    <file>Assets/GeneratedLocalRepo/Plugins/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/0.10.14/gpgs-plugin-support-0.10.14.aar</file>
+    <file>Assets/GeneratedLocalRepo/Plugins/GooglePlayGames/Editor/m2repository/com/google/games/gpgs-plugin-support/0.10.14/gpgs-plugin-support-0.10.14.pom</file>
   </files>
   <settings>
     <setting name="androidAbis" value="arm64-v8a,armeabi-v7a" />
