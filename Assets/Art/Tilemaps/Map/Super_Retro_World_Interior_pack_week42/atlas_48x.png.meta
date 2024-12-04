@@ -125,6 +125,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -16054,8 +16066,8 @@ TextureImporter:
       atlas_48x_79: -577128234
       atlas_48x_433: 1502102321
       atlas_48x_126: -2047347826
-      atlas_48x_81: 826091903
       atlas_48x_224: 1611002323
+      atlas_48x_81: 826091903
       atlas_48x_314: -829687275
       atlas_48x_34: 565419958
       atlas_48x_257: 786787356
@@ -16133,10 +16145,10 @@ TextureImporter:
       atlas_48x_642: -1440566034
       atlas_48x_233: 1201474264
       atlas_48x_463: 2106703317
-      atlas_48x_486: 1468190657
       atlas_48x_629: -1018557543
-      atlas_48x_714: 785018622
+      atlas_48x_486: 1468190657
       atlas_48x_740: -1254164729
+      atlas_48x_714: 785018622
       atlas_48x_508: -642346006
       atlas_48x_552: 430914797
       atlas_48x_689: 1559984198
@@ -16225,10 +16237,10 @@ TextureImporter:
       atlas_48x_64: 957111222
       atlas_48x_4: 1195059376
       atlas_48x_162: 994633774
-      atlas_48x_223: -54899007
       atlas_48x_507: 1161232550
-      atlas_48x_298: 33041587
+      atlas_48x_223: -54899007
       atlas_48x_24: -1464556636
+      atlas_48x_298: 33041587
       atlas_48x_422: 1583084401
       atlas_48x_465: -471049879
       atlas_48x_428: -597697070
@@ -16249,9 +16261,9 @@ TextureImporter:
       atlas_48x_549: 883341169
       atlas_48x_506: -1808688970
       atlas_48x_202: 871183881
-      atlas_48x_512: 1286681053
-      atlas_48x_185: -370742791
       atlas_48x_573: 1693644122
+      atlas_48x_185: -370742791
+      atlas_48x_512: 1286681053
       atlas_48x_246: 219131222
       atlas_48x_330: 1503983478
       atlas_48x_235: 366065730
@@ -16345,8 +16357,8 @@ TextureImporter:
       atlas_48x_315: 1353325643
       atlas_48x_123: -1207904747
       atlas_48x_93: 1532223987
-      atlas_48x_97: -536698573
       atlas_48x_214: -633998362
+      atlas_48x_97: -536698573
       atlas_48x_304: -742940880
       atlas_48x_157: -1635336089
       atlas_48x_418: 2013849068
@@ -16398,10 +16410,10 @@ TextureImporter:
       atlas_48x_59: -1469956833
       atlas_48x_623: 39941524
       atlas_48x_449: 2055152417
-      atlas_48x_18: 1452513374
-      atlas_48x_341: -1334938697
-      atlas_48x_270: 1331267480
       atlas_48x_443: 1018128769
+      atlas_48x_18: 1452513374
+      atlas_48x_270: 1331267480
+      atlas_48x_341: -1334938697
       atlas_48x_283: 708323703
       atlas_48x_610: 246142807
       atlas_48x_312: 1570261285
@@ -16410,12 +16422,12 @@ TextureImporter:
       atlas_48x_590: -1197998611
       atlas_48x_84: 1564263245
       atlas_48x_147: 666237427
-      atlas_48x_221: 667845571
       atlas_48x_332: 109872113
-      atlas_48x_268: 1429295055
+      atlas_48x_221: 667845571
       atlas_48x_254: -458513004
       atlas_48x_399: 1314978855
       atlas_48x_429: 732062161
+      atlas_48x_268: 1429295055
       atlas_48x_672: 525300752
       atlas_48x_167: 406360652
       atlas_48x_296: -283857800
@@ -16428,8 +16440,8 @@ TextureImporter:
       atlas_48x_139: -1009925248
       atlas_48x_676: 372069530
       atlas_48x_120: 26466863
-      atlas_48x_371: 516326953
       atlas_48x_504: 1908567478
+      atlas_48x_371: 516326953
       atlas_48x_519: -1320652734
       atlas_48x_669: -1691443573
       atlas_48x_129: 291414779
@@ -16652,8 +16664,8 @@ TextureImporter:
       atlas_48x_646: 15625636
       atlas_48x_90: -1129091032
       atlas_48x_436: 846566977
-      atlas_48x_5: 1745384716
       atlas_48x_659: -1435029693
+      atlas_48x_5: 1745384716
       atlas_48x_489: 3138712
       atlas_48x_711: 1546019044
       atlas_48x_375: -245008804

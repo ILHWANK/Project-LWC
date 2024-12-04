@@ -25,4 +25,9 @@ public class CSVTable
     {
         return rows.FindAll(row => row[column] == value);
     }
+    
+    public Dictionary<string, string> GetByColumn(string column, string value)
+    {
+        return rows.Find(row => row[column] == value);
+    }
 }

@@ -229,6 +229,8 @@ MonoBehaviour:
   popupCanvas: {fileID: 0}
   popupAnimator: {fileID: 0}
   canvasGroup: {fileID: 0}
+  itemName: {fileID: 7197349697699906560}
+  itemDescription: {fileID: 7345573654058240043}
   _interactionButton: {fileID: 1792214184842774425}
   _closeButton: {fileID: 237194066712119322}
 --- !u!1 &3153827507081026891

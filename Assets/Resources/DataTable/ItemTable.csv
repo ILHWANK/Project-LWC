@@ -1,4 +1,4 @@
-﻿Index,Item_Id,Item_Name,Item_Desc,Item_SubDesc,Item_Image,Item_Type
+﻿Index,Item_Id,Item_Name,Item_Desc,Item_SubDesc,Item_Path,Item_Type
 1,Day1_Oriental,어린 세자,고풍스러운 종이에 적힌 편지다.,어린 세자,,Letter
 2,Day1_Western,용사가 된 검사,눅눅한 종이에 적힌 편지다.,용사가 된 검사,,Letter
 3,Day1_Animal,도그 부부,금색 털이 잔뜩 붙어있는 편지다.,도그 부부,,Letter

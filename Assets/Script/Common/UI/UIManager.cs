@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _miniGamePanel;
     [SerializeField] private GameObject _inventoryPopup;
     [SerializeField] private GameObject _inventoryItemInfoPopup;
+    [SerializeField] private GameObject _resultpopup;
 
     private Dictionary<string, GameObject> panelPrefabs;
     private Stack<UIPanel> openPanels = new Stack<UIPanel>();
@@ -31,7 +32,8 @@ public class UIManager : MonoBehaviour
             { "LoadingPanel", _loadingPanel},
             { "MiniGamePanel", _miniGamePanel },
             { "InventoryPopup", _inventoryPopup },
-            { "InventoryItemInfoPopup", _inventoryItemInfoPopup }
+            { "InventoryItemInfoPopup", _inventoryItemInfoPopup },
+            { "ResultPopup", _resultpopup },
         };
 
         if (_instance == null)
