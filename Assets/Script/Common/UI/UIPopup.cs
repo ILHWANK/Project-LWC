@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace script.Common
@@ -8,7 +9,9 @@ namespace script.Common
         [SerializeField] private Animator popupAnimator;
         [SerializeField] private CanvasGroup canvasGroup;
 
-        public void Open()
+        public Action PopupClose;
+        
+        public virtual void Open()
         {
             if (popupCanvas == null) 
                 return;
@@ -26,9 +29,13 @@ namespace script.Common
             }
         }
 
-        public void Close()
+        public virtual void Close()
         {
-            UIManager.Instance.ClosePopup(this);
+            PopupClose?.Invoke();
+            
+            gameObject.SetActive(false);
+        
+            Destroy(gameObject);
         }
 
         public void OnCloseAnimationFinished()

@@ -17,11 +17,6 @@ public class UIManager : MonoBehaviour
     private Stack<UIPanel> openPanels = new Stack<UIPanel>();
     private Stack<UIPopup> openPopups = new Stack<UIPopup>();
 
-    public static event Action<UIPanel> OnOpenPanel;
-    public static event Action<UIPanel> OnClosePanel;
-    public static event Action<UIPopup> OnPopupOpened;
-    public static event Action<UIPopup> OnPopupClosed;
-
     private static UIManager _instance;
     public static UIManager Instance => _instance;
 
@@ -65,7 +60,6 @@ public class UIManager : MonoBehaviour
             {
                 panelInstance.Open();
                 openPanels.Push(panelInstance);
-                OnOpenPanel?.Invoke(panelInstance);
             }
         }
         else
@@ -83,7 +77,6 @@ public class UIManager : MonoBehaviour
         panelInstance.Open();
 
         openPanels.Push(panelInstance);
-        OnOpenPanel?.Invoke(panelInstance);
     }
 
     public void ClosePanel(string panelName)
@@ -106,7 +99,6 @@ public class UIManager : MonoBehaviour
         currentPanel.OnCloseAnimationFinished();
 
         Destroy(currentPanel.gameObject);
-        OnClosePanel?.Invoke(currentPanel);
     }
 
     public void CloseAllPanels()
@@ -117,7 +109,6 @@ public class UIManager : MonoBehaviour
             panel.OnCloseAnimationFinished();
 
             Destroy(panel.gameObject);
-            OnClosePanel?.Invoke(panel);
         }
     }
 
@@ -134,7 +125,6 @@ public class UIManager : MonoBehaviour
             {
                 popupInstance.gameObject.SetActive(true);
                 openPopups.Push(popupInstance);
-                OnPopupOpened?.Invoke(popupInstance);
             }
         }
         else
@@ -155,7 +145,6 @@ public class UIManager : MonoBehaviour
         openPopups.Push(popupInstance);
         popupInstance.gameObject.SetActive(true);
 
-        OnPopupOpened?.Invoke(popupInstance);
     }
 
     public void ClosePopup(string popupName)
@@ -175,10 +164,8 @@ public class UIManager : MonoBehaviour
             return;
 
         openPopups.Pop();
-        popup.gameObject.SetActive(false);
-
-        OnPopupClosed?.Invoke(popup);
-        Destroy(popup.gameObject);
+        
+        popup.Close();
     }
 
     public void CloseLastOpenedPopup()

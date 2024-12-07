@@ -17,7 +17,7 @@ public static class PlayerDataFileHandler
 
         File.WriteAllText(saveFilePath, jsonFile);
 
-        PlayerDataManager.UpdateCache(playerData);
+        // PlayerDataManager에 캐시 업데이트를 직접 요청하지 않음
     }
 
     public static PlayerData FileLoad(string saveFileName)
@@ -30,11 +30,6 @@ public static class PlayerDataFileHandler
         }
 
         var jsonFile = File.ReadAllText(saveFilePath);
-        var playerData = JsonUtility.FromJson<PlayerData>(jsonFile);
-
-        PlayerDataManager.UpdateCache(playerData);
-
-        return playerData;
+        return JsonUtility.FromJson<PlayerData>(jsonFile);
     }
 }
-

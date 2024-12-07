@@ -4418,8 +4418,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a34e9eded6b64778a87b8a2c0ff0055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _miniGamePanel: {fileID: 6765828084501807359, guid: 03202fe568d624f09aa67d9687ce9cea, type: 3}
-  _inventoyPopup: {fileID: 6818640302072546462, guid: 69b87248e3348954cb8b28250596a7be, type: 3}
+  _miniGamePanel: {fileID: 0}
+  _inventoyPopup: {fileID: 0}
   _inventoryItemIngfoPopup: {fileID: 0}
   topObject: {fileID: 1517977034}
   bottomObject: {fileID: 1681279880}

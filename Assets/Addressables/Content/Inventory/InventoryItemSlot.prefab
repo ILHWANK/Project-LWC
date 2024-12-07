@@ -424,8 +424,8 @@ MonoBehaviour:
   _click: {fileID: 9145723088629340722}
   _inventoryResult: {fileID: 7606511312728881365, guid: 6fdc83015fb9044be97b781b56571518, type: 3}
   SlotInner: {fileID: 4017616022845982357}
-  ItemImage: {fileID: 0}
-  AmountText: {fileID: 0}
+  ItemImage: {fileID: 4017616023373170895}
+  AmountText: {fileID: 810473281740258796}
 --- !u!1 &4017616023745104680
 GameObject:
   m_ObjectHideFlags: 0

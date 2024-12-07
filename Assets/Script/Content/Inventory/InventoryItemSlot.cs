@@ -10,8 +10,14 @@ namespace WHDle.UI.Inventory
 {
     public class InventoryItemSlot : MonoBehaviour, IPoolableObject
     {
-        [SerializeField] private Button _click;
+        public struct Data
+        {
+            public string ItemId;
+        }
 
+        private Data _data;
+        
+        [SerializeField] private Button _click;
         [SerializeField] private UIPopup _inventoryResult;
         
         public bool CanRecyle { get; set; } = true;
@@ -29,7 +35,14 @@ namespace WHDle.UI.Inventory
             _click.onClick.AddListener(OnClicked);
         }
 
-        public void DeleteItem()
+        public void SetData(Data data)
+        {
+            _data = data;
+            
+            Init();
+        }
+        
+        public void Reset()
         {
             ItemImage.sprite = null;
             AmountText.text = string.Empty;
@@ -52,6 +65,19 @@ namespace WHDle.UI.Inventory
             //AmountText.text = string.Empty;
         }
 
+        private void Init()
+        {
+            ItemImage.sprite = null;
+            AmountText.text = string.Empty;
+
+            SlotInner.SetActive(true);
+        }
+
+        private void Refresh()
+        {
+            Debug.Log(_data.ItemId);
+        }
+
         #region Event
 
         private void OnClicked()
@@ -59,6 +85,6 @@ namespace WHDle.UI.Inventory
            UIManager.Instance.OpenPopup("InventoryItemInfoPopup"); 
         }
 
-        #endregion
+        #endregion=
     }
 }

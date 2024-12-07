@@ -5406,8 +5406,8 @@ TextureImporter:
       Inside_D_147: 1838181421
       Inside_D_152: 2048762230
       Inside_D_56: 806922316
-      Inside_D_79: -997765834
       Inside_D_229: 1810346709
+      Inside_D_79: -997765834
       Inside_D_133: -1713598830
       Inside_D_203: 211514105
       Inside_D_168: 292436001
@@ -5489,15 +5489,16 @@ TextureImporter:
       Inside_D_238: -1392879030
       Inside_D_226: -1945345436
       Inside_D_49: 1326252378
-      Inside_D_27: 364594215
-      Inside_D_210: -998689731
-      Inside_D_43: -1305295898
-      Inside_D_17: -1876339421
-      Inside_D_134: -257453460
-      Inside_D_186: 1002890590
-      Inside_D_193: -1218472474
-      Inside_D_137: 1263599101
       Inside_D_218: 959285609
+      Inside_D_210: -998689731
+      Inside_D_27: 364594215
+      Inside_D_193: -1218472474
+      Inside_D_17: -1876339421
+      Inside_D_243: -1260031756
+      Inside_D_186: 1002890590
+      Inside_D_134: -257453460
+      Inside_D_137: 1263599101
+      Inside_D_43: -1305295898
       Inside_D_211: -777026938
       Inside_D_70: 1538622697
       Inside_D_76: -302009935
@@ -5509,11 +5510,10 @@ TextureImporter:
       Inside_D_205: -1398201867
       Inside_D_219: -1490243341
       Inside_D_0: 1801443235
-      Inside_D_85: -1006356354
       Inside_D_220: 1984265011
       Inside_D_194: 942839009
       Inside_D_232: -418604939
-      Inside_D_243: -1260031756
+      Inside_D_85: -1006356354
       Inside_D_214: -1421456519
       Inside_D_151: 727220061
       Inside_D_89: -1205170952

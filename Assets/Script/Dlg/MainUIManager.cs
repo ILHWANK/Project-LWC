@@ -10,27 +10,17 @@ using Unity.VisualScripting;
 
 public class MainUIManager : MonoBehaviour
 {
-    [SerializeField] private UIPanel _miniGamePanel;
-    [SerializeField] private UIPopup _inventoyPopup;
-    [SerializeField] private UIPopup _inventoryItemIngfoPopup;
-
-    //
     [SerializeField] private GameObject topObject;
     [SerializeField] private GameObject bottomObject;
     [SerializeField] private GameObject interactionObject;
-    [SerializeField] private GameObject optionPopup;
 
     [SerializeField] private Button interactionButton;
     [SerializeField] private Button inventoryButton;
     [SerializeField] private Button backButton;
     [SerializeField] private Button skipButton;
 
-    [SerializeField] private Text optionMainText;
-    [SerializeField] private Text optionSubText;
-
     [SerializeField] private Button nextButtonBackGround;
 
-    [SerializeField] private MiniGamePanel miniGame;
 
     [SerializeField] private PlayerAction playerAction;
 
@@ -73,7 +63,7 @@ public class MainUIManager : MonoBehaviour
     {
         var interactionType = playerAction.InteractionType;
         var playerData = PlayerDataFileHandler.FileLoad("PlayerData");
-        var routineMap = playerData.RoutineMapMap;
+        var routineMap = playerData.RoutineMap;
 
         SoundManager.instance.SFXPlay(SoundManager.SFXType.Interaction);
 
@@ -85,7 +75,7 @@ public class MainUIManager : MonoBehaviour
             } break;
             case ObjectController.ObjectType.MiniGame1:
             {
-                UIManager.Instance.OpenPanel(_miniGamePanel);
+                UIManager.Instance.OpenPanel("MiniGamePanel");
 
                 // playerAction.currentDialogueGroup = "Prologue1";
                 //
@@ -108,7 +98,7 @@ public class MainUIManager : MonoBehaviour
 
     void OnInventoryButtonClicked()
     {
-        UIManager.Instance.OpenPopup(_inventoyPopup);
+        UIManager.Instance.OpenPopup("InventoryPopup");
     }
 
     void OnClick_Next_Button_BackGround()
@@ -123,12 +113,12 @@ public class MainUIManager : MonoBehaviour
 
     void OnClick_BottomUI_Button_Skip()
     {
-        OpenOptionPopup();
+        
     }
 
     public void OnClick_NoButton()
     {
-        optionPopup.SetActive(false);
+        
     }
 
     public void OnClick_YesClick()
@@ -138,18 +128,7 @@ public class MainUIManager : MonoBehaviour
 
         _splashManager.Reset();
 
-        optionPopup.SetActive(false);
-
         OptionMainText = "";
         OptionSubText = "";
-    }
-
-    // Evnet
-    public void OpenOptionPopup()
-    {
-        optionPopup.SetActive(true);
-
-        optionMainText.text = OptionMainText;
-        optionSubText.text = OptionSubText;
     }
 }
