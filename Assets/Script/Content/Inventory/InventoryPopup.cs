@@ -16,11 +16,6 @@ public class InventoryPopup : UIPopup
     {
         base.Open();
 
-        foreach (var inventoryItemSlot in _inventoryItemList)
-        {
-            inventoryItemSlot.Reset();
-        }
-
         // 1. PlayerData 로드
         PlayerDataManager.LoadData("PlayerData");
         
@@ -29,6 +24,7 @@ public class InventoryPopup : UIPopup
         PlayerDataManager.UpdateInventory("Item1", 1);
         PlayerDataManager.UpdateInventory("Day3_Future", 1);
         PlayerDataManager.UpdateInventory("Day3_Animal", 1);
+        
         PlayerDataManager.SaveData("PlayerData");
         
         Init();
@@ -73,9 +69,19 @@ public class InventoryPopup : UIPopup
                 break;
         }
     }
-    
+
+    private void Refresh()
+    {
+        
+    }
+
+    #region Events
+
     public void OnButtonCloseClicked()
     {
         UIManager.Instance.ClosePopup(this);
     }
+
+    #endregion
+
 }

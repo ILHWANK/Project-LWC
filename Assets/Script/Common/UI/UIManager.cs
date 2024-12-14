@@ -111,10 +111,41 @@ public class UIManager : MonoBehaviour
             Destroy(panel.gameObject);
         }
     }
+    
+    public GameObject GetPanel(string panelName)
+    {
+        if (panelPrefabs.TryGetValue(panelName, out GameObject panel))
+        {
+            return panel;
+        }
+
+        Debug.LogError($"패널 '{panelName}'을(를) 찾을 수 없습니다.");
+        return null;
+    }
 
     #endregion
 
     #region UIPopup
+    
+    public void OpenPopup<T>(string popupName, Action<T> onSetup = null) where T : UIPopup
+    {
+        if (panelPrefabs.TryGetValue(popupName, out var prefab))
+        {
+            var popupInstance = Instantiate(prefab, _container).GetComponent<T>();
+            if (popupInstance != null)
+            {
+                popupInstance.gameObject.SetActive(true);
+                openPopups.Push(popupInstance);
+            
+                // 데이터 셋팅 콜백 실행
+                onSetup?.Invoke(popupInstance);
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Popup '{popupName}' not found in UIManager!");
+        }
+    }
 
     public void OpenPopup(string popupName)
     {
@@ -176,5 +207,16 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public GameObject GetPopup(string popupName)
+    {
+        if (panelPrefabs.TryGetValue(popupName, out GameObject popup))
+        {
+            return popup;
+        }
+
+        Debug.LogError($"팝업 '{popupName}'을(를) 찾을 수 없습니다.");
+        return null;
+    }
+    
     #endregion
 }

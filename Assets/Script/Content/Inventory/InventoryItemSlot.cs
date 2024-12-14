@@ -2,6 +2,8 @@
 using script.Common;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 using WHDle.Database.Vo;
 using WHDle.Util;
@@ -33,36 +35,15 @@ namespace WHDle.UI.Inventory
         public void Start()
         {
             _click.onClick.AddListener(OnClicked);
+            
+            Init();
         }
 
         public void SetData(Data data)
         {
             _data = data;
             
-            Init();
-        }
-        
-        public void Reset()
-        {
-            ItemImage.sprite = null;
-            AmountText.text = string.Empty;
-
-            SlotInner.SetActive(false);
-        }
-
-        public void SetItem(VOItemBase voItemBase)
-        {
-            this.voItemBase = voItemBase;
-
-
-            //ItemImage.sprite = Resources.Load<Sprite>(voItemBase.EnglishName);
-
-        }
-
-        public void SlotClear()
-        {
-            //ItemImage.sprite = null;
-            //AmountText.text = string.Empty;
+            Refresh();
         }
 
         private void Init()
@@ -70,19 +51,52 @@ namespace WHDle.UI.Inventory
             ItemImage.sprite = null;
             AmountText.text = string.Empty;
 
-            SlotInner.SetActive(true);
+            SlotInner.SetActive(false);
         }
 
         private void Refresh()
         {
-            Debug.Log(_data.ItemId);
+            AmountText.text = string.Empty;
+            
+            var itemTable = CSVDialogueParser.LoadDialogueTable("Assets/Resources/DataTable/ItemTable.csv");
+
+            var itemData = itemTable.GetByColumn("Item_Id", _data.ItemId);
+            
+            var spriteAddress = itemData["Item_Path"];
+            
+            Addressables.LoadAssetAsync<Sprite>(spriteAddress).Completed += handle =>
+            {
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    ItemImage.sprite = handle.Result;
+                    
+                    SlotInner.SetActive(true);
+                }
+                else
+                {
+                    SlotInner.SetActive(false);
+                }
+            };
         }
 
         #region Event
 
         private void OnClicked()
         {
-           UIManager.Instance.OpenPopup("InventoryItemInfoPopup"); 
+           var inventoryItemInfoPopup = UIManager.Instance.GetPopup("InventoryItemInfoPopup");
+
+           inventoryItemInfoPopup.GetComponent<InventoryItemInfoPopup>();
+
+           var itemData = new InventoryItemInfoPopup.ItemData
+           {
+               ItemId = _data.ItemId
+           };
+           
+           UIManager.Instance.OpenPopup<InventoryItemInfoPopup>("InventoryItemInfoPopup", 
+               popup =>
+               {
+                   popup.SetData(itemData);
+               }); 
         }
 
         #endregion=

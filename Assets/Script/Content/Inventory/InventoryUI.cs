@@ -33,19 +33,19 @@ namespace WHDle.UI.Inventory
             {
                 var slot = slots[i];
 
-                if (slot.VoItemBase != null)
-                    slot.SetItem(slot.VoItemBase);
-                else
-                    slot.SlotClear();
+                // if (slot.VoItemBase != null)
+                //     slot.SetItem(slot.VoItemBase);
+                // else
+                //     slot.SlotClear();
             }
         }
 
         public void SetSlot(int slotNumber, VOItemBase itemBase)
         {
-            slots[slotNumber].SetItem(itemBase);
+            // slots[slotNumber].SetItem(itemBase);
         }
 
-        public void ClearSlot(int slotNumber)
-            => slots[slotNumber].SlotClear();
+        // public void ClearSlot(int slotNumber)
+        //     => slots[slotNumber].SlotClear();
     }
 }

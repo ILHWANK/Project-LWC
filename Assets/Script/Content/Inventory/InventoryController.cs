@@ -74,26 +74,26 @@ namespace WHDle.Controller
         {
             var pis = voInventory.voPlaceItem;
             
-            for(int i = 0; i< MAX_SLOT_COUNT; i++)
-            {
-                if (i < pis.Count)
-                    inventoryUI.SetSlot(i, pis[i]);
-                else
-                    inventoryUI.ClearSlot(i);
-            }
+            // for(int i = 0; i< MAX_SLOT_COUNT; i++)
+            // {
+            //     if (i < pis.Count)
+            //         inventoryUI.SetSlot(i, pis[i]);
+            //     else
+            //         inventoryUI.ClearSlot(i);
+            // }
         }
 
         private void SetInventory_MakeItem()
         {
             var ms = voInventory.voMake;
 
-            for(int i = 0; i < MAX_SLOT_COUNT; i++)
-            {
-                if (i < ms.Count)
-                    inventoryUI.SetSlot(i, ms[i]);
-                else
-                    inventoryUI.ClearSlot(i);
-            }
+            // for(int i = 0; i < MAX_SLOT_COUNT; i++)
+            // {
+            //     if (i < ms.Count)
+            //         inventoryUI.SetSlot(i, ms[i]);
+            //     else
+            //         inventoryUI.ClearSlot(i);
+            // }
         }
 
         public void AddItem(ItemType itemType,string ItemCode, int amount)

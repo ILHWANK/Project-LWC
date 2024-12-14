@@ -22,12 +22,23 @@ public class InventoryItemInfoPopup : UIPopup
     {
         _interactionButton.onClick.AddListener(OnInteractionButtonClicked);
         _closeButton.onClick.AddListener(OnCloseButtonClicked);
-     
-        //
+    }
+
+    public void SetData(ItemData itemData)
+    {
+        _itemData = itemData;
+
+        ReFresh();
+    }
+
+    private void ReFresh()
+    {
         var itemTable = CSVDialogueParser.LoadDialogueTable("Assets/Resources/DataTable/ItemTable.csv");
 
         var itemData = itemTable.GetByColumn("Item_Id", _itemData.ItemId);
 
+        Debug.Log(_itemData.ItemId);
+        
         if (itemData != null)
         {
             itemName.text = itemData["Item_Name"];
@@ -39,8 +50,6 @@ public class InventoryItemInfoPopup : UIPopup
 
     private void OnInteractionButtonClicked()
     {
-        Debug.Log("Item 사용");
-        
         UIManager.Instance.ClosePopup("InventoryItemInfoPopup");
         UIManager.Instance.OpenPopup("ResultPopup"); 
     }
