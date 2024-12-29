@@ -99,11 +99,9 @@ namespace Script.Manager
             // 버튼 클릭 이벤트 연결
             nextButtonBackGround.onClick.AddListener(NextDialogue);
             
-            //
             mainUIManager = FindObjectOfType<MainUIManager>();
             _playerAction = FindObjectOfType<PlayerAction>();
 
-            // Set
             SetDialogue(false);
 
             choiceManager = FindObjectOfType<ChoiceManager>();
@@ -119,6 +117,10 @@ namespace Script.Manager
             var groupMap = new[] { ("Dialogue_Group", dialogueGroup) };
             var dialogueList = dialogueTable.GetByMultipleColumnsGroup(groupMap);
 
+            
+            Debug.Log(groupMap[0].ToString());
+            Debug.Log(dialogueList[0].ToString());
+            
             // dialogueEvent에 데이터 매핑
             dialogueEvent = new DialogueEvent
             {
@@ -132,10 +134,15 @@ namespace Script.Manager
                     contextName = data["Context_CharacterName"]
                 }).ToArray()
             };
+
+
+            Debug.Log(dialogueEvent.dialogues);
         }
 
-        public void StartDialogue()
+        public void StartDialogue(string dialogueGroup)
         {
+            LoadDialogueData(dialogueGroup);
+            
             SetDialogue(true);
             
             isPlaying = true;
@@ -499,9 +506,9 @@ namespace Script.Manager
             isNextStory = true;
         }
 
-        public void TempPlayStory()
+        public void TempPlayStory(string dialogueGroup)
         {
-            StartDialogue();
+            StartDialogue(dialogueGroup);
         }
     }
 }

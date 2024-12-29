@@ -90,7 +90,7 @@ public class ChoiceManager : MonoBehaviour
         TempResetObject(false);
 
         dialogueManager.EndStory();
-        dialogueManager.TempPlayStory();
+        dialogueManager.TempPlayStory("Prologue_Start");
     }
 
     public void OnClick_ChoiceButtonTwo()
@@ -100,7 +100,7 @@ public class ChoiceManager : MonoBehaviour
         TempResetObject(false);
 
         dialogueManager.EndStory();
-        dialogueManager.TempPlayStory();
+        dialogueManager.TempPlayStory("Prologue_Start");
     }
 
     public void OnClick_ChoiceButtonThree()
@@ -110,7 +110,7 @@ public class ChoiceManager : MonoBehaviour
         TempResetObject(false);
 
         dialogueManager.EndStory();
-        dialogueManager.TempPlayStory();
+        dialogueManager.TempPlayStory("Prologue_Start");
     }
 
     private void TempResetObject(bool isActive)

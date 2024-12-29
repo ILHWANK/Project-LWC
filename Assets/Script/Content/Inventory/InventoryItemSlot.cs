@@ -87,7 +87,7 @@ namespace WHDle.UI.Inventory
 
            inventoryItemInfoPopup.GetComponent<InventoryItemInfoPopup>();
 
-           var itemData = new InventoryItemInfoPopup.ItemData
+           var itemData = new InventoryItemInfoPopup.State
            {
                ItemId = _data.ItemId
            };

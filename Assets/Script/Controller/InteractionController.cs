@@ -29,7 +29,7 @@ public class InteractionController : MonoBehaviour
     void Update()
     {
         if (isCollide && Input.GetKeyDown(KeyCode.F)){
-            dialogueManager.TempPlayStory();
+            dialogueManager.TempPlayStory("Prologue_Start");
         }
     }
 

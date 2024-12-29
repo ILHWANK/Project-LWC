@@ -199,6 +199,17 @@ public class UIManager : MonoBehaviour
         popup.Close();
     }
 
+    public void CloseAllPopups()
+    {
+        while (openPopups.Count > 0)
+        {
+            var popup = openPopups.Pop();
+            popup.OnCloseAnimationFinished();
+
+            Destroy(popup.gameObject);
+        }
+    }
+    
     public void CloseLastOpenedPopup()
     {
         if (openPopups.Count > 0)

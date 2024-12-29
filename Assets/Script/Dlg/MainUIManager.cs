@@ -71,7 +71,7 @@ public class MainUIManager : MonoBehaviour
         {
             case ObjectController.ObjectType.Letter:
             {
-                _dialogueManager.TempPlayStory();
+                _dialogueManager.TempPlayStory("Prologue_Start");
             } break;
             case ObjectController.ObjectType.MiniGame1:
             {
@@ -85,13 +85,13 @@ public class MainUIManager : MonoBehaviour
             {
                 playerAction.currentDialogueGroup = "Prologue2";
 
-                _dialogueManager.TempPlayStory();
+                _dialogueManager.TempPlayStory("Prologue_Start");
             } break;
             case ObjectController.ObjectType.MiniGame3:
             {
                 playerAction.currentDialogueGroup = "Prologue3";
 
-                _dialogueManager.TempPlayStory();
+                _dialogueManager.TempPlayStory("Prologue_Start");
             } break;
         }
     }
