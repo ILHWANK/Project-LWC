@@ -63,17 +63,16 @@ public static class PlayerDataManager
             _cachedData.InventoryMap = new Dictionary<string, int>();
         }
 
-        if (_cachedData.InventoryMap.ContainsKey(itemKey))
+        if (0 < itemCount)
         {
-            _cachedData.InventoryMap[itemKey] = itemCount;
+            _cachedData.InventoryMap[itemKey] = itemCount;            
         }
         else
         {
-            _cachedData.InventoryMap.Add(itemKey, itemCount);
+            _cachedData.InventoryMap.Remove(itemKey);
         }
     }
-
-
+    
     public static void UpdateDay(int newDay)
     {
         if (_cachedData == null)

@@ -15,6 +15,7 @@ namespace WHDle.UI.Inventory
         public struct Data
         {
             public string ItemId;
+            public Action Interaction;
         }
 
         private Data _data;
@@ -61,22 +62,33 @@ namespace WHDle.UI.Inventory
             var itemTable = CSVDialogueParser.LoadDialogueTable("Assets/Resources/DataTable/ItemTable.csv");
 
             var itemData = itemTable.GetByColumn("Item_Id", _data.ItemId);
+
+            var spriteAddress = "";
             
-            var spriteAddress = itemData["Item_Path"];
-            
-            Addressables.LoadAssetAsync<Sprite>(spriteAddress).Completed += handle =>
+            if (itemData != null)
             {
-                if (handle.Status == AsyncOperationStatus.Succeeded)
+                spriteAddress = itemData["Item_Path"];
+                
+                Addressables.LoadAssetAsync<Sprite>(spriteAddress).Completed += handle =>
                 {
-                    ItemImage.sprite = handle.Result;
+                    if (handle.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        ItemImage.sprite = handle.Result;
                     
-                    SlotInner.SetActive(true);
-                }
-                else
-                {
-                    SlotInner.SetActive(false);
-                }
-            };
+                        SlotInner.SetActive(true);
+                    }
+                    else
+                    {
+                        SlotInner.SetActive(false);
+                    }
+                };
+            }
+            else
+            {
+                ItemImage.sprite = null;
+                
+                SlotInner.SetActive(false);
+            }
         }
 
         #region Event
@@ -89,7 +101,8 @@ namespace WHDle.UI.Inventory
 
            var itemData = new InventoryItemInfoPopup.State
            {
-               ItemId = _data.ItemId
+               ItemId = _data.ItemId,
+               Interaction = _data.Interaction
            };
            
            UIManager.Instance.OpenPopup<InventoryItemInfoPopup>("InventoryItemInfoPopup", 
@@ -99,6 +112,6 @@ namespace WHDle.UI.Inventory
                }); 
         }
 
-        #endregion=
+        #endregion
     }
 }

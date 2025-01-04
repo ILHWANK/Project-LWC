@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using script.Common;
 using Script.Manager;
@@ -10,6 +11,7 @@ public class InventoryItemInfoPopup : UIPopup
     public struct State
     {
         public string ItemId;
+        public Action Interaction; 
     }
 
     private State _state;
@@ -59,13 +61,14 @@ public class InventoryItemInfoPopup : UIPopup
 
     private void OnInteractionButtonClicked()
     {
+        var itemId = _itemData["Item_Id"];
         var itemType = _itemData["Item_Type"];
 
         if (itemType == "Letter")
         {
             UIManager.Instance.CloseAllPopups();
             
-            dialogueManager.TempPlayStory("Day3_Animal"); //_itemData["Item_Id"]
+            dialogueManager.TempPlayStory(itemId);
         }
         else
         {
@@ -73,7 +76,9 @@ public class InventoryItemInfoPopup : UIPopup
             UIManager.Instance.OpenPopup("ResultPopup"); 
         }
         
-
+        PlayerDataManager.UpdateInventory(itemId, 0);
+        
+        _state.Interaction?.Invoke();
     }
 
     private void OnCloseButtonClicked()
