@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 namespace WHDle.Util.Define
 {
@@ -81,10 +78,14 @@ namespace WHDle.Util.Define
         End
     }
 
-    public enum DeserializeType { SD, DTO, DefineDtoByBackend }
+    public enum DeserializeType
+    {
+        SD,
+        DTO,
+        DefineDtoByBackend
+    }
 
     public class Define : MonoBehaviour
     {
-
     }
 }
