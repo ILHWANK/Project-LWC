@@ -22,7 +22,7 @@ public class AdMobBanner : MonoBehaviour
 #elif UNITY_IOS
 adUnitId = "ca-app-pub-3940256099942544/2934735716";
 #else
-adUnitId = "unexpected_platform;
+adUnitId = "unexpected_platform";
 #endif
 
         //Banner 임시 처리

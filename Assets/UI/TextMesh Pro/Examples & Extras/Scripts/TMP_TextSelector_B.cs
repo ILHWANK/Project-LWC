@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿/*
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.Collections;
@@ -329,7 +330,7 @@ namespace TMPro.Examples
 
                 m_TextMeshPro.canvasRenderer.SetVertices(uiVertices, uiVertices.Length);
             }
-            */
+            #1#
             #endregion
 
 
@@ -389,7 +390,7 @@ namespace TMPro.Examples
 
                 m_TextMeshPro.canvasRenderer.SetVertices(uiVertices, uiVertices.Length);
             }
-            */
+            #1#
             #endregion
 
 
@@ -442,7 +443,7 @@ namespace TMPro.Examples
                 m_TextMeshPro.canvasRenderer.SetVertices(uiVertices, uiVertices.Length);
                 #endregion
             }
-            */
+            #1#
             #endregion
         }
 
@@ -545,3 +546,4 @@ namespace TMPro.Examples
         }
     }
 }
+*/
