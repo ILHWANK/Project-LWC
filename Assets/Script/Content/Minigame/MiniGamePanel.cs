@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using script.Common;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class MiniGamePanel : UIPanel
@@ -25,7 +24,13 @@ public class MiniGamePanel : UIPanel
 
     private Vector2 movedBarPosition = Vector2.zero;
 
-    public enum Level { easy = 20, normal = 15, hard = 10 }
+    public enum Level
+    {
+        easy = 20,
+        normal = 15,
+        hard = 10
+    }
+
     private Level level = Level.hard;
 
     private int minCorrectRange = 0;
@@ -33,8 +38,7 @@ public class MiniGamePanel : UIPanel
 
     private bool isMove = false;
 
-    [SerializeField]
-    private float speed = 1f;
+    [SerializeField] private float speed = 1f;
     private float moveProgress = 0f;
 
     private bool negative = false;
@@ -44,7 +48,7 @@ public class MiniGamePanel : UIPanel
         CalculatorMovedBarPosition();
 
         SetLevel(1);
-        
+
         gameObject.SetActive(true);
     }
 
@@ -109,9 +113,13 @@ public class MiniGamePanel : UIPanel
         UIManager.Instance.ClosePanel(this);
     }
 
-    public void SetLevel(Level level) { this.level = level; }
-    public void GameStart() 
-    { 
+    public void SetLevel(Level level)
+    {
+        this.level = level;
+    }
+
+    public void GameStart()
+    {
         SetCorrectRange();
 
         isMove = true;
@@ -124,7 +132,7 @@ public class MiniGamePanel : UIPanel
         outterRadius = outterHalfCircle.rect.width / 2f;
         var innerCircleRadius = innerHalfCircle.rect.width / 2f;
 
-        averageRadius = -(outterRadius + innerCircleRadius) /2;
+        averageRadius = -(outterRadius + innerCircleRadius) / 2;
         var posY = -halfRaduis;
 
         movedBarPosition = new Vector2(averageRadius, posY);
@@ -158,7 +166,7 @@ public class MiniGamePanel : UIPanel
         {
             Debug.Log($"Success");
 
-            SoundManager.instance.SFXPlay(SoundManager.SFXType.Success);
+            SoundManager.Instance.SFXPlay(SoundManager.SFXType.Success);
 
             UIManager.Instance.ClosePanel(this);
         }
@@ -166,7 +174,7 @@ public class MiniGamePanel : UIPanel
         {
             Debug.Log($"Faild");
 
-            SoundManager.instance.SFXPlay(SoundManager.SFXType.Fail);
+            SoundManager.Instance.SFXPlay(SoundManager.SFXType.Fail);
 
             UIManager.Instance.ClosePanel(this);
         }

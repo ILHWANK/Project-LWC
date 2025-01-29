@@ -22,19 +22,17 @@ public class MainUIManager : MonoBehaviour
 
     [SerializeField] private Button interactionButton;
     [SerializeField] private Button inventoryButton;
-    [SerializeField] private Button backButton;
-    [SerializeField] private Button skipButton;
+    // [SerializeField] private Button backButton;
+    // [SerializeField] private Button skipButton;
 
     [SerializeField] private Text optionMainText;
     [SerializeField] private Text optionSubText;
-
-    [SerializeField] private Button nextButtonBackGround;
 
     [SerializeField] private MiniGamePanel miniGame;
 
     [SerializeField] private PlayerAction playerAction;
 
-    DialogueManager _dialogueManager;
+    // DialogueManagerTemp _dialogueManagerTemp;
     SplashManager _splashManager;
 
     public string OptionMainText { get; set; }
@@ -44,10 +42,9 @@ public class MainUIManager : MonoBehaviour
     {
         interactionButton.onClick.AddListener(OnClickButtonUIButtonInteraction);
         inventoryButton.onClick.AddListener(OnInventoryButtonClicked);
-
-        nextButtonBackGround.onClick.AddListener(OnClick_Next_Button_BackGround);
-        backButton.onClick.AddListener(OnClick_BottomUI_Button_Back);
-        skipButton.onClick.AddListener(OnClick_BottomUI_Button_Skip);
+        
+        // backButton.onClick.AddListener(OnClick_BottomUI_Button_Back);
+        // skipButton.onClick.AddListener(OnClick_BottomUI_Button_Skip);
     }
 
     void Start()
@@ -55,13 +52,13 @@ public class MainUIManager : MonoBehaviour
         AddListener();
 
         playerAction = FindObjectOfType<PlayerAction>();
-        _dialogueManager = FindObjectOfType<DialogueManager>();
+        // _dialogueManagerTemp = FindObjectOfType<DialogueManagerTemp>();
         _splashManager = FindObjectOfType<SplashManager>();
 
         // Set
-        _dialogueManager.SetDialogue(false);
+        // _dialogueManagerTemp.SetDialogue(false);
 
-        SoundManager.instance?.BGMPlay(true);
+        SoundManager.Instance?.BGMPlay(true);
     }
 
     void Update()
@@ -75,13 +72,15 @@ public class MainUIManager : MonoBehaviour
         var playerData = PlayerDataFileHandler.FileLoad("PlayerData");
         var routineMap = playerData.RoutineMapMap;
 
-        SoundManager.instance.SFXPlay(SoundManager.SFXType.Interaction);
+        SoundManager.Instance.SFXPlay(SoundManager.SFXType.Interaction);
 
         switch (interactionType)
         {
             case ObjectController.ObjectType.Letter:
             {
-                _dialogueManager.TempPlayStory();
+                // DialogueManager.Instance.StartDialogue("WitchEncounter");
+                
+                // _dialogueManagerTemp.TempPlayStory();
             } break;
             case ObjectController.ObjectType.MiniGame1:
             {
@@ -95,13 +94,13 @@ public class MainUIManager : MonoBehaviour
             {
                 playerAction.currentDialogueGroup = "Prologue2";
 
-                _dialogueManager.TempPlayStory();
+                // _dialogueManagerTemp.TempPlayStory();
             } break;
             case ObjectController.ObjectType.MiniGame3:
             {
                 playerAction.currentDialogueGroup = "Prologue3";
 
-                _dialogueManager.TempPlayStory();
+                // _dialogueManagerTemp.TempPlayStory();
             } break;
         }
     }
@@ -109,11 +108,6 @@ public class MainUIManager : MonoBehaviour
     void OnInventoryButtonClicked()
     {
         UIManager.Instance.OpenPopup(_inventoyPopup);
-    }
-
-    void OnClick_Next_Button_BackGround()
-    {
-        
     }
 
     void OnClick_BottomUI_Button_Back()
@@ -133,8 +127,8 @@ public class MainUIManager : MonoBehaviour
 
     public void OnClick_YesClick()
     {
-        _dialogueManager.EndStory();
-        _dialogueManager.SetDialogue(false);
+        // _dialogueManagerTemp.EndStory();
+        // _dialogueManagerTemp.SetDialogue(false);
 
         _splashManager.Reset();
 

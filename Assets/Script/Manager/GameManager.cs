@@ -1,13 +1,10 @@
 using BackEnd;
 using System;
 using System.Collections;
-using script.Common;
 using Script.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using WHDle.Controller;
-using WHDle.Database.SD;
-using WHDle.Database.Vo;
 using WHDle.Util.Define;
 
 namespace WHDle.Util
@@ -19,21 +16,17 @@ namespace WHDle.Util
         // 필요한 매니저들을 등록
         public SoundManager SoundManager { get; private set; }
         public FadeManager FadeManager { get; private set; }
-        public DialogueManager DialogueManager { get; private set; }
+        public DialogueManagerTemp DialogueManagerTemp { get; private set; }
         public UIManager UIManager { get; private set; }
         
         // 
         public LoginType loginType = LoginType.Guest;
         
         public TitleController TitleController;
-        
-        [SerializeField]
-        private VOUser boUser;
-        public static VOUser User => Instance?.boUser;
 
         [SerializeField]
-        private StaticDataModule sd = new();
-        public static StaticDataModule SD => Instance?.sd;
+        // private StaticDataModule sd = new();
+        // public static StaticDataModule SD => Instance?.sd;
 
         private float loadProgress = 0;
 
@@ -64,8 +57,8 @@ namespace WHDle.Util
                 case FadeManager fadeManager:
                     FadeManager = fadeManager;
                     break;
-                case DialogueManager dialogueManager:
-                    DialogueManager = dialogueManager;
+                case DialogueManagerTemp dialogueManager:
+                    DialogueManagerTemp = dialogueManager;
                     break;
                 case UIManager uiManager:
                     UIManager = uiManager;

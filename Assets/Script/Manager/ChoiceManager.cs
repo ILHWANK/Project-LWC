@@ -22,7 +22,7 @@ public class ChoiceManager : MonoBehaviour
 
     PlayerAction playerAction;
 
-    DialogueManager dialogueManager;
+    DialogueManagerTemp _dialogueManagerTemp;
 
     List <string> dialogurGroups = new List<string>();
 
@@ -30,7 +30,7 @@ public class ChoiceManager : MonoBehaviour
     {
         playerAction = FindObjectOfType<PlayerAction>();
 
-        dialogueManager = FindObjectOfType<DialogueManager>();
+        _dialogueManagerTemp = FindObjectOfType<DialogueManagerTemp>();
     }
 
     void Update()
@@ -89,8 +89,8 @@ public class ChoiceManager : MonoBehaviour
 
         TempResetObject(false);
 
-        dialogueManager.EndStory();
-        dialogueManager.TempPlayStory();
+        _dialogueManagerTemp.EndStory();
+        _dialogueManagerTemp.TempPlayStory();
     }
 
     public void OnClick_ChoiceButtonTwo()
@@ -99,8 +99,8 @@ public class ChoiceManager : MonoBehaviour
 
         TempResetObject(false);
 
-        dialogueManager.EndStory();
-        dialogueManager.TempPlayStory();
+        _dialogueManagerTemp.EndStory();
+        _dialogueManagerTemp.TempPlayStory();
     }
 
     public void OnClick_ChoiceButtonThree()
@@ -109,8 +109,8 @@ public class ChoiceManager : MonoBehaviour
 
         TempResetObject(false);
 
-        dialogueManager.EndStory();
-        dialogueManager.TempPlayStory();
+        _dialogueManagerTemp.EndStory();
+        _dialogueManagerTemp.TempPlayStory();
     }
 
     private void TempResetObject(bool isActive)

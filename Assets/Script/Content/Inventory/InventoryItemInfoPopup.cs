@@ -39,5 +39,5 @@ public class InventoryItemInfoPopup : UIPopup
         UIManager.Instance.ClosePopup("InventoryItemInfoPopup");
     }
 
-    #endregion≠
+    #endregion
 }

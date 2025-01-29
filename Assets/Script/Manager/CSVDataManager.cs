@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 [RequireComponent(typeof(CSVParser))]
@@ -23,19 +20,21 @@ public class CSVDataManager : MonoBehaviour
     [SerializeField] private string choicefilePath;
     [SerializeField] private string dialogueProceedingsPath;
     [SerializeField] private string dayRoutinePath;
-    
+
     private Dictionary<int, Dialogue> _dialogueDictionaryMap = new Dictionary<int, Dialogue>();
     private Dictionary<int, Choice> _choiceDictionaryMap = new Dictionary<int, Choice>();
     private Dictionary<int, Letter> _letterDictionaryMap = new Dictionary<int, Letter>();
     private Dictionary<int, DialogueProceeding> _dialogueProceedingsMap = new Dictionary<int, DialogueProceeding>();
     private Dictionary<int, DayRoutine> _dayRoutineMap = new Dictionary<int, DayRoutine>();
-    
+
     CSVParser _csvParse;
 
     public static bool isEnd = false;
 
-    void Awake(){
-        if(Instance == null){
+    void Awake()
+    {
+        if (Instance == null)
+        {
             Instance = this;
 
             _csvParse = GetComponent<CSVParser>();
@@ -43,7 +42,7 @@ public class CSVDataManager : MonoBehaviour
             SetDialogueData(dialoguefilePath);
         }
     }
-    
+
     // DayRoutine
     public void SetDayRoutine(string routineGroup)
     {
@@ -65,13 +64,13 @@ public class CSVDataManager : MonoBehaviour
 
         return dayRoutine;
     }
-    
+
     // DialogueProceedings
     public void SetDialogueProceedingData(string pChoiceGroup)
     {
         _dialogueProceedingsMap.Clear();
 
-        var dialogueProceedings 
+        var dialogueProceedings
             = _csvParse.DialogueProceedingsParse(choicefilePath, pChoiceGroup);
 
         for (int i = 0; i < dialogueProceedings.Length; ++i)
@@ -82,14 +81,14 @@ public class CSVDataManager : MonoBehaviour
 
     public DialogueProceeding GetDialogueProceedingData(string currentStoryGroup)
     {
-        var dialogueProceedingList 
+        var dialogueProceedingList
             = _csvParse.DialogueProceedingsParse(dialogueProceedingsPath, currentStoryGroup);
-        
+
         var dialogueProceeding = dialogueProceedingList[0];
-        
+
         return dialogueProceeding;
     }
-    
+
     // Dialogue
     public void SetDialogueData(string pDialougeGroup)
     {
@@ -105,10 +104,12 @@ public class CSVDataManager : MonoBehaviour
         isEnd = true;
     }
 
-    public Dialogue[] GetDialogue(int pStartIndex, int pEndIndex){
+    public Dialogue[] GetDialogue(int pStartIndex, int pEndIndex)
+    {
         List<Dialogue> dialogueList = new List<Dialogue>();
 
-        for (int i = 0 ; i <= pEndIndex - pStartIndex ; ++i){
+        for (int i = 0; i <= pEndIndex - pStartIndex; ++i)
+        {
             dialogueList.Add(_dialogueDictionaryMap[pStartIndex + i]);
         }
 
@@ -147,30 +148,30 @@ public class CSVDataManager : MonoBehaviour
         switch (pDataType)
         {
             case DataType.Dialogue:
-                {
-                    endIndex = _dialogueDictionaryMap.Count;
-                }
+            {
+                endIndex = _dialogueDictionaryMap.Count;
+            }
                 break;
             case DataType.Letter:
-                {
-                    endIndex = 0;
-                }
+            {
+                endIndex = 0;
+            }
                 break;
             case DataType.Choice:
-                {
-                    endIndex = _choiceDictionaryMap.Count;
-                }
+            {
+                endIndex = _choiceDictionaryMap.Count;
+            }
                 break;
             case DataType.DialogueProceeding:
-                {
-                    endIndex = 0;
-                }
+            {
+                endIndex = 0;
+            }
                 break;
             default:
-                {
-                    endIndex = 0;
-                    break;
-                }
+            {
+                endIndex = 0;
+                break;
+            }
         }
 
         return endIndex;

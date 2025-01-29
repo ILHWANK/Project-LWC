@@ -12,10 +12,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _inventoryPopup;
     [SerializeField] private GameObject _inventoryItemInfoPopup;
     [SerializeField] private GameObject _resultpopup;
+    [SerializeField] private GameObject _dialoguePopup;
 
-    private Dictionary<string, GameObject> panelPrefabs;
-    private Stack<UIPanel> openPanels = new Stack<UIPanel>();
-    private Stack<UIPopup> openPopups = new Stack<UIPopup>();
+    private Dictionary<string, GameObject> prefabs;
+    private Stack<UIPanel> openPanels = new();
+    private Stack<UIPopup> openPopups = new();
 
     public static event Action<UIPanel> OnOpenPanel;
     public static event Action<UIPanel> OnClosePanel;
@@ -27,13 +28,14 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        panelPrefabs = new Dictionary<string, GameObject>
+        prefabs = new Dictionary<string, GameObject>
         {
             { "LoadingPanel", _loadingPanel},
             { "MiniGamePanel", _miniGamePanel },
             { "InventoryPopup", _inventoryPopup },
             { "InventoryItemInfoPopup", _inventoryItemInfoPopup },
             { "ResultPopup", _resultpopup },
+            { "DialoguePopup", _dialoguePopup}
         };
 
         if (_instance == null)
@@ -47,6 +49,28 @@ public class UIManager : MonoBehaviour
         }
     }
     
+    public T GetPrefabComponent<T>(string prefabName) where T : Component
+    {
+        if (prefabs.TryGetValue(prefabName, out var prefab))
+        {
+            var instance = Instantiate(prefab, _container);
+            var component = instance.GetComponent<T>();
+
+            if (component == null)
+            {
+                Debug.LogError($"{prefabName} Prefab에 {typeof(T).Name} 컴포넌트가 없습니다.");
+                Destroy(instance);
+                return null;
+            }
+
+            instance.SetActive(true);
+            return component;
+        }
+
+        Debug.LogError($"{prefabName} Prefab을 찾을 수 없습니다.");
+        return null;
+    }
+    
     public void LoadSceneAsync(string sceneName, Action onComplete = null)
     {
         // var loadingPanel = _loadingPanel?.GetComponent<LoadingPanel>();
@@ -58,7 +82,7 @@ public class UIManager : MonoBehaviour
 
     public void OpenPanel(string panelName)
     {
-        if (panelPrefabs.TryGetValue(panelName, out var prefab))
+        if (prefabs.TryGetValue(panelName, out var prefab))
         {
             var panelInstance = Instantiate(prefab, _container).GetComponent<UIPanel>();
             if (panelInstance != null)
@@ -127,7 +151,7 @@ public class UIManager : MonoBehaviour
 
     public void OpenPopup(string popupName)
     {
-        if (panelPrefabs.TryGetValue(popupName, out var prefab))
+        if (prefabs.TryGetValue(popupName, out var prefab))
         {
             var popupInstance = Instantiate(prefab, _container).GetComponent<UIPopup>();
             if (popupInstance != null)

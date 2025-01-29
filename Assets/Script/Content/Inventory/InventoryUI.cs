@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WHDle.Database.Vo;
@@ -48,4 +48,4 @@ namespace WHDle.UI.Inventory
         public void ClearSlot(int slotNumber)
             => slots[slotNumber].SlotClear();
     }
-}
+}*/

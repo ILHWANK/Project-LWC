@@ -18,18 +18,18 @@ public class InteractionController : MonoBehaviour
     bool isInteraction = false;
 
     PlayerAction playerAction;
-    DialogueManager dialogueManager;
+    DialogueManagerTemp _dialogueManagerTemp;
 
     void Start(){
         playerAction = FindObjectOfType<PlayerAction>();
-        dialogueManager = FindObjectOfType<DialogueManager>();
+        _dialogueManagerTemp = FindObjectOfType<DialogueManagerTemp>();
         interactionButton.interactable = false;
     }
 
     void Update()
     {
         if (isCollide && Input.GetKeyDown(KeyCode.F)){
-            dialogueManager.TempPlayStory();
+            _dialogueManagerTemp.TempPlayStory();
         }
     }
 

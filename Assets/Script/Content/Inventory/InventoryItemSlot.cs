@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using script.Common;
 using TMPro;
 using UnityEngine;
@@ -62,3 +63,4 @@ namespace WHDle.UI.Inventory
         #endregion
     }
 }
+*/

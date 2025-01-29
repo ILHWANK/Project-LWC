@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using WHDle.UI.Inventory;
+// using WHDle.UI.Inventory;
 using WHDle.Util.Define;
 
 namespace WHDle.Util
@@ -23,7 +23,7 @@ namespace WHDle.Util
             registCount = 0;
             maxRegistCount = 1;
 
-            LoadPoolableObject<InventoryItemSlot>(PoolType.Slot, "Prefabs/Inventory/Slot", 100, CompleteRegist);
+            // LoadPoolableObject<InventoryItemSlot>(PoolType.Slot, "Prefabs/Inventory/Slot", 100, CompleteRegist);
         }
 
         private void CompleteRegist()
