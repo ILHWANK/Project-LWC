@@ -78,7 +78,7 @@ public class MainUIManager : MonoBehaviour
         {
             case ObjectController.ObjectType.Letter:
             {
-                // DialogueManager.Instance.StartDialogue("WitchEncounter");
+                DialogueManager.Instance.StartDialogue("WitchEncounter");
                 
                 // _dialogueManagerTemp.TempPlayStory();
             } break;

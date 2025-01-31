@@ -369,6 +369,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2528614560576370249}
+  - component: {fileID: 451357905011607155}
   m_Layer: 0
   m_Name: DialogueContext
   m_TagString: Untagged
@@ -396,6 +397,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 350}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!225 &451357905011607155
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550846884552343310}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1558568181801875186
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,6 +749,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3533903877742822451}
+  - component: {fileID: 4823103639028833515}
   m_Layer: 0
   m_Name: Spot2
   m_TagString: Untagged
@@ -763,6 +777,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4823103639028833515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3107320022578414090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36205e69f17b994c826713b99d52b45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterImageSpot: {fileID: 1046329773924108729}
 --- !u!1 &3117110180448880542
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,7 +799,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8098873001658605050}
-  - component: {fileID: 3479689745282182145}
   - component: {fileID: 6960663106076926011}
   - component: {fileID: 9045243483470438658}
   m_Layer: 0
@@ -810,18 +836,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &3479689745282182145
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3117110180448880542}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &6960663106076926011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -837,14 +851,9 @@ MonoBehaviour:
   popupCanvas: {fileID: 0}
   popupAnimator: {fileID: 0}
   canvasGroup: {fileID: 0}
-  nameText: {fileID: 8568351854235057850}
-  contextText: {fileID: 489208880004405071}
-  choiceButtons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  characterImageSpot1: {fileID: 806343070655663295}
-  characterImageSpot2: {fileID: 1046329773924108729}
+  uiDialogueCharacterSlotList:
+  - {fileID: 6661388051563835471}
+  - {fileID: 4823103639028833515}
   screenButton: {fileID: 4338605489194605858}
   skipButton: {fileID: 1438294734390311412}
 --- !u!114 &9045243483470438658
@@ -860,7 +869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueRunner: {fileID: 0}
-  canvasGroup: {fileID: 3479689745282182145}
+  canvasGroup: {fileID: 451357905011607155}
   lineText: {fileID: 489208880004405071}
   continueButton: {fileID: 4338605489194605858}
   showCharacterNameInLineView: 1
@@ -969,7 +978,7 @@ MonoBehaviour:
   optionViewPrefab: {fileID: 2833931891779646725, guid: b2ac0f9d8b8fd174e9d8643245c5f64b, type: 3}
   palette: {fileID: 0}
   fadeTime: 0.1
-  showUnavailableOptions: 0
+  showUnavailableOptions: 1
   lastLineText: {fileID: 0}
   lastLineContainer: {fileID: 0}
   lastLineCharacterNameText: {fileID: 0}
@@ -1059,6 +1068,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8253843275687302105}
+  - component: {fileID: 6661388051563835471}
   m_Layer: 0
   m_Name: Spot1
   m_TagString: Untagged
@@ -1086,6 +1096,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6661388051563835471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4082048980845400013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36205e69f17b994c826713b99d52b45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterImageSpot: {fileID: 806343070655663295}
 --- !u!1 &4138741315702921167
 GameObject:
   m_ObjectHideFlags: 0

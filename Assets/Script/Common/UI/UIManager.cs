@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using script.Common;
 using UnityEngine;
+using Yarn.Unity;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private Transform _container;
 
+    [SerializeField] private GameObject _dialogue;
+    
     [SerializeField] private GameObject _loadingPanel;
     [SerializeField] private GameObject _miniGamePanel;
     [SerializeField] private GameObject _inventoryPopup;
@@ -211,6 +214,15 @@ public class UIManager : MonoBehaviour
         {
             ClosePopup(openPopups.Peek());
         }
+    }
+
+    #endregion
+
+    #region Dialogue
+
+    public void SetDialogue(bool isActive)
+    {
+        _dialogue.SetActive(isActive);
     }
 
     #endregion

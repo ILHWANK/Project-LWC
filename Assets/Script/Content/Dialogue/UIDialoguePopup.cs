@@ -1,22 +1,18 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using script.Common;
 using TMPro;
 using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 namespace Script.Content.Dialogue
 {
     public class UIDialoguePopup : UIPopup
     {
-        [SerializeField] private TextMeshProUGUI nameText;
-        [SerializeField] private TextMeshProUGUI contextText;
-
-        [SerializeField] private List<Button> choiceButtons;
-
-        [SerializeField] private RawImage characterImageSpot1;
-        [SerializeField] private RawImage characterImageSpot2;
-
+        [SerializeField] private List<UIDialogueCharacterSlot> uiDialogueCharacterSlotList;
+        
         [SerializeField] private Button screenButton;
         [SerializeField] private Button skipButton;
 
@@ -24,73 +20,59 @@ namespace Script.Content.Dialogue
         {
             AddListener();
 
-            HideAllUI();
+            HideAllCharacters();
         }
 
         private void AddListener()
         {
-            // screenButton.onClick.AddListener(OnScreenButtonClicked);
             skipButton.onClick.AddListener(OnSkipButtonClicked);
         }
-
-        public void HideAllUI()
+        
+        public void HideAllCharacters()
         {
-            foreach (var button in choiceButtons)
+            foreach (var slot in uiDialogueCharacterSlotList)
             {
-                button.gameObject.SetActive(false);
-                button.onClick.RemoveAllListeners();
-            }
-
-            characterImageSpot1.gameObject.SetActive(false);
-            characterImageSpot2.gameObject.SetActive(false);
-        }
-
-        public void SetDialogue(string characterName, string text)
-        {
-            nameText.text = characterName;
-            contextText.text = text;
-        }
-
-        public void SetCharacter(string characterName, string spritePath)
-        {
-            var characterSprite = Resources.Load<Sprite>(spritePath);
-
-            if (characterSprite == null) return;
-
-            if (characterName == "마녀")
-            {
-                characterImageSpot1.texture = characterSprite.texture;
-                characterImageSpot1.gameObject.SetActive(true);
-            }
-            else
-            {
-                characterImageSpot2.texture = characterSprite.texture;
-                characterImageSpot2.gameObject.SetActive(true);
+                slot.gameObject.SetActive(false);
             }
         }
 
-        public void ShowChoices(List<string> choices, Action<int> onChoiceSelected)
+        public void ChangeCharacters(string[] characterNames, Action onComplete)
         {
-            for (var i = 0; i < choices.Count; i++)
-            {
-                if (i >= choiceButtons.Count) break;
-
-                choiceButtons[i].gameObject.SetActive(true);
-                choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = choices[i];
-
-                var choiceIndex = i;
-                choiceButtons[i].onClick.AddListener(() => onChoiceSelected(choiceIndex));
-            }
+            StartCoroutine(LoadCharactersCoroutine(characterNames, onComplete));
         }
 
+        private IEnumerator LoadCharactersCoroutine(string[] characterNames, Action onComplete)
+        {
+            var handles = new List<AsyncOperationHandle<Texture2D>>();
+
+            for (int i = 0; i < uiDialogueCharacterSlotList.Count; i++)
+            {
+                if (i < characterNames.Length && !string.IsNullOrEmpty(characterNames[i]))
+                {
+                    uiDialogueCharacterSlotList[i].gameObject.SetActive(true);
+                    handles.Add(uiDialogueCharacterSlotList[i].ChangeImage(characterNames[i]));
+                }
+                else
+                {
+                    uiDialogueCharacterSlotList[i].gameObject.SetActive(false);
+                }
+            }
+
+            foreach (var handle in handles)
+            {
+                yield return handle; // ✅ 비동기 로딩이 끝날 때까지 대기
+            }
+
+            onComplete?.Invoke(); // ✅ 로딩 완료 후 콜백 실행
+        }
+        
+        #region Event
+        
         private void OnSkipButtonClicked()
         {
-            UIManager.Instance.ClosePopup("DialoguePopup");
+            
         }
 
-        private void OnScreenButtonClicked()
-        {
-            Debug.Log("다음 Context 출력");
-        }
+        #endregion
     }
 }
