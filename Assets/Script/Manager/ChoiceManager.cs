@@ -82,37 +82,7 @@ public class ChoiceManager : MonoBehaviour
             choiceObject.SetActive(false);
         }
     }
-
-    public void OnClick_ChoiceButtonOne()
-    {
-        playerAction.currentDialogueGroup = dialogurGroups[0];
-
-        TempResetObject(false);
-
-        _dialogueManagerTemp.EndStory();
-        _dialogueManagerTemp.TempPlayStory();
-    }
-
-    public void OnClick_ChoiceButtonTwo()
-    {
-        playerAction.currentDialogueGroup = dialogurGroups[1];
-
-        TempResetObject(false);
-
-        _dialogueManagerTemp.EndStory();
-        _dialogueManagerTemp.TempPlayStory();
-    }
-
-    public void OnClick_ChoiceButtonThree()
-    {
-        playerAction.currentDialogueGroup = dialogurGroups[2];
-
-        TempResetObject(false);
-
-        _dialogueManagerTemp.EndStory();
-        _dialogueManagerTemp.TempPlayStory();
-    }
-
+    
     private void TempResetObject(bool isActive)
     {
         choiceObject.SetActive(isActive);

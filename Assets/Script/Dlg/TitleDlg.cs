@@ -54,12 +54,8 @@ public class TitleDlg : MonoBehaviour
 
         PlayGamesPlatform.Activate();
         
-        var loadData = PlayerDataFileHandler.FileLoad("playerData");
-
-        var isLoadData = loadData != null;
-        
         newGameButton.interactable = true;
-        loadGameButton.interactable = isLoadData;
+        loadGameButton.interactable = false;
     }
 
     public void EnablePanelAnnouncement(bool pBool)
@@ -137,17 +133,11 @@ public class TitleDlg : MonoBehaviour
 
         routineMap.Add("WitchTalk", false);
         
-        var playerData = new PlayerData(1, routineMap, "CurrentStoryGroup", "NextStoryGroup", inventoryMap);
-
-        PlayerDataFileHandler.FileSave(playerData, "playerData");
-
         LoadGame();
     }
 
     public void LoadGame()
     {
-        var loadData = PlayerDataFileHandler.FileLoad("playerData");
-
         GameManager.Instance.TitleController.LoadComplete = true;
         
         GameManager.Instance.LoadScene(SceneType.GamePlay);

@@ -15,8 +15,6 @@ public class PlayerAction : MonoBehaviour
     // MoveAnimation
     [SerializeField] Animator animator;
 
-    public string currentDialogueGroup;
-
     public ObjectController.ObjectType InteractionType;
 
 

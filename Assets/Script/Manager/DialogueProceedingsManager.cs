@@ -14,22 +14,11 @@ public class DialogueProceedingsManager : MonoBehaviour
     
     public void UpdateProceeding(string currentStoryGroup)
     {
-        var dialogueProceeding =  CSVDataManager.Instance.GetDialogueProceedingData(currentStoryGroup);
-
-        var _day = 1;
-        _routineMap = new Dictionary<string, bool>();
-        _currentStoryGroup = dialogueProceeding.currentStoryGroup;
-        _nextStoryGroup = dialogueProceeding.nextDialogue;
-        
-        var playerData = new PlayerData(_day, _routineMap, _currentStoryGroup, _nextStoryGroup, _inventoryMap);
-        
-        PlayerDataFileHandler.FileSave(playerData, "PlayerData");
+        var dialogueProceeding =  CSVDataManager.Instance.GetDialogueProceedingData(currentStoryGroup); ;
     }
 
     private void UpdateProceeding()
     {
-        var playerData = PlayerDataFileHandler.FileLoad("PlayerData");
-
-        _proceedingText.text = playerData.CurrentStoryGroup;
+        
     }
 }

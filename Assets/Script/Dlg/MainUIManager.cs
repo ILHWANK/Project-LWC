@@ -69,8 +69,6 @@ public class MainUIManager : MonoBehaviour
     void OnClickButtonUIButtonInteraction()
     {
         var interactionType = playerAction.InteractionType;
-        var playerData = PlayerDataFileHandler.FileLoad("PlayerData");
-        var routineMap = playerData.RoutineMapMap;
 
         SoundManager.Instance.SFXPlay(SoundManager.SFXType.Interaction);
 
@@ -79,28 +77,19 @@ public class MainUIManager : MonoBehaviour
             case ObjectController.ObjectType.Letter:
             {
                 DialogueManager.Instance.StartDialogue("WitchEncounter");
-                
-                // _dialogueManagerTemp.TempPlayStory();
             } break;
             case ObjectController.ObjectType.MiniGame1:
             {
                 UIManager.Instance.OpenPanel(_miniGamePanel);
-
-                // playerAction.currentDialogueGroup = "Prologue1";
-                //
-                // _dialogueManager.TempPlayStory();
             } break;
             case ObjectController.ObjectType.MiniGame2:
             {
-                playerAction.currentDialogueGroup = "Prologue2";
-
-                // _dialogueManagerTemp.TempPlayStory();
+                Debug.Log($"날짜 : {GameDataManager.Instance.GameData.CurrentDay} Day");
             } break;
             case ObjectController.ObjectType.MiniGame3:
             {
-                playerAction.currentDialogueGroup = "Prologue3";
-
-                // _dialogueManagerTemp.TempPlayStory();
+                GameDataManager.Instance.GameData.CurrentDay += 1;
+                GameDataManager.Instance.SaveGameData();
             } break;
         }
     }
