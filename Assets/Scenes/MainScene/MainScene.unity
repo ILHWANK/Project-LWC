@@ -1493,7 +1493,6 @@ MonoBehaviour:
   rb: {fileID: 0}
   moveVec: {x: 0, y: 0}
   animator: {fileID: 0}
-  currentDialogueGroup: Prologue1
   InteractionType: 0
 --- !u!95 &235201603
 Animator:
@@ -7179,13 +7178,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1713883213}
+  - component: {fileID: 1713883218}
   - component: {fileID: 1713883212}
   - component: {fileID: 1713883214}
   - component: {fileID: 1713883215}
   - component: {fileID: 1713883216}
   - component: {fileID: 1713883217}
-  - component: {fileID: 1713883218}
   - component: {fileID: 1713883219}
+  - component: {fileID: 1713883220}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -7317,6 +7317,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84f2db13e00eb42ce9407b14d94f7bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1713883220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713883211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6bbeb9527584087b16ffc699c78924c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1740064797 stripped

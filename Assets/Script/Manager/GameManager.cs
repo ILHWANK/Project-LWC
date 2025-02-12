@@ -18,7 +18,8 @@ namespace WHDle.Util
         public FadeManager FadeManager { get; private set; }
         public DialogueManagerTemp DialogueManagerTemp { get; private set; }
         public UIManager UIManager { get; private set; }
-        
+        public GameDataManager GameDataManager { get; private set; }
+ 
         // 
         public LoginType loginType = LoginType.Guest;
         
@@ -65,6 +66,9 @@ namespace WHDle.Util
                     break;
                 case TitleController titleController:
                     TitleController = titleController;
+                    break;
+                case GameDataManager gameDataManager:
+                    GameDataManager = gameDataManager;
                     break;
                 default:
                     Debug.LogError("알 수 없는 매니저 타입입니다.");
