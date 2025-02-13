@@ -4,6 +4,8 @@ using System.Collections;
 
 public class FadeManager : MonoBehaviour
 {
+    
+    
     public IEnumerator FadeIn(Image image, float fadeSpeed)
     {
         var color = image.color;
@@ -37,4 +39,5 @@ public class FadeManager : MonoBehaviour
         color.a = 1f;
         image.color = color;
     }
+    //
 }

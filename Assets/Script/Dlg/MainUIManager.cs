@@ -90,6 +90,8 @@ public class MainUIManager : MonoBehaviour
             {
                 GameDataManager.Instance.GameData.CurrentDay += 1;
                 GameDataManager.Instance.SaveGameData();
+                
+                UIManager.Instance.OpenPanel("DayTransitionPanel");
             } break;
         }
     }

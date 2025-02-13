@@ -17,7 +17,7 @@ namespace script.Common
             if (canvasGroup == null)
                 return;
 
-            //canvasGroup.alpha = 0;
+            canvasGroup.alpha = 0;
             //canvasGroup.LeanAlpha(1, duration); // LeanTween이나 DOTween과 같은 Tween 라이브러리 사용
         }
 

@@ -8522,8 +8522,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _container: {fileID: 1794168245}
   _dialogue: {fileID: 1923166888}
-  _loadingPanel: {fileID: 0}
+  _loadingPanel: {fileID: 7964440076796539646, guid: 3d20dde4fdf7c440abdd0c724603e381, type: 3}
   _miniGamePanel: {fileID: 6765828084501807357, guid: 03202fe568d624f09aa67d9687ce9cea, type: 3}
+  _dayTransitionPanel: {fileID: 6765828084501807357, guid: ebf68069cbd657b4aa554bc5274eb3eb, type: 3}
   _inventoryPopup: {fileID: 6029409936988304020, guid: 69b87248e3348954cb8b28250596a7be, type: 3}
   _inventoryItemInfoPopup: {fileID: 3117110180448880542, guid: 6fdc83015fb9044be97b781b56571518, type: 3}
   _resultpopup: {fileID: 4084400694042160934, guid: 959be62812ec44ead81574fd9f198bc7, type: 3}

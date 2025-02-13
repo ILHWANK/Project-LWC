@@ -10,8 +10,12 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject _dialogue;
     
+    // Panel
     [SerializeField] private GameObject _loadingPanel;
     [SerializeField] private GameObject _miniGamePanel;
+    [SerializeField] private GameObject _dayTransitionPanel;
+    
+    // Popup
     [SerializeField] private GameObject _inventoryPopup;
     [SerializeField] private GameObject _inventoryItemInfoPopup;
     [SerializeField] private GameObject _resultpopup;
@@ -35,6 +39,7 @@ public class UIManager : MonoBehaviour
         {
             { "LoadingPanel", _loadingPanel},
             { "MiniGamePanel", _miniGamePanel },
+            { "DayTransitionPanel", _dayTransitionPanel},
             { "InventoryPopup", _inventoryPopup },
             { "InventoryItemInfoPopup", _inventoryItemInfoPopup },
             { "ResultPopup", _resultpopup },
