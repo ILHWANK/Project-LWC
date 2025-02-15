@@ -1,43 +1,81 @@
+using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
-public class FadeManager : MonoBehaviour
+namespace Script.Manager
 {
-    
-    
-    public IEnumerator FadeIn(Image image, float fadeSpeed)
+    public class FadeManager : MonoBehaviour
     {
-        var color = image.color;
-        color.a = 1f;
-        image.color = color;
+        public static FadeManager Instance { get; private set; }
 
-        while (color.a > 0f)
+        private void Awake()
         {
-            color.a -= fadeSpeed * Time.deltaTime;
-            image.color = color;
-            yield return null;
+            if (Instance == null)
+                Instance = this;
+            else
+                Destroy(gameObject);
         }
 
-        color.a = 0f;
-        image.color = color;
-    }
-
-    public IEnumerator FadeOut(Image image, float fadeSpeed)
-    {
-        var color = image.color;
-        color.a = 0f;
-        image.color = color;
-
-        while (color.a < 1f)
+        public UniTask FadeInImage(Image image, float duration, Action onComplete = null)
         {
-            color.a += fadeSpeed * Time.deltaTime;
-            image.color = color;
-            yield return null;
+            return FadeImage(image, 1f, duration, onComplete);
         }
 
-        color.a = 1f;
-        image.color = color;
+        public UniTask FadeOutImage(Image image, float duration, Action onComplete = null)
+        {
+            return FadeImage(image, 0f, duration, onComplete);
+        }
+    
+        public UniTask FadeInCanvas(CanvasGroup canvasGroup, float duration, Action onComplete = null)
+        {
+            return FadeCanvas(canvasGroup, 1f, duration, onComplete);
+        }
+
+        public UniTask FadeOutCanvas(CanvasGroup canvasGroup, float duration, Action onComplete = null)
+        {
+            return FadeCanvas(canvasGroup, 0f, duration, onComplete);
+        }
+        
+        private async UniTask FadeImage(Image image, float targetAlpha, float duration, Action onComplete = null)
+        {
+            if (image == null) return;
+
+            Color color = image.color;
+            float startAlpha = color.a;
+            float time = 0f;
+
+            while (time < duration)
+            {
+                time += Time.deltaTime;
+                color.a = Mathf.Lerp(startAlpha, targetAlpha, time / duration);
+                image.color = color;
+                await UniTask.Yield();
+            }
+
+            color.a = targetAlpha;
+            image.color = color;
+
+            onComplete?.Invoke();
+        }
+
+        private async UniTask FadeCanvas(CanvasGroup canvasGroup, float targetAlpha, float duration, Action onComplete = null)
+        {
+            if (canvasGroup == null) return;
+
+            float startAlpha = canvasGroup.alpha;
+            float time = 0f;
+
+            while (time < duration)
+            {
+                time += Time.deltaTime;
+                canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / duration);
+                await UniTask.Yield();
+            }
+
+            canvasGroup.alpha = targetAlpha;
+
+            onComplete?.Invoke();
+        }
     }
-    //
 }

@@ -1,4 +1,5 @@
-using script.Common;
+using Script.Common.UI;
+using Script.Core.UI;
 
 public class InventoryPopup : UIPopup
 {

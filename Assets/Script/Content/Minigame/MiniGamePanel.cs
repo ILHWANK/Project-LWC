@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using script.Common;
+using Script.Common.UI;
+using Script.Core.UI;
 using UnityEngine;
 using UnityEngine.UI;
 

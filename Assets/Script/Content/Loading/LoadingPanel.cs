@@ -3,16 +3,16 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using script.Common;
+using Script.Core.UI;
 
 public class LoadingPanel : UIPanel
 {
     [SerializeField] private Slider _progressBar;
     [SerializeField] private Text _progressText;
 
-    public override void Open()
+    public override void OnEnter()
     {
-        base.Open();
+        base.OnEnter();
 
         UpdateProgress(0f);
     }
@@ -33,7 +33,7 @@ public class LoadingPanel : UIPanel
 
     private IEnumerator LoadSceneCoroutine(string sceneName, Action onComplete)
     {
-        Open();
+        OnEnter();
 
         var operation = SceneManager.LoadSceneAsync(sceneName);
         operation.allowSceneActivation = false;
@@ -53,7 +53,7 @@ public class LoadingPanel : UIPanel
             yield return null;
         }
 
-        Close();
+        OnExit();
         onComplete?.Invoke();
     }
 }

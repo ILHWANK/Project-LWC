@@ -18,19 +18,15 @@ public class InteractionController : MonoBehaviour
     bool isInteraction = false;
 
     PlayerAction playerAction;
-    DialogueManagerTemp _dialogueManagerTemp;
 
     void Start(){
         playerAction = FindObjectOfType<PlayerAction>();
-        _dialogueManagerTemp = FindObjectOfType<DialogueManagerTemp>();
         interactionButton.interactable = false;
     }
 
     void Update()
     {
-        if (isCollide && Input.GetKeyDown(KeyCode.F)){
-            _dialogueManagerTemp.TempPlayStory();
-        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other){

@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using script.Common;
-using TMPro;
+using Script.Core.UI;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
@@ -12,9 +11,19 @@ namespace Script.Content.Dialogue
     public class UIDialoguePopup : UIPopup
     {
         [SerializeField] private List<UIDialogueCharacterSlot> uiDialogueCharacterSlotList;
-        
+
         [SerializeField] private Button screenButton;
         [SerializeField] private Button skipButton;
+
+        private void OnEnable()
+        {
+            MessageSystem.Instance.Subscribe<string>("HideCharacters", HideAllCharactersMessage);
+        }
+
+        private void OnDisable()
+        {
+            MessageSystem.Instance.Unsubscribe<string>("HideCharacters", HideAllCharactersMessage);
+        }
 
         private void Start()
         {
@@ -27,7 +36,7 @@ namespace Script.Content.Dialogue
         {
             skipButton.onClick.AddListener(OnSkipButtonClicked);
         }
-        
+
         public void HideAllCharacters()
         {
             foreach (var slot in uiDialogueCharacterSlotList)
@@ -65,12 +74,21 @@ namespace Script.Content.Dialogue
 
             onComplete?.Invoke(); // ✅ 로딩 완료 후 콜백 실행
         }
-        
+
+        #region Message
+
+        private void HideAllCharactersMessage(string data)
+        {
+            Debug.Log($"Message Data : {data}");
+            HideAllCharacters();
+        }
+
+        #endregion
+
         #region Event
-        
+
         private void OnSkipButtonClicked()
         {
-            
         }
 
         #endregion
