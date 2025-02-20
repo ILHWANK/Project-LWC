@@ -1,5 +1,5 @@
 ﻿Index,Item_Id,Item_Name,Item_Desc,Item_SubDesc,Item_Path,Item_Type
-1,Day1_Oriental,어린 세자,고풍스러운 종이에 적힌 편지다.,어린 세자,,Letter
+1,Day1_Oriental,어린 세자,고풍스러운 종이에 적힌 편지다.,어린 세자,Temp/Sprite,Letter
 2,Day1_Western,용사가 된 검사,눅눅한 종이에 적힌 편지다.,용사가 된 검사,,Letter
 3,Day1_Animal,도그 부부,금색 털이 잔뜩 붙어있는 편지다.,도그 부부,,Letter
 4,Day1_Future,영양 분석 연구원,검은 종이에 형광빛의 로고가 그려진 편지다.,영양 분석 연구원,,Letter
@@ -12,4 +12,4 @@
 11,Day3_Animal,늙은 곰,정갈한 글씨체로 적힌 편지다.,늙은 곰,,Letter
 12,Day3_Future,신체 개조 담당 연구원,검은 종이에 하얀 글씨로 적힌 편지다.,신체 개조 담당 연구원,,Letter
 13,Animal_Gift,선물,동물 친구에게서 온 선물,,,Gift
-14,Item1,테스트 아이템,테스트 아이템 설명,,,None
+14,Item1,테스트 아이템,테스트 아이템 설명,,Temp/UI/Sprite,None

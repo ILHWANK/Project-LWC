@@ -1,38 +1,49 @@
 ﻿using Script.Common.UI;
-using Script.Core.UI;
+using Script.Data;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace WHDle.UI.Inventory
+namespace Script.Content.Inventory
 {
     public class InventoryItemSlot : MonoBehaviour
     {
-        [SerializeField] private Button _click;
-
-        [SerializeField] private UIPopup _inventoryResult;
-
-        public GameObject SlotInner;
+        [SerializeField] private Button click;
+        [SerializeField] private GameObject slotInner;
+        
         public Image ItemImage;
         public TMP_Text AmountText;
 
         public void Start()
         {
-            _click.onClick.AddListener(OnClicked);
+            click.onClick.AddListener(OnClicked);
+        }
+        
+        public void Set(ItemData itemData)
+        {
+            Init();
+
+            if (itemData == null) 
+                return;
+            
+            var itemTable = CSVDialogueParser.LoadDialogueTable("Assets/Resources/DataTable/ItemTable.csv");
+            var itemTableData = itemTable.GetByColumn("Item_Id", itemData.itemID);
+
+            Debug.Log($"Item Image 위치 : {itemTableData["Item_Path"]}");
+            
+            ItemImage.sprite = null;
+            AmountText.text = itemData.itemCount.ToString();
+            
+            slotInner.SetActive(true);   
         }
 
-        public void DeleteItem()
+        private void Init()
         {
             ItemImage.sprite = null;
             AmountText.text = string.Empty;
 
-            SlotInner.SetActive(false);
-        }
-
-        public void SlotClear()
-        {
-            ItemImage.sprite = null;
-            AmountText.text = string.Empty;
+            slotInner.SetActive(false);    
         }
 
         #region Event

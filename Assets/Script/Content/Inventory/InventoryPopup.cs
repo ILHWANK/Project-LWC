@@ -1,15 +1,81 @@
+using System.Collections.Generic;
 using Script.Common.UI;
 using Script.Core.UI;
+using Script.Data;
+using Script.Data.ScriptableObject;
+using UnityEngine;
+using UnityEngine.UI;
 
-public class InventoryPopup : UIPopup
+namespace Script.Content.Inventory
 {
-    private void Start()
+    public class InventoryPopup : UIPopup
     {
-        // UIManager.Instance.OnPopupOpened += OnPopupOpen;
-    }
+        // Data
+        [SerializeField] private InventoryDataSO inventoryData;
+
+        [SerializeField] private List<InventoryItemSlot> inventoryItemSlotList;
+        [SerializeField] private Button closeButton;
     
-    public void Close()
-    {
-        UIManager.Instance.ClosePopup("InventoryPopup");
+        private void Start()
+        {
+            inventoryData.AddItem(new ItemData()
+            {
+                itemID = "Day1_Oriental",
+                itemCount = 3
+            });
+            
+            inventoryData.AddItem(new ItemData()
+            {
+                itemID = "Item1",
+                itemCount = 1
+            });
+            
+            closeButton.onClick.AddListener(OnCloseButtonClicked);
+        }
+
+        private void OnEnable()
+        {
+            inventoryData.OnInventoryUpdated += UpdateUI;
+        }
+
+        private void OnDisable()
+        {
+            inventoryData.OnInventoryUpdated -= UpdateUI;
+        }
+
+        private void UpdateUI()
+        {
+            Init();
+
+            var slotIndex = 0;
+            
+            foreach (var itemData in inventoryData.items)
+            {
+                inventoryItemSlotList[slotIndex].Set(itemData);
+
+                slotIndex++;
+                if (inventoryItemSlotList.Count <= slotIndex)
+                {
+                    break;
+                }
+            }
+        }
+        
+        private void Init()
+        {
+            foreach (var inventoryItemSlot in inventoryItemSlotList)
+            {
+                inventoryItemSlot.Set(null);
+            }
+        }
+
+        #region Event
+    
+        private void OnCloseButtonClicked()
+        {
+            UIManager.Instance.ClosePopup(this);
+        }
+
+        #endregion
     }
 }
