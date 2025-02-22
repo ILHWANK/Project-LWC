@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Script.Common.UI;
 using Script.Core.UI;
 using Script.Data;
 using Script.Data.ScriptableObject;
+using Script.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +16,10 @@ namespace Script.Content.Inventory
         [SerializeField] private List<InventoryItemSlot> inventoryItemSlotList;
         [SerializeField] private Button closeButton;
     
-        private void Start()
+        public override void OnEnter()
         {
+            base.OnEnter();
+            
             inventoryData.AddItem(new ItemData()
             {
                 itemID = "Day1_Oriental",
@@ -31,6 +33,7 @@ namespace Script.Content.Inventory
             });
             
             closeButton.onClick.AddListener(OnCloseButtonClicked);
+            UpdateUI();
         }
 
         private void OnEnable()
@@ -73,7 +76,7 @@ namespace Script.Content.Inventory
     
         private void OnCloseButtonClicked()
         {
-            UIManager.Instance.ClosePopup(this);
+            UIManager.Instance.CloseLastPopup();
         }
 
         #endregion

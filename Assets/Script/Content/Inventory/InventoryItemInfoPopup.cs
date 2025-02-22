@@ -1,5 +1,5 @@
-using Script.Common.UI;
 using Script.Core.UI;
+using Script.Manager;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,14 +12,28 @@ public class InventoryItemInfoPopup : UIPopup
     [SerializeField] private Button _interactionButton;
     [SerializeField] private Button _closeButton;
 
-    private void Start()
+    public struct ItemInfoPopupData
     {
-        var itemTable = CSVDialogueParser.LoadDialogueTable("Assets/Resources/DataTable/ItemTable.csv");
+        public string ItemId;
+        public int ItemCount;
+    }
 
-        var itemData = itemTable.GetByColumn("Item_Id", "Day1_Oriental");
+    public override void OnEnter()
+    {
+        base.OnEnter();
         
-        itemName.text = itemData["Item_Name"];
-        itemDescription.text = itemData["Item_Desc"];
+        if (popupData is ItemInfoPopupData itemInfo) // 받은 데이터를 구조체로 변환
+        {
+            var itemTable = CSVDialogueParser.LoadDialogueTable("Assets/Resources/DataTable/ItemTable.csv");
+            var itemData = itemTable.GetByColumn("Item_Id", itemInfo.ItemId);
+
+            itemName.text = itemData["Item_Name"] + $" (x{itemInfo.ItemCount})";
+            itemDescription.text = itemData["Item_Desc"];
+        }
+        else
+        {
+            Debug.LogWarning("InventoryItemInfoPopup: 데이터가 전달되지 않았습니다.");
+        }
 
         _interactionButton.onClick.AddListener(OnInteractionButtonClicked);
         _closeButton.onClick.AddListener(OnCloseButtonClicked);
@@ -29,15 +43,13 @@ public class InventoryItemInfoPopup : UIPopup
 
     private void OnInteractionButtonClicked()
     {
-        Debug.Log("Item 사용");
-        
-        UIManager.Instance.ClosePopup("InventoryItemInfoPopup");
+        UIManager.Instance.CloseLastPopup();
         UIManager.Instance.OpenPopup("ResultPopup"); 
     }
 
     private void OnCloseButtonClicked()
     {
-        UIManager.Instance.ClosePopup("InventoryItemInfoPopup");
+        UIManager.Instance.CloseLastPopup();
     }
 
     #endregion

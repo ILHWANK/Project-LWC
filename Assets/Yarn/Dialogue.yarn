@@ -1,0 +1,107 @@
+﻿title: WitchEncounter
+---
+<<set $childTrust = 0>>
+
+<<changeCharacter >>
+마녀: "자, 어린아이는 왜 이 깊은 숲까지 들어온 거지?"
+
+<<changeCharacter "Child_A_Sad">>
+아이: "저는 길을 잃었어요… 도와주실 수 있나요?"
+
+-> "당연하지! 널 도와줄게." 
+    <<set $childTrust += 2>>
+    <<changeCharacter "Child_A_Sad" "Witch_A">>
+    마녀: "그래, 따라오렴. 안전한 곳으로 데려다 줄게."
+    
+-> "네가 여기 온 이유부터 말해봐." 
+    <<set $childTrust -= 1>>
+    <<changeCharacter "Witch_D">>
+    마녀: "길을 잃었다고? 하지만, 이 숲에 들어온 이유를 먼저 듣고 싶구나."
+
+<<if $childTrust > 0>>
+    <<changeCharacter "Child_A_Idle" "Witch_E">>
+    아이: "고마워요, 마녀님!"
+    마녀: "후후, 넌 용감하구나. 하지만 이곳은 위험해. 조심해야 해."
+<<endif>>
+
+<<if $childTrust <= 0>>
+    <<changeCharacter "Child_A_Idle" "Witch_F">>
+    아이: "으... 무서워요..."
+    마녀: "두려워하지 마라. 하지만 네가 정직하지 않으면, 이 숲이 널 삼켜버릴 수도 있지."
+<<endif>>
+
+마녀: "자, 이제 넌 무엇을 원하니?"
+
+-> "집으로 가고 싶어요." 
+    <<set $childTrust += 1>>
+    <<jump GoHome>>
+
+-> "마법을 배우고 싶어요!" 
+    <<set $childTrust += 2>>
+    <<jump MagicLesson>>
+
+===
+
+title: GoHome
+---
+마녀: "집으로 돌아가고 싶구나? 그래, 하지만 이 숲은 쉽지 않아."
+<<changeCharacter "Witch_D">>
+
+<<if $childTrust >= 3>>
+    <<changeCharacter "Child_A_Sad" "Witch_A">>
+    마녀: "넌 정직하고 용감하구나. 내가 직접 집까지 데려다 주마."
+    <<jump SecretEnding>>
+<<else>>
+    마녀: "하지만 널 그냥 보낼 수는 없어. 한 가지 질문에 답해야 한단다."
+    마녀: "넌 이곳에서 얻은 걸 후회하지 않니?"
+    
+    -> "후회해요..."
+        <<changeCharacter "Child_A_Idle">>
+        마녀: "그렇구나. 하지만 모든 경험이 너를 성장하게 한단다. 이제 돌아가렴."
+        <<jump Ending>>
+    
+    -> "후회하지 않아요!"
+        <<changeCharacter "Witch_A">>
+        마녀: "좋아! 그럼 널 더 가르쳐 주고 싶구나."
+        <<set $childTrust += 1>>
+        <<jump MagicLesson>>
+<<endif>>
+
+===
+
+title: MagicLesson
+---
+<<changeCharacter "Child_A_Sad" "Witch_B">>
+마녀: "마법에는 대가가 따른단다. 네가 감당할 수 있겠니?"
+
+-> "네! 뭐든 할 수 있어요!"
+    <<set $childTrust += 2>>
+    마녀: "좋아. 그럼 먼저, 이 주문을 외워보거라..."
+    <<jump SpellTest>>
+
+-> "아니요, 다시 생각해볼게요."
+    <<set $childTrust -= 1>>
+    <<changeCharacter "Witch_A">>
+    마녀: "그럼 네 결정을 존중하지. 하지만 후회는 없길 바란다."
+    <<jump Ending>>
+
+===
+
+title: SecretEnding
+---
+<<changeCharacter "Child_A_Scamp" "Witch_A">>
+마녀: "너는 진정한 용기를 가진 아이구나. 나는 너를 제자로 삼겠다."
+아이: "정말요? 감사합니다, 마녀님!"
+마녀: "후후, 이제 네가 배울 것은 많단다. 어서 가자."
+<<end>>
+
+===
+
+title: Ending
+---
+<<changeCharacter>>
+마녀: "오늘의 이야기는 여기까지란다. 다시 만날 날이 오겠지?"
+아이: "감사합니다, 마녀님!"
+<<end>>
+
+===

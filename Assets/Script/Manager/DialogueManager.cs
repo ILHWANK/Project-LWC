@@ -1,5 +1,5 @@
 using System.Collections;
-using Script.Common.UI;
+using Script.Manager;
 using UnityEngine;
 using Yarn.Unity;
 

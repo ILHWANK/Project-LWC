@@ -1,5 +1,5 @@
-﻿using Script.Common.UI;
-using Script.Data;
+﻿using Script.Data;
+using Script.Manager;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -11,6 +11,8 @@ namespace Script.Content.Inventory
     {
         [SerializeField] private Button click;
         [SerializeField] private GameObject slotInner;
+        
+        private ItemData _itemData;
         
         public Image ItemImage;
         public TMP_Text AmountText;
@@ -26,14 +28,16 @@ namespace Script.Content.Inventory
 
             if (itemData == null) 
                 return;
+
+            _itemData = itemData;
             
             var itemTable = CSVDialogueParser.LoadDialogueTable("Assets/Resources/DataTable/ItemTable.csv");
-            var itemTableData = itemTable.GetByColumn("Item_Id", itemData.itemID);
+            var itemTableData = itemTable.GetByColumn("Item_Id", _itemData.itemID);
 
             Debug.Log($"Item Image 위치 : {itemTableData["Item_Path"]}");
             
             ItemImage.sprite = null;
-            AmountText.text = itemData.itemCount.ToString();
+            AmountText.text = _itemData.itemCount.ToString();
             
             slotInner.SetActive(true);   
         }
@@ -50,7 +54,11 @@ namespace Script.Content.Inventory
 
         private void OnClicked()
         {
-            UIManager.Instance.OpenPopup("InventoryItemInfoPopup");
+            UIManager.Instance.OpenPopup<InventoryItemInfoPopup.ItemInfoPopupData>("InventoryItemInfoPopup", new()
+            {
+                ItemId = _itemData.itemID,
+                ItemCount = _itemData.itemCount
+            });
         }
 
         #endregion
