@@ -22,7 +22,7 @@ public class InventoryItemInfoPopup : UIPopup
     {
         base.OnEnter();
         
-        if (popupData is ItemInfoPopupData itemInfo) // 받은 데이터를 구조체로 변환
+        if (PopupData is ItemInfoPopupData itemInfo) // 받은 데이터를 구조체로 변환
         {
             var itemTable = CSVDialogueParser.LoadDialogueTable("Assets/Resources/DataTable/ItemTable.csv");
             var itemData = itemTable.GetByColumn("Item_Id", itemInfo.ItemId);
@@ -44,7 +44,8 @@ public class InventoryItemInfoPopup : UIPopup
     private void OnInteractionButtonClicked()
     {
         UIManager.Instance.CloseLastPopup();
-        UIManager.Instance.OpenPopup("ResultPopup"); 
+        
+        DialogueManager.Instance.StartDialogue("WitchEncounter");
     }
 
     private void OnCloseButtonClicked()

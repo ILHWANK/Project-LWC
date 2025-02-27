@@ -1,12 +1,23 @@
-
 using UnityEngine;
 
 namespace Script.Core.UI
 {
     public class UIPanel : MonoBehaviour
     {
-        public virtual void OnEnter() { }
+        protected object PanelData;
 
-        public virtual void OnExit() { }
+        public virtual void OnEnter()
+        {
+        }
+
+        public void OnEnter<T>(T data)
+        {
+            PanelData = data;
+            OnEnter();
+        }
+
+        protected virtual void OnExit()
+        {
+        }
     }
 }

@@ -100,6 +100,25 @@ namespace Script.Manager
                 Debug.LogWarning($"Panel '{panelName}' not found in UIManager!");
             }
         }
+        
+        public void OpenPanel<T>(string panelName, T data)
+        {
+            if (prefabs.TryGetValue(panelName, out var prefab))
+            {
+                var panelInstance = Instantiate(prefab, _container).GetComponent<UIPanel>();
+                if (panelInstance != null)
+                {
+                    panelInstance.OnEnter(data);
+                    openPanels.Push(panelInstance);
+                    OnOpenPanel?.Invoke(panelInstance);
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Panel '{panelName}' not found in UIManager!");
+            }
+        }
+
 
         public void OpenPanel(UIPanel panel)
         {
@@ -161,7 +180,6 @@ namespace Script.Manager
                     popupInstance.OnEnter();
                     popupInstance.gameObject.SetActive(true);
                     openPopups.Push(popupInstance);
-                    OnPopupOpened?.Invoke(popupInstance);
                 }
             }
             else

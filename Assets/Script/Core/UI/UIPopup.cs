@@ -4,16 +4,13 @@ namespace Script.Core.UI
 {
     public class UIPopup : MonoBehaviour
     {
-        protected object popupData; // 전달받은 데이터 저장
+        protected object PopupData;
 
-        public virtual void OnEnter()
-        {
-            
-        }
+        public virtual void OnEnter() { }
 
-        public virtual void OnEnter<T>(T data)
+        public void OnEnter<T>(T data)
         {
-            popupData = data;
+            PopupData = data;
             OnEnter();
         }
 

@@ -1,4 +1,5 @@
 using Script.Core.UI;
+using Script.Data.ScriptableObject;
 using Script.Manager;
 using TMPro;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace Script.Content.MainUI
         [SerializeField] private Button inventoryButton;
 
         [SerializeField] private TextMeshProUGUI dayText;
-
+        
         private void Start()
         {
             AddListener();
@@ -58,7 +59,12 @@ namespace Script.Content.MainUI
 
         private void OnInteractionButtonCClicked()
         {
-            UIManager.Instance.OpenPanel("DayTransitionPanel");
+            var currentDay = GameDataManager.Instance.GameData.CurrentDay;
+            
+            UIManager.Instance.OpenPanel("DayTransitionPanel", new DayTransitionPanel.Data
+            {
+                CurrentDay  = currentDay
+            });
         }
 
         private void OnInventoryButtonClicked()
