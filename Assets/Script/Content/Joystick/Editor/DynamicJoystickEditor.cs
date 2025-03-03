@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(DynamicJoystick))]
+[CustomEditor(typeof(JoystickElement))]
 public class DynamicJoystickEditor : JoystickEditor
 {
     private SerializedProperty moveThreshold;

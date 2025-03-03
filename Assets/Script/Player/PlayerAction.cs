@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerAction : MonoBehaviour
 {
     // Joystick
-    [SerializeField] DynamicJoystick joyStick;
+    [SerializeField] JoystickElement joyStick;
     [SerializeField] float speed;
 
     [SerializeField] Rigidbody2D rb;

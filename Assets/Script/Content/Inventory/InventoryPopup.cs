@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Script.Content.PersistentUI;
 using Script.Core.UI;
 using Script.Data;
 using Script.Data.ScriptableObject;
@@ -77,6 +78,8 @@ namespace Script.Content.Inventory
         private void OnCloseButtonClicked()
         {
             UIManager.Instance.CloseLastPopup();
+            
+            MainUIController.Instance.SetActive(true);
         }
 
         #endregion
