@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ namespace Script.Content.PersistentUI
         [SerializeField] private GameObject titleUI;
 
         [SerializeField] private Button newGameButton;
+        [SerializeField] private Button loadGameButton;
 
         private void Awake()
         {
@@ -24,6 +26,7 @@ namespace Script.Content.PersistentUI
         private void AddListener()
         {
             newGameButton.onClick.AddListener(OnNewGameButtonClicked);
+            loadGameButton.onClick.AddListener(OnLoadGameButtonClicked);
         }
 
         #region Handler
@@ -33,13 +36,32 @@ namespace Script.Content.PersistentUI
             titleUI.SetActive(true);
         }
 
+        private async UniTask Loading()
+        {
+            titleUI.SetActive(false);
+            
+            LoadingUIController.Instance.SetActive(true);
+            
+            await LoadingUIController.Instance.AddLoadingItemsByLabel("DialogueResource", "이미지 를 불러 오는 중입니다...", typeof(Sprite));
+            await LoadingUIController.Instance.ShowAndLoadAsync();
+            
+            MainUIController.Instance.SetActive(true);
+        }
+        
         #endregion
 
         #region Event
 
         private void OnNewGameButtonClicked()
         {
-            titleUI.SetActive(false);
+            LoadingUIController.Instance.ReleaseAllLoadedAssets();
+            
+            Loading().Forget();
+        }
+
+        private void OnLoadGameButtonClicked()
+        {
+            Loading().Forget();
         }
 
         #endregion

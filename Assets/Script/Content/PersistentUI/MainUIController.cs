@@ -20,6 +20,7 @@ namespace Script.Content.PersistentUI
         private void Awake()
         {
             Instance = this;
+            gameObject.SetActive(false);
         }
 
         private void Start()
@@ -67,6 +68,8 @@ namespace Script.Content.PersistentUI
         private void OnMainMenuButtonClicked()
         {
             TitleUIController.Instance.ShowTitle();
+            
+            LoadingUIController.Instance.ClearLoadingItems();
         }
 
         private void OnInteractionButtonCClicked()

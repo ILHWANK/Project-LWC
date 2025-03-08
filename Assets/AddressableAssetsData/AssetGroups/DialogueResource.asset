@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: DialogueResource
+  m_EditorClassIdentifier: 
+  m_GroupName: DialogueResource
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 17772236feb99214193e918c8ad8d158
+  m_SerializeEntries:
+  - m_GUID: e3e0eba10afa01d41a0fc5dcd23ba0c0
+    m_Address: Assets/Addressables/Sprites/Characters/Dialogue
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DialogueResource
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 4e09b232208d54e12aa7a8bd75cb00d3, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: da3fd4f0893d79c44bf237e74ed7667d, type: 2}
+    - {fileID: 11400000, guid: aec336b3f5abff644a675712ba3c7746, type: 2}

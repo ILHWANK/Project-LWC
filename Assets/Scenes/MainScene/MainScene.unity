@@ -3183,6 +3183,17 @@ Transform:
   - {fileID: 678010296}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &925274397 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3981585465476905019, guid: 40e308769e85f5a4a85fe7599c194529, type: 3}
+  m_PrefabInstance: {fileID: 1466087575}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!213 &954790041
 Sprite:
   m_ObjectHideFlags: 0
@@ -3817,6 +3828,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5567635277557786104, guid: 40e308769e85f5a4a85fe7599c194529, type: 3}
+      propertyPath: loadGameButton
+      value: 
+      objectReference: {fileID: 925274397}
     - target: {fileID: 5608129277241965028, guid: 40e308769e85f5a4a85fe7599c194529, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 32.069824
@@ -6233,27 +6248,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1542388731916112890, guid: 89ee66600a0ee4049b35c8b5e0491d47, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1542388731916112890, guid: 89ee66600a0ee4049b35c8b5e0491d47, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4214535960177551819, guid: 89ee66600a0ee4049b35c8b5e0491d47, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 130
-      objectReference: {fileID: 0}
-    - target: {fileID: 4214535960177551819, guid: 89ee66600a0ee4049b35c8b5e0491d47, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 140
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452575102416252788, guid: 89ee66600a0ee4049b35c8b5e0491d47, type: 3}
-      propertyPath: m_fontSize
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452575102416252788, guid: 89ee66600a0ee4049b35c8b5e0491d47, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 75
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6765828084501807357, guid: 89ee66600a0ee4049b35c8b5e0491d47, type: 3}
       propertyPath: m_Name
@@ -6261,7 +6260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6765828084501807357, guid: 89ee66600a0ee4049b35c8b5e0491d47, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6765828084501807358, guid: 89ee66600a0ee4049b35c8b5e0491d47, type: 3}
       propertyPath: m_Pivot.x
